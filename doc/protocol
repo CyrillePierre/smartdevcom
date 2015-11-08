@@ -116,3 +116,7 @@ Version : 0.1
 				ff:ff:ff	broadcast à tous le monde (à modérer)
 				00:00:00	adresse du réseau virtuel (utile pour les
 							routeurs)
+
+3 - Protocole VARP
+	Le protocole VARP est une imitation du protocole ARP mais appliqué au
+	réseau virtuel.
