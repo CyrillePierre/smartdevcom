@@ -13,8 +13,8 @@ Version : 0.1
 	TCP/IP.
 
 	Le protocole définit ici va lui même se découper en deux niveaux :
-		- la couche transport (protocole VIP)
-		- la couche applicative (protocole HAP) 
+		- la couche VLL (virtual logic link)
+		- la couche applicative
 
 2 - Le protocole VIP
 	Virtual IP (VIP) est un protocole qui s'occupe de la couche transport
@@ -26,14 +26,93 @@ Version : 0.1
         |0  |4  |8  |12 |16 |20 |24 |28 |32 |36 |40 |44 |48 |52 |56 |60 |64
 
         ,---------------------------------------------------------------,
-        |V | NU |  TTL  |       ADDR_SRC        |       ADDR_DEST       |
+        | P  |V |  TTL  |       ADDR_SRC        |       ADDR_DEST       |
         '---------------------------------------------------------------'
 
-		V         (3 bits)  : version du protocole
-		NU        (5 bits)  : non utilisé
+		P         (5 bits)  : protocole (0b00000)
+		V         (3 bits)  : version du protocole (0b000)
 		TTL       (8 bits)  : durée de vie du paquet
 		ADDR_SRC  (24 bits) : addresse de l'objet qui envoie la commande
 		ADDR_DEST (24 bits) : addresse de l'objet qui reçoit la commande
+
+	2.2 - Protocole (P)
+		Les 5 premiers bits sont dédié à la détermination du protocole qui
+		est encapsulé dans la couche VLL. Dans le cas du protocole VIP, ces
+		bits valent 0b00000. Si le paquet correspond à un autre protocole,
+		la valeur de ces bits est différente.
 	
-	2.2 - Version du protocole
-		Actuellement, la version du protocole est à 0 mais si jamais
+	2.3 - Version du protocole (V)
+		Actuellement, la version du protocole est à 0 mais si jamais une
+		modification de l'en-tête du protocole VIP venait à arriver, il
+		suffirait d'indiquer une autre valeur dans le champ V pour que les
+		communications utilisant l'ancien protocole ne soient pas
+		perturbées.
+
+	2.4 - Time to live (TTL)
+		La durée de vie est utilisée pour éviter qu'un paquet ne reste trop
+		longtemps sur le réseau. Cela peut arriver lorsque le graphe du
+		réseau virtuel est cyclique et que le routage du paquet le fait
+		tourner en rond.
+
+		Ce champ contient un nombre définit à la création du paquet. Ce
+		nombre sera alors décrémenté à chaque passage dans un routeur
+		(objet faisant passerelle entre plusieurs support de
+		 communication). Si le nombre atteint la valeur 0 alors la
+		transmission du paquet sera interrompu.
+
+	2.5 - Les addresses (ADDR_SRC et ADDR_DEST)
+		Les champs ADDR_SRC et ADDR_DEST sont respectivement utilisé pour
+		renseigner l'adresse de l'objet source et de l'objet destinataire.
+		Une adresse est constitué de 3 octets dont chacun à une fonction
+		précise :
+
+			| 0 | 2 | 4 | 6 | 8 | 10 |12 |14 |16 |18 |20 |22 |24
+			
+			,------------------------------------------------,
+			|   ADDR_NET    |  ADDR_SUB_NET  |   ADDR_OBJ    |
+			'------------------------------------------------'
+
+			ADDR_NET     (8 bits) : adresse de réseau
+			ADDR_SUB_NET (8 bits) : adresse de sous-réseau
+			ADDR_OBJ     (8 bits) : adresse d'objet
+
+		Chaque objet peut être classé dans 3 niveaux de hiérarchie qui sera
+		déterminé par la valeur de son adresse complète. On peut donc
+		facilement localiser où se trouve un objet dans le réseau
+		simplement avec son adresse. Par défaut, un objet n'est capable de
+		communiquer qu'avec les objets présents dans le même sous-réseau
+		que lui. Il peut cependant parler avec des objets d'autres réseau
+		si le sous-réseau est équipé de routeur.
+
+		2.5.1 - Représentation d'une adresse
+			La forme générale de la représentation d'une adresse est la
+			suivante :
+
+				<NB_HEX>:<NB_HEX>:<NB_HEX>
+
+				NB_HEX : un nombre hexadécimal à deux chiffres
+
+			Voici quelques exemples d'adresses :
+				0f:34:02	réseau 0x0f, sous-réseau 0x34, objet 0x02
+				aa:b2:27	réseau 0xaa, sous-réseau 0xb2, objet 0x27
+				aa:32:1c	réseau 0xaa, sous-réseau 0x32, objet 0x1c
+
+		2.5.2 - Adresses particulières
+			Certaines adresses sont réservées pour des utilisations
+			spéciales. Chaque niveau d'adressage (chaque octet) ne peut
+			contenir la valeur 0x00 ou 0xff :
+				- 0x00 : adresse de réseau
+				- 0xff : adresse de broadcast
+			L'adresse de réseau renseigne sur un réseau ou un sous-réseau
+			spécifique et non un objet connecté à ce réseau/sous-réseau.
+			L'adresse de broadcast permet d'envoyer un paquet à tous les
+			objets appartenant à un réseau/sous-réseau spécifique.
+
+			Voici quelques exemples de ce type d'adresses :
+				23:00:00	adresse du réseau 0x23	
+				23:4b:00	adresse du sous-réseau 0x4b du réseau 0x23
+				23:4b:ff	adresse de broadcast du sous-réseau précédent
+				23:ff:ff	broadcast à tous les objets du réseau 0x23
+				ff:ff:ff	broadcast à tous le monde (à modérer)
+				00:00:00	adresse du réseau virtuel (utile pour les
+							routeurs)
