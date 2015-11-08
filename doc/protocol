@@ -66,11 +66,11 @@ Version : 0.1
 		Une adresse est constitué de 3 octets dont chacun à une fonction
 		précise :
 
-			| 0 | 2 | 4 | 6 | 8 | 10 |12 |14 |16 |18 |20 |22 |24
+			|0  |2  |4  |6  |8  |10 |12 |14 |16 |18 |20 |22 |24
 			
-			,------------------------------------------------,
-			|   ADDR_NET    |  ADDR_SUB_NET  |   ADDR_OBJ    |
-			'------------------------------------------------'
+			,-----------------------------------------------,
+			|   ADDR_NET    |  ADDR_SUB_NET  |   ADDR_OBJ   |
+			'-----------------------------------------------'
 
 			ADDR_NET     (8 bits) : adresse de réseau
 			ADDR_SUB_NET (8 bits) : adresse de sous-réseau
@@ -119,4 +119,98 @@ Version : 0.1
 
 3 - Protocole VARP
 	Le protocole VARP est une imitation du protocole ARP mais appliqué au
-	réseau virtuel.
+	réseau virtuel. Il permet de rechercher une adresse du support de
+	communication à partir d'une adresse dans le réseau virtuelle. Cela
+	permet de savoir à qui envoyer le paquet lorsque l'on souhaite faire
+	une requête à un objet connecté.
+
+	3.1 - En-tête du paquet
+		(représentation pour les paquets VARP encapsulé par du TCP/IP)
+		
+		   |0  |4  |8  |12 |16 |20 |24 |28 |32 |36 |40 |44 |48 |52 |56 |60 |
+
+		-- ,---------------------------------------------------------------,
+		00 | P  |V |OP|SCAL|          SC_ADRR_SRC          |   ADDR_SRC    |
+		-- ;---------------------------------------------------------------'
+		64 |       |        SC_ADDR_DEST       |       ADDR_DEST       |
+		-- '-----------------------------------------------------------'
+
+		P            (5 bits)  : protocole (0b00001)
+		V            (3 bits)  : version (0b000)
+		OP           (3 bits)  : opération réalisée
+		SCAL         (5 bits)  : taille de l'adresse du support de com
+								 (en octets)
+		SC_ADDR_SRC  (xx bits) : adresse du support de communication de
+								 l'objet source
+		ADDR_SRC     (24 bits) : adresse de l'objet source
+		SC_ADDR_DEST (xx bits) : adresse du support de communication de
+								 l'objet destinataire
+		ADDR_DEST    (24 bits) : adresse de l'objet destinataire
+
+	3.2 - Protocole
+		Dans le cas du protocole VARP, la valeur du premier champ P du
+		paquet vaut 0b00001.
+	
+	3.3 - Version du protocole
+		Cette version est la première version donc V vaut 0b000
+
+	3.4 - Code d'opération
+		Le code d'opération (OP) permet de déterminer comment doit être
+		interprété le paquet envoyé. Il existe actuellement 3 valeurs
+		possibles :
+			- 0b000 : Le paquet est une demande d'adresse de support. Cela
+					  signifie que l'on connais l'adresse de l'objet dans
+					  le réseau virtuelle mais pas son adresse dans le
+					  support de com.
+			- 0b001 : Le paquet est une demande d'adresse virtuel. Cela
+					  signifie que l'on connais l'adresse de l'objet dans
+					  le support de com mais pas dans le réseau virtuel
+			- 0b010 : Réponse à une demande d'adresse
+
+	3.5 - Adresses sources et destination
+		Le protocole VARP doit pouvoir fonctionner sur plusieurs supports
+		de communication différents. En fonction de ces supports, leur
+		adresse n'aura pas forcément la même forme. Étant donné qu'il est
+		nécessaire de renseigner cette adresse dans la trame VARP, il faut
+		indiquer leur taille. Cet info doit être stocké (en octets) dans 
+		SCAL.
+
+		Les champs des adresses sources doivent être entièrement remplis.
+		Pour le champ inconnu du destinataire, il doit être rempli par
+		l'adresse de broadcast (c'est à dire, que des bits à 1).
+
+	3.6 - Exemple
+		Voici quelques exemples de paquets VARP:
+
+		Exemple 1 :
+			Demande d'adresse du support pour l'objet ayant l'adresse
+			virtuelle 1b:c7:05
+
+			OP           = 0b000
+			SCAL         = 4
+			SC_ADDR_SRC  = 192.167.28.4
+			ADDR_SRC     = 1b:c7:03
+			SC_ADDR_DEST = 255.255.255.255
+			ADDR_DEST    = 1b:c7:05
+
+		Exemple 2 :
+			Réponse à la requête précédente. L'objet à l'adresse virtuelle
+			1b:c7:05 possède l'adresse de support 192.167.28.82
+
+			OP           = 0b010
+			SCAL         = 4
+			SC_ADDR_DEST = 192.167.28.82
+			ADDR_DEST    = 1b:c7:05
+			SC_ADDR_DEST = 192.167.28.4
+			ADDR_DEST    = 1b:c7:03
+
+		Exemple 3 :
+			Demande d'adresse virtuelle  pour l'objet ayant l'adresse de
+			support 192.167.28.59
+
+			OP           = 0b001
+			SCAL         = 4
+			SC_ADDR_SRC  = 192.167.28.4
+			ADDR_SRC     = 1b:c7:03
+			SC_ADDR_DEST = 192.167.28.59
+			ADDR_DEST    = ff:ff:ff
