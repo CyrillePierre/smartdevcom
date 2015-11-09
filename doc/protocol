@@ -226,12 +226,12 @@ Version : 0.1
 		|0  |2  |4  |6  |8  |10 |12 |14 |16 |18 |20 |22 |24 |26 |28 |
 		
 		,---------------------------------------------------------------
-		|      ID       |T|            LENGTH           |   DATA  . . .
+		|      ID       | T |          LENGTH           |   DATA  . . .
 		'---------------------------------------------------------------
 		
 		ID     (8 bits)  : identifiant de la requête
-		T      (1 bits)  : indique si le paquet est une requête/réponse
-		LENGTH (15 bits) : longueur des données (en octets)
+		T      (2 bits)  : type de la requête
+		LENGTH (14 bits) : longueur des données (en octets)
 		DATA   (xx bits) : les données des requêtes
 
 	4.2 - Identifiant de la requête
@@ -239,11 +239,11 @@ Version : 0.1
 		paquet est chargé de transporter. Les différentes valeurs de ce
 		champ sont détaillés plus loin dans ce document (section 4.5).
 
-	4.3 - Bit d'indication requête/réponse
-		Le champ T ne fait qu'un seul bit et permet de déterminer si le
-		paquet correspond à une requête ou à la réponse à cette requête :
-			- T = 0 : le paquet est une requête
-			- T = 1 : le paquet est réponse
+	4.3 - Type de requête
+		Le champ T permet de déterminer le type de la requête :
+			- T = 0b00 : le paquet est une requête
+			- T = 0b01 : le paquet est une réponse
+			- T = 0b10 : le paquet est un évènement
 
 	4.4 - Les données
 		Le champ DATA permet de stocker les données des paramètres des
@@ -255,17 +255,48 @@ Version : 0.1
 		Voici la liste des requêtes définies selon la version 0.2 du cahier
 		des charges :
 
-		Demande du type d'objet.
+		4.5.1 - Test de présence
 			Identifiant : 0x00
-			Adresse : unicast ou broadcast
-			Description : Cette requête permet de connaitre le type
-				d'objet. Elle est souvent utilisée en broadcast pour 
-				connaitre les objets présents dans la pièce ou dans 
-				la maison ainsi que les types de ceux-ci.
-			Paramètres : Aucun (LENGTH = 0)
-			Réponse : LENGTH = 2
-				- entier (2 octets) : type de l'objet. La liste des types
-					d'objets est définie dans la section 4.6.
+			Adresse : broadcast
+			Description : Cette requête permet de déterminer qui est
+				présent sur le réseau. C'est une requête équivalente à
+				simple ping puisqu'elle ne transmet aucune information.
+				Elle peut être utilisée avec les différentes adresses de
+				broadcast en fonction des besoins.
+			Paramètre : Aucun (LENGTH = 0)
+			Réponse : LENGTH = 0
 
+		4.5.2 - Récupération de la liste des capteurs
+			Identifiant : 0x01
+			Adresse : unicast
+			Description : Cette requête permet de récupérer la liste des
+				capteurs dont l'objet cible est équipé. Chaque capteur
+				possède un identifiant et un type.
+			Paramètre : Aucun (LENGTH = 0)
+			Réponse : LENGTH = N * 3 avec N le nombre de capteurs
+				- entier (1 octet)  : identifiant du capteur k (k = 0)
+				- entier (2 octets) : type du capteur k
+				- N-1 fois les deux lignes d'avant avec k = k + 1
 
+		4.5.3 - Récupération de la liste des actionneurs
+			Identifiant : 0x02
+			Adresse : unicast
+			Description : Cette requête permet de récupérer la liste des
+				actionneurs dont l'objet cible est équipé. Chaque
+				actionneur possède un identifiant et un type.
+			Paramètre : Aucun (LENGTH = 0)
+			Réponse : LENGTH = N * 3 avec N le nombre d'actionneur
+				- entier (1 octet)  : identifiant de l'actionneur k (k = 0)
+				- entier (2 octets) : type de l'actionneur k
+				- N-1 fois les deux lignes d'avant avec k = k + 1
+
+		4.5.4 - Récupération de la liste des actions
+			Identifiant : 0x03
+			Adresse : unicast
+			Description : Cette requête permet de récupérer la liste des
+				actions disponibles chez l'objet cible.
+			Paramètre : Aucun (LENGTH = 0)
+			Réponse : LENGTH = N * 2 avec N le nombre d'actions
+				- entier (2 octets) : identifiant de l'action k (k = 0)
+				- N-1 fois la ligne d'avant avec k = k + 1
 
