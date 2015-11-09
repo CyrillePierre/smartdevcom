@@ -214,3 +214,58 @@ Version : 0.1
 			ADDR_SRC     = 1b:c7:03
 			SC_ADDR_DEST = 192.167.28.59
 			ADDR_DEST    = ff:ff:ff
+	
+4 - Le protocole SDCP
+	Le procotole Smart Devices Control Protocol (SDCP) est un protocole de
+	la couche applicative du réseau virtuel. Il va donc venir au dessus du
+	protocole VIP. Il permet de définir les différentes commandes que
+	peuvent utiliser les objets connectés pour communiquer et transmettre
+	leurs informations.
+
+	4.1 - En-tête du protocole
+		|0  |2  |4  |6  |8  |10 |12 |14 |16 |18 |20 |22 |24 |26 |28 |
+		
+		,---------------------------------------------------------------
+		|      ID       |T|            LENGTH           |   DATA  . . .
+		'---------------------------------------------------------------
+		
+		ID     (8 bits)  : identifiant de la requête
+		T      (1 bits)  : indique si le paquet est une requête/réponse
+		LENGTH (15 bits) : longueur des données (en octets)
+		DATA   (xx bits) : les données des requêtes
+
+	4.2 - Identifiant de la requête
+		Le champs ID contient le code correspondant à la requête que le
+		paquet est chargé de transporter. Les différentes valeurs de ce
+		champ sont détaillés plus loin dans ce document (section 4.5).
+
+	4.3 - Bit d'indication requête/réponse
+		Le champ T ne fait qu'un seul bit et permet de déterminer si le
+		paquet correspond à une requête ou à la réponse à cette requête :
+			- T = 0 : le paquet est une requête
+			- T = 1 : le paquet est réponse
+
+	4.4 - Les données
+		Le champ DATA permet de stocker les données des paramètres des
+		requêtes. La taille de ce champ sera déterminé par la valeur du
+		champ LENGTH. Le format de ces données sera déterminé par
+		l'indetifiant de la requête.
+
+	4.5 - Liste des requêtes possibles
+		Voici la liste des requêtes définies selon la version 0.2 du cahier
+		des charges :
+
+		Demande du type d'objet.
+			Identifiant : 0x00
+			Adresse : unicast ou broadcast
+			Description : Cette requête permet de connaitre le type
+				d'objet. Elle est souvent utilisée en broadcast pour 
+				connaitre les objets présents dans la pièce ou dans 
+				la maison ainsi que les types de ceux-ci.
+			Paramètres : Aucun (LENGTH = 0)
+			Réponse : LENGTH = 2
+				- entier (2 octets) : type de l'objet. La liste des types
+					d'objets est définie dans la section 4.6.
+
+
+
