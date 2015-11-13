@@ -300,3 +300,15 @@ Version : 0.1
 				- entier (2 octets) : identifiant de l'action k (k = 0)
 				- N-1 fois la ligne d'avant avec k = k + 1
 
+		4.5.5 - Récupération du prototype d'une action
+			Identifiant : 0x04
+			Adresse : unicast
+			Description : Cette requête permet de connaitre la manière
+				d'utiliser une action. Le prototype de l'action définit le
+				nombre de paramètre ainsi que le format de chacun de ces
+				paramètres. Il définit également la forme de la réponse.
+			Paramètre : LENGTH = 2
+				- entier (2 octets) : identifiant de l'action
+			Réponse : LENGTH = xxx (indéterminé)
+				Détaillé dans la partie 4.6.
+

@@ -1,0 +1,55 @@
+Classification des actions d'objets connectés :
+
+	- ambiance
+		- action kinéstésique
+			- température
+			- intensité de la soufflerie
+			- aération
+		- action visuelle
+			- lumière
+				- activation
+				- intensité
+				- couleur
+			- décoration
+				- activation
+				- état
+		- action olfactive
+			- désodorisation
+			- odeur d'ambiance
+		- action auditive
+			- atténuation sonore
+			- son d'ambiance
+	- sécurité
+		- état
+		- niveau de gravité
+	- multimédia
+		- audio
+			- sélectionner la source
+			- jouer une musique
+			- mettre en pause
+		- vidéo
+			- sélectionner la source
+			- lancer une vidéo
+			- mettre en pause
+	- électroménager
+		- alimentaire
+			- cuisson
+			- déshidratation
+			- réfrégération
+			- congélation
+			- stockage
+		- autre
+			- activation
+	- accessibilité (humain)
+		- déplacement
+			- changement d'étage
+			- 
+		- ouverture de porte
+			- entre deux pièces
+			- avec l'extérieur
+		- localisation
+	- entretien
+		- aspiration du sol
+		- lavage des vitres
+		- auto-nettoyage
+		- niveau de propreté
