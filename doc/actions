@@ -25,12 +25,18 @@ Classification des actions d'objets connectés :
 	- multimédia
 		- audio
 			- sélectionner la source
+			- changer de CD
+			- changer de radio
 			- jouer une musique
 			- mettre en pause
 		- vidéo
 			- sélectionner la source
+			- changer de chaine
 			- lancer une vidéo
 			- mettre en pause
+		- jeu
+			- lancer un jeu vidéo
+			- sélectionner le jeu
 	- électroménager
 		- alimentaire
 			- cuisson
@@ -43,11 +49,13 @@ Classification des actions d'objets connectés :
 	- accessibilité (humain)
 		- déplacement
 			- changement d'étage
-			- 
+			- déplacement d'objet
 		- ouverture de porte
 			- entre deux pièces
 			- avec l'extérieur
 		- localisation
+			- GPS
+			- pièce
 	- entretien
 		- aspiration du sol
 		- lavage des vitres

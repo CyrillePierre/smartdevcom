@@ -263,8 +263,8 @@ Version : 0.1
 				simple ping puisqu'elle ne transmet aucune information.
 				Elle peut être utilisée avec les différentes adresses de
 				broadcast en fonction des besoins.
-			Paramètre : Aucun (LENGTH = 0)
-			Réponse : LENGTH = 0
+			Paramètre : LENGTH = 0 (Aucun)
+			Réponse : LENGTH = 0 (réponse vide)
 
 		4.5.2 - Récupération de la liste des capteurs
 			Identifiant : 0x01
@@ -272,7 +272,7 @@ Version : 0.1
 			Description : Cette requête permet de récupérer la liste des
 				capteurs dont l'objet cible est équipé. Chaque capteur
 				possède un identifiant et un type.
-			Paramètre : Aucun (LENGTH = 0)
+			Paramètre : LENGTH = 0 (Aucun)
 			Réponse : LENGTH = N * 3 avec N le nombre de capteurs
 				- entier (1 octet)  : identifiant du capteur k (k = 0)
 				- entier (2 octets) : type du capteur k
@@ -284,7 +284,7 @@ Version : 0.1
 			Description : Cette requête permet de récupérer la liste des
 				actionneurs dont l'objet cible est équipé. Chaque
 				actionneur possède un identifiant et un type.
-			Paramètre : Aucun (LENGTH = 0)
+			Paramètre : LENGTH = 0 (Aucun)
 			Réponse : LENGTH = N * 3 avec N le nombre d'actionneur
 				- entier (1 octet)  : identifiant de l'actionneur k (k = 0)
 				- entier (2 octets) : type de l'actionneur k
@@ -295,7 +295,7 @@ Version : 0.1
 			Adresse : unicast
 			Description : Cette requête permet de récupérer la liste des
 				actions disponibles chez l'objet cible.
-			Paramètre : Aucun (LENGTH = 0)
+			Paramètre : LENGTH = 0 (Aucun)
 			Réponse : LENGTH = N * 2 avec N le nombre d'actions
 				- entier (2 octets) : identifiant de l'action k (k = 0)
 				- N-1 fois la ligne d'avant avec k = k + 1
@@ -310,5 +310,52 @@ Version : 0.1
 			Paramètre : LENGTH = 2
 				- entier (2 octets) : identifiant de l'action
 			Réponse : LENGTH = xxx (indéterminé)
-				Détaillé dans la partie 4.6.
+				Détaillée dans la partie 4.6.
+
+		4.5.6 - Exécution d'une action
+			Identifiant : 0x05
+			Adresse : unicast
+			Description : Cette requête permet d'exécuter une action sur un
+				objet. En fonction de l'action, les paramètres diffèrent.a
+				Certaines actions peuvent renvoyer des informations,
+				d'autres ne font que renvoyer le code d'erreur
+			Paramètre : LENGTH = xxx (indéterminé)
+				Le format des paramètres est défini avec le prototype de
+				l'action exécutée.
+			Réponse : LENGTH = 1 + xxx (indéterminé)
+				- entier (1 octet) : code d'erreur (voir partie 4.7)
+				- le reste est défini par le prototype de l'action
+
+	4.6 - Format des prototypes d'actions
+		Chaque action ne possèdant pas forcément les même formats de
+		paramètre. Il est nécessaire de pouvoir connaitre comment utiliser
+		correctement l'action. La syntaxe de déclaration d'un prototype
+		d'action doit être défini manière protocolaire pour que n'importe
+		quel objet puisse comprendre comment exécuter l'action définie.
+
+		4.6.1 - Format de déclaration d'un prototype
+
+			PARAM_NB (4 bit) : nombre de paramètres
+
+
+	4.7 - Code d'erreur d'exécution d'une action
+		Si l'exécution d'une action ne respecte pas le prototype de
+		celle-ci ou si l'objet n'a pas réussi à faire le travail demandé,
+		l'objet cible doit alors répondre en incluant l'un des codes
+		d'erreur suivant :
+
+		| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+
+		,-------------------------------,
+		|      ERR      |     PARAM     |
+		'-------------------------------'
+
+		Valeur du champ ERR :
+			- ERR_SUCCESS (0x0) : tous s'est bien passé
+			- ERR_UNKNOWN (0x1) : action inconnue
+			- ERR_FORMAT  (0x2) : erreur dans le format d'un paramètre
+				PARAM = le numéro du paramètre
+			- ERR_PRMS_NB (0x3) : erreur de nombre de paramètres
+				PARAM = le vrai nombre de paramètres
+			- ERR_EXEC    (0x4) : erreur d'exécution de l'action
 
