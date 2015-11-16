@@ -1,63 +1,66 @@
-Classification des actions d'objets connectés :
+Classification des actions d'objets connectés
+Chaque type d'action est stocké sur 16 bits. Les valeurs affichées
+ci-dessous faisant moins de 16 bits sont complétées par des 0 à droite.
 
-	- ambiance
-		- action kinéstésique
-			- température
-			- intensité de la soufflerie
-			- aération
-		- action visuelle
-			- lumière
-				- activation
-				- intensité
-				- couleur
-			- décoration
-				- activation
-				- état
-		- action olfactive
-			- désodorisation
-			- odeur d'ambiance
-		- action auditive
-			- atténuation sonore
-			- son d'ambiance
-	- sécurité
-		- état
-		- niveau de gravité
-	- multimédia
-		- audio
-			- sélectionner la source
-			- changer de CD
-			- changer de radio
-			- jouer une musique
-			- mettre en pause
-		- vidéo
-			- sélectionner la source
-			- changer de chaine
-			- lancer une vidéo
-			- mettre en pause
-		- jeu
-			- lancer un jeu vidéo
-			- sélectionner le jeu
-	- électroménager
-		- alimentaire
-			- cuisson
-			- déshidratation
-			- réfrégération
-			- congélation
-			- stockage
-		- autre
-			- activation
-	- accessibilité (humain)
-		- déplacement
-			- changement d'étage
-			- déplacement d'objet
-		- ouverture de porte
-			- entre deux pièces
-			- avec l'extérieur
-		- localisation
-			- GPS
-			- pièce
-	- entretien
-		- aspiration du sol
-		- lavage des vitres
-		- auto-nettoyage
-		- niveau de propreté
+	- 0x1 ambiance
+		- 0x11 action kinéstésique
+			- 0x111 température
+			- 0x112 intensité de la soufflerie
+			- 0x113 aération
+		- 0x12 action visuelle
+			- 0x121 lumière
+				- 0x1211 activation
+				- 0x1212 intensité
+				- 0x1213 couleur
+			- 0x122 décoration
+				- 0x1221 activation
+				- 0x1222 état
+		- 0x13 action olfactive
+			- 0x131 désodorisation
+			- 0x132 odeur d'ambiance
+		- 0x14 action auditive
+			- 0x141 atténuation sonore
+			- 0x142 son d'ambiance
+	- 0x2 sécurité
+		- 0x21 état
+		- 0x22 niveau de gravité
+	- 0x3 multimédia
+		- 0x31 audio
+			- 0x311 sélectionner la source
+			- 0x312 changer de CD
+			- 0x313 changer de radio
+			- 0x314 jouer une musique
+			- 0x315 mettre en pause
+		- 0x32 vidéo
+			- 0x321 sélectionner la source
+			- 0x322 changer de chaine
+			- 0x323 lancer une vidéo
+			- 0x324 mettre en pause
+		- 0x33 jeu
+			- 0x331 lancer un jeu vidéo
+			- 0x332 sélectionner le jeu
+	- 0x4 électroménager
+		- 0x41 alimentaire
+			- 0x411 cuisson
+			- 0x412 déshidratation
+			- 0x413 réfrégération
+			- 0x414 congélation
+			- 0x415 stockage
+		- 0x42 autre
+			- 0x421 activation
+	- 0x5 accessibilité (humain)
+		- 0x51 déplacement
+			- 0x511 changement d'étage
+			- 0x512 déplacement d'objet
+		- 0x52 ouverture de porte
+			- 0x521 entre deux pièces
+			- 0x522 avec l'extérieur
+		- 0x53 localisation
+			- 0x531 GPS
+			- 0x532 pièce
+	- 0x6 entretien
+		- 0x61 aspiration du sol
+		- 0x62 lavage des vitres
+		- 0x63 auto-nettoyage
+		- 0x64 niveau de propreté
+

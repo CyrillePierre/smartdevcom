@@ -298,6 +298,8 @@ Version : 0.1
 			Paramètre : LENGTH = 0 (Aucun)
 			Réponse : LENGTH = N * 2 avec N le nombre d'actions
 				- entier (2 octets) : identifiant de l'action k (k = 0)
+				- entier (2 octets) : type de l'action (voir fichier
+						"actions")
 				- N-1 fois la ligne d'avant avec k = k + 1
 
 		4.5.5 - Récupération du prototype d'une action
@@ -334,9 +336,33 @@ Version : 0.1
 		quel objet puisse comprendre comment exécuter l'action définie.
 
 		4.6.1 - Format de déclaration d'un prototype
+			- ID       (16 bits) : identifiant de l'action
+			- TYPE_ACT (16 bits) : type de l'action (voir fichier "actions")
+			- PARAM_NB (8 bits)  : nombre de paramètres
+			Pour chaque paramètres :
+				- TYPE     (4 bits)      : type du paramètre
+				- SIZE     (4 bits)      : nombre d'octets du paramètre
+				- MIN      (SIZE octets) : valeur minimal autorisée
+				- MAX      (SIZE octets) : valeur maximal autorisée
+			- RET_NB (8 bits) : nombre de paramètres de la réponse
+			Pour chaque paramètres :
+				- TYPE     (4 bits)      : type du paramètre
+				- SIZE     (4 bits)      : nombre d'octets du paramètre
+				- MIN      (SIZE octets) : valeur minimal autorisée
+				- MAX      (SIZE octets) : valeur maximal autorisée
 
-			PARAM_NB (4 bit) : nombre de paramètres
+		4.6.2 - Types de paramètre
+			Il existe plusieurs types d'informations transportable par
+			paramètre dans un appel d'action. Voici la liste des valeurs
+			que peut prendre le champ TYPE :
+				- TYPE_UINT   (0x0) : nombre entier non signé
+				- TYPE_INT    (0x1) : nombre entier signé (complément à 2)
+				- TYPE_FLOAT  (0x2) : nombre décimal à virgule flottante
+				- TYPE_BOOL   (0x3) : booléen
+				- TYPE_STRING (0x4) : chaine de caractère (termine par 0)
 
+			Dans le cas des paramètres de type chaine de caractère, les
+			champs MIN et MAX sont omis. Le paramètre SIZE n'est pas lu.
 
 	4.7 - Code d'erreur d'exécution d'une action
 		Si l'exécution d'une action ne respecte pas le prototype de
