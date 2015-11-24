@@ -1,0 +1,7 @@
+Il faut faire une description des trois familles de graphes :
+	- Le graphe montrant le support physique (c'est à dire quels objets peut
+		directement physiquement communiquer avec ses voisins)
+	- Le graphe montrant les mêmes supports de communication avec les
+		passerelles permettant de passer d'un suppor à l'autre
+	- Le graphe complet de l'ensemble des objets, qui est simplement un graphe
+		complet
