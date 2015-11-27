@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/smartDevCom/protocol\"
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -m64 -pipe -O2 -std=c++0x -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -Itest -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
+INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -Isrc -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Test -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -45,9 +45,12 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = test/testnetstream.cpp moc_testnetstream.cpp
-OBJECTS       = testnetstream.o \
-		moc_testnetstream.o
+SOURCES       = src/net/netstream.cpp \
+		src/net/netmanager.cpp \
+		src/main.cpp 
+OBJECTS       = netstream.o \
+		netmanager.o \
+		main.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -103,7 +106,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		protocol.pro test/testnetstream.cpp
+		protocol.pro src/net/netstream.cpp \
+		src/net/netmanager.cpp \
+		src/main.cpp
 QMAKE_TARGET  = protocol
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = protocol
@@ -262,7 +267,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/protocol1.0.0 || mkdir -p .tmp/protocol1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/protocol1.0.0/ && $(COPY_FILE) --parents test/netstream.hpp test/testnetstream.hpp .tmp/protocol1.0.0/ && $(COPY_FILE) --parents test/testnetstream.cpp .tmp/protocol1.0.0/ && (cd `dirname .tmp/protocol1.0.0` && $(TAR) protocol1.0.0.tar protocol1.0.0 && $(COMPRESS) protocol1.0.0.tar) && $(MOVE) `dirname .tmp/protocol1.0.0`/protocol1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/protocol1.0.0
+	$(COPY_FILE) --parents $(DIST) .tmp/protocol1.0.0/ && $(COPY_FILE) --parents src/net/netstream.hpp src/net/socket.hpp src/net/netstream.hpp src/net/netmanager.hpp src/net/netmanager.hpp src/net/netstream.hpp src/types.hpp src/net/socket.hpp .tmp/protocol1.0.0/ && $(COPY_FILE) --parents src/net/netstream.cpp src/net/netmanager.cpp src/main.cpp .tmp/protocol1.0.0/ && (cd `dirname .tmp/protocol1.0.0` && $(TAR) protocol1.0.0.tar protocol1.0.0 && $(COMPRESS) protocol1.0.0.tar) && $(MOVE) `dirname .tmp/protocol1.0.0`/protocol1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/protocol1.0.0
 
 
 clean:compiler_clean 
@@ -285,12 +290,8 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_testnetstream.cpp
+compiler_moc_header_make_all:
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_testnetstream.cpp
-moc_testnetstream.cpp: test/testnetstream.hpp
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtTest -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include test/testnetstream.hpp -o moc_testnetstream.cpp
-
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_yacc_decl_make_all:
@@ -299,17 +300,18 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean 
+compiler_clean: 
 
 ####### Compile
 
-testnetstream.o: test/testnetstream.cpp test/testnetstream.hpp \
-		test/netstream.hpp \
-		testnetstream.moc
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o testnetstream.o test/testnetstream.cpp
+netstream.o: src/net/netstream.cpp src/net/netstream.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o netstream.o src/net/netstream.cpp
 
-moc_testnetstream.o: moc_testnetstream.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_testnetstream.o moc_testnetstream.cpp
+netmanager.o: src/net/netmanager.cpp src/net/netmanager.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o netmanager.o src/net/netmanager.cpp
+
+main.o: src/main.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
 ####### Install
 

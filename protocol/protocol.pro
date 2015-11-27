@@ -4,10 +4,19 @@
 
 TEMPLATE = app
 TARGET = protocol
-INCLUDEPATH += . test
+INCLUDEPATH += src
 QT += testlib
 CONFIG += c++11
 
 # Input
-HEADERS += test/netstream.hpp test/testnetstream.hpp
-SOURCES += test/testnetstream.cpp
+HEADERS += src/net/netstream.hpp \
+		   src/net/socket.hpp \
+		   src/net/netstream.hpp \
+		   src/net/netmanager.hpp \
+		   src/net/netmanager.hpp \
+		   src/net/netstream.hpp \
+		   src/types.hpp \
+		   src/net/socket.hpp
+SOURCES += src/net/netstream.cpp \
+		   src/net/netmanager.cpp \
+		   src/main.cpp
