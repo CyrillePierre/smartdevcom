@@ -1,11 +1,12 @@
 #include "netstream.hpp"
 
 using sdc::net::NetStream;
+using namespace sdc::type;
 
-void NetStream::write(const Byte *buf, int size) {
-    // TODO à écrire
+NetStream & operator <<(NetStream &ns, Bit bit) {
+    return ns;
 }
 
-void NetStream::read(Byte *buf, int size) {
-    // TODO à écrire
+NetStream & operator <<(NetStream &ns, Byte byte) {
+    return ns;
 }

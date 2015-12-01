@@ -8,7 +8,7 @@ namespace net {
 
 class NetManager
 {
-    std::function<void (/* à completer */)> _eventFn;
+    std::function<void (/* TODO à completer */)> _eventFn;
 
 public:
     template <typename Fn, typename... Args>

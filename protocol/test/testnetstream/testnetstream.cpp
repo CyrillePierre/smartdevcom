@@ -1,45 +1,30 @@
 #include "testnetstream.hpp"
-#include "netstream.hpp"
+
+namespace type = sdc::type;
+using sdc::net::NetStream;
+
+void TestNetStream::SockTest::write(type::Byte const *b, int size) {
+    type::Byte *it = buf;
+    while (size--) *it++ = *b++;
+}
+
+void TestNetStream::SockTest::read(type::Byte *b, int size) {
+    type::Byte *it = buf;
+    while (size--) *b++ = *it++;
+}
 
 void TestNetStream::write() {
-    NetStream ns;
-    ns << 12 << '\n';
-    ns << "test" << '\n';
-    ns << 4.3 << ' ' << 2.6d << '\n';
-    ns.write("salut\n", 6);
+    NetStream ns(st);
+    uint32_t a = 0x23ff12ee;
+    uint16_t c = 0xff00;
+    uint8_t  d = 0xa2;
+    ns.write(d, 8);
+//    QVERIFY2(*st.buf == uint8_t(0xa2), (int)*st.buf + " " + (int)0xa2);
+    QVERIFY2(*st.buf == uint8_t(0xa2), "cheval rouge");
 }
 
 void TestNetStream::read() {
-    NetStream ns;
-    int i;
-    float f;
-    double d;
-    char c;
-    std::string s;
-
-    ns << "Entrez un entier : ";
-    ns >> i;
-    ns << "Entrez un float : ";
-    ns >> f;
-    ns << "Entrez un double : ";
-    ns >> d;
-    ns << "Entrez un char : ";
-    ns >> c;
-    std::cin.get();
-    ns << "Entrez une chaine : ";
-    ns >> s;
-
-    ns << i << ' ' << f << ' ' << d << ' ' << c << ' ' << s << '\n';
 }
 
-void TestNetStream::listener() {
-    NetStream ns;
-    QCOMPARE(ns.listenerEnabled(), true);
-    ns.enableListener(false);
-    QCOMPARE(ns.listenerEnabled(), false);
-    ns.setListener([](std::string const & s){ std::cout << s; },
-                   "Event receved.\n");
-}
-
-QTEST_MAIN(TestNetStream)
+QTEST_APPLESS_MAIN(TestNetStream)
 #include "moc_testnetstream.cpp"

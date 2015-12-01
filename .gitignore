@@ -3,7 +3,7 @@
 *.includes
 *.user
 *.creator
-bin/
+*/bin/
 *.o
 *.autosave
 moc_*

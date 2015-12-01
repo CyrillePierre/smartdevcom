@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/smartDevCom/protocol\"
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -m64 -pipe -O2 -std=c++0x -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -Isrc -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
+INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -Isrc -Isrc/net -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Test -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -41,16 +41,16 @@ MKDIR         = mkdir -p
 
 ####### Output directory
 
-OBJECTS_DIR   = ./
+OBJECTS_DIR   = bin/
 
 ####### Files
 
-SOURCES       = src/net/netstream.cpp \
+SOURCES       = src/main.cpp \
 		src/net/netmanager.cpp \
-		src/main.cpp 
-OBJECTS       = netstream.o \
-		netmanager.o \
-		main.o
+		src/net/netstream.cpp 
+OBJECTS       = bin/main.o \
+		bin/netmanager.o \
+		bin/netstream.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -106,9 +106,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		protocol.pro src/net/netstream.cpp \
+		protocol.pro src/main.cpp \
 		src/net/netmanager.cpp \
-		src/main.cpp
+		src/net/netstream.cpp
 QMAKE_TARGET  = protocol
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = protocol
@@ -266,8 +266,8 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist: 
-	@test -d .tmp/protocol1.0.0 || mkdir -p .tmp/protocol1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/protocol1.0.0/ && $(COPY_FILE) --parents src/net/netstream.hpp src/net/socket.hpp src/net/netstream.hpp src/net/netmanager.hpp src/net/netmanager.hpp src/net/netstream.hpp src/types.hpp src/net/socket.hpp .tmp/protocol1.0.0/ && $(COPY_FILE) --parents src/net/netstream.cpp src/net/netmanager.cpp src/main.cpp .tmp/protocol1.0.0/ && (cd `dirname .tmp/protocol1.0.0` && $(TAR) protocol1.0.0.tar protocol1.0.0 && $(COMPRESS) protocol1.0.0.tar) && $(MOVE) `dirname .tmp/protocol1.0.0`/protocol1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/protocol1.0.0
+	@test -d bin/protocol1.0.0 || mkdir -p bin/protocol1.0.0
+	$(COPY_FILE) --parents $(DIST) bin/protocol1.0.0/ && $(COPY_FILE) --parents src/types.hpp src/net/netmanager.hpp src/net/netstream.hpp src/net/socket.hpp bin/protocol1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/net/netmanager.cpp src/net/netstream.cpp bin/protocol1.0.0/ && (cd `dirname bin/protocol1.0.0` && $(TAR) protocol1.0.0.tar protocol1.0.0 && $(COMPRESS) protocol1.0.0.tar) && $(MOVE) `dirname bin/protocol1.0.0`/protocol1.0.0.tar.gz . && $(DEL_FILE) -r bin/protocol1.0.0
 
 
 clean:compiler_clean 
@@ -304,14 +304,15 @@ compiler_clean:
 
 ####### Compile
 
-netstream.o: src/net/netstream.cpp src/net/netstream.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o netstream.o src/net/netstream.cpp
+bin/main.o: src/main.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/main.o src/main.cpp
 
-netmanager.o: src/net/netmanager.cpp src/net/netmanager.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o netmanager.o src/net/netmanager.cpp
+bin/netmanager.o: src/net/netmanager.cpp src/net/netmanager.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/netmanager.o src/net/netmanager.cpp
 
-main.o: src/main.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
+bin/netstream.o: src/net/netstream.cpp src/net/netstream.hpp \
+		src/types.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/netstream.o src/net/netstream.cpp
 
 ####### Install
 
