@@ -1,10 +1,12 @@
 #ifndef NETSTREAM_HPP
 #define NETSTREAM_HPP
 
-#include <boost/dynamic_bitset.hpp>
+#include <vector>
 #include <type_traits>
+#include <iostream>
 #include "types.hpp"
 #include "net/socket.hpp"
+#include "dynamicbitset.hpp"
 
 namespace sdc {
 namespace net {
@@ -17,33 +19,17 @@ namespace net {
  * de bits.
  */
 struct NetStream {
-    using Bits = boost::dynamic_bitset<type::Byte>;
-
-private:
-    Socket &   _socket;		///< La socket sur laquelle ce flux travaille
-    uint8_t    _sockId;		///< Identifiant de la socket
-    Bits	   _bits;		///< Buffer de bits contenant le paquet à envoyer
-    type::Byte _byteIn;		///< Octet servant à stocker les quelque bits non lues
-    uint8_t    _nbBitsIn;	///< Nle nombre de bits contenus dans _byteIn
+    Socket &   		_socket;	///< La socket sur laquelle ce flux travaille
+    uint8_t    		_sockId;	///< Identifiant de la socket
+    type::Byte 		_byteIn;	///< Octet servant à stocker les quelque bits non lues
+    uint8_t    		_nbBitsIn;	///< Nle nombre de bits contenus dans _byteIn
+    DynamicBitset	_bits;		///< Buffer de bits contenant le paquet à envoyer
 
 public:
     NetStream(Socket &s) : _socket(s) {}
 
-    /**
-     * @brief Envoi d'un tableau de données sur le réseau
-     * @param buf : buffer contenant les données à écrire
-     * @param size : la taille en octets du buffer
-     */
-    void write(type::Byte *, uint16_t);
-
-    /**
-     * Envoi d'une valeur directe
-     * @param data la valeur à écrire
-     * @param size le nombre de bits de la valeur
-     */
-    template <typename T,
-              typename = std::enable_if<std::is_integral<T>::value>>
-    void write(T, uint8_t);
+    DynamicBitset       &writingBitset()       { return _bits; }
+    DynamicBitset const &writingBitset() const { return _bits; }
 
     /**
      * @brief Récupération de données simples venant du réseau
@@ -98,12 +84,6 @@ NetStream & operator <<(NetStream &, type::Bit);
  */
 NetStream & operator <<(NetStream &, type::Byte);
 
-
-template <typename T, typename>
-void NetStream::write(T data, uint8_t size) {
-    for (uint8_t i = 0; i < size; ++i)
-        _bits.push_back((type::Bit) (data & (1 << i)));
-}
 
 template <typename T, typename>
 void NetStream::read(T & data, uint8_t size) {

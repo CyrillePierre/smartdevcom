@@ -9,5 +9,6 @@ CONFIG += c++11
 QT += testlib
 
 # Input
-HEADERS += testnetstream.hpp
+HEADERS += testnetstream.hpp ../../src/net/netstream.hpp
 SOURCES += testnetstream.cpp
+OBJECTS += ../../bin/netstream.o

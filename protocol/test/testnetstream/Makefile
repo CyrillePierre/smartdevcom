@@ -46,7 +46,8 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = testnetstream.cpp 
-OBJECTS       = testnetstream.o
+OBJECTS       = ../../bin/netstream.o \
+		testnetstream.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
