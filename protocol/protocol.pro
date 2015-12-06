@@ -13,7 +13,8 @@ OBJECTS_DIR = bin
 HEADERS += src/types.hpp \
            src/net/netmanager.hpp \
            src/net/netstream.hpp \
-           src/net/socket.hpp
+           src/net/socket.hpp \
+           src/dynamicbitset.hpp
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \
            src/net/netstream.cpp \

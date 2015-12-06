@@ -6,8 +6,11 @@
 class TestDynamicBitset : public QObject {
     Q_OBJECT
 
-public slots:
+private slots:
+    void testEmpty() const;
+    void testClear() const;
     void testPush() const;
+    void testPushPtr() const;
 };
 
 #endif // TESTDYNAMICBITSET_HPP

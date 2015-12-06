@@ -7,3 +7,4 @@
 *.o
 *.autosave
 moc_*
+protocol/test/testDynamicBitset/testDynamicBitset

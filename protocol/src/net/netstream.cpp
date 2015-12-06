@@ -4,8 +4,8 @@ using sdc::net::NetStream;
 using namespace sdc::type;
 
 void NetStream::flushOut() {
-    _socket.write((type::Byte *) _bits.begin(), _bits.size() >> 3);
-    _bits.clear();
+//    _socket.write((type::Byte *) _bits.begin(), _bits.size() >> 3);
+//    _b)its.clear();
 }
 
 NetStream & operator <<(NetStream &ns, Bit bit) {
