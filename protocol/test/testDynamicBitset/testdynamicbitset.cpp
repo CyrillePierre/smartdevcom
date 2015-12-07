@@ -28,10 +28,9 @@ void TestDynamicBitset::testClear() const {
 }
 
 void TestDynamicBitset::testPush() const {
-    using BlockType = DynamicBitset::BlockType;
-
     DynamicBitset db;
-    BlockType *data;
+    DynamicBitset::BlockType *data;
+    char *buf;
 
     db.push(uint8_t(0xf2), 8);
     db.push(uint8_t(0x0a), 5);
@@ -41,10 +40,9 @@ void TestDynamicBitset::testPush() const {
     db.push(uint8_t(0xcb), 8);
     data = db.data();
     // 0b(1111 0010 0101 0111 0011 1110 0111 1001 0110 0000)  0x(f2 57 3e 79 60)
-    qDebug() << QTest::toHexRepresentation((char *)data, db.blockSize());
+    buf = QTest::toHexRepresentation((char *)data, db.blockSize());
     QCOMPARE(db.size(), DynamicBitset::SizeType(35));
-    for (BlockType byte : {0xf2, 0x57, 0x3e, 0x79, 0x60})
-        QCOMPARE(*data++, byte);
+    QCOMPARE(buf, "F2 57 3E 79 60");
 
     db.clear();
     db.push(uint16_t(0xfce4), 16);
@@ -54,10 +52,9 @@ void TestDynamicBitset::testPush() const {
     db.push(uint16_t(0xabcd), 15);
     data = db.data();
     // 0b(1111 1100 1110 0100 1001 1001 1110 1100 0000 0010 1011 1100 1101 0000)
-    qDebug() << QTest::toHexRepresentation((char *)data, db.blockSize());
+    buf = QTest::toHexRepresentation((char *)data, db.blockSize());
     QCOMPARE(db.size(), DynamicBitset::SizeType(16+12+2+7+15));
-    for (BlockType byte : {0xfc, 0xe4, 0x99, 0xec, 0x02, 0xbc, 0xd0})
-        QCOMPARE(*data++, byte);
+    QCOMPARE(buf, "FC E4 99 EC 02 BC D0");
 
     db.clear();
     db.push(uint32_t(0x01a7e9f3), 32);
@@ -67,27 +64,40 @@ void TestDynamicBitset::testPush() const {
     data = db.data();
     // 0b(0000 0001 1010 0111 1110 1001 1111 0011 0000 1010 1011 1001
     //    1001 1011 0100 1010 0000 0001 1000 0000)
-    qDebug() << QTest::toHexRepresentation((char *)data, db.blockSize());
+    buf = QTest::toHexRepresentation((char *)data, db.blockSize());
     QCOMPARE(db.size(), DynamicBitset::SizeType(32+3+16+23));
-    for (BlockType byte : {0x01, 0xa7, 0xe9, 0xf3, 0x0a, 0xb9,
-                           0x9b, 0x4a, 0x01, 0x80})
-        QCOMPARE(*data++, byte);
+    QCOMPARE(buf, "01 A7 E9 F3 0A B9 9B 4A 01 80");
 }
 
 void TestDynamicBitset::testPushPtr() const {
-    using BlockType = DynamicBitset::BlockType;
-
     DynamicBitset db;
-    BlockType *data;
+    DynamicBitset::BlockType *data;
+    char *buf;
 
-    type::Byte bytes[] = {0x12, 0xaf, 0xa5, 0x3c, 0x23, 0x0e};
+    type::Byte  bytes[]  = {0x12, 0xaf, 0xa5, 0x3c, 0x23, 0x0e};
+    type::Word  words[]  = {0xaefc, 0x3490, 0x0040, 0x1f2a};
+    type::DWord dwords[] = {0xab4fe812, 0xaabbcc33, 0x0f1e2d3b};
 
-    db.push(bytes, 6);
+    db.push(bytes, sizeof(bytes));
     data = db.data();
-    qDebug() << QTest::toHexRepresentation((char *)data, db.blockSize());
-    QCOMPARE(db.size(), DynamicBitset::SizeType(16+12+2+7+15));
-    for (BlockType byte : {0xfc, 0xe4, 0x99, 0xec, 0x02, 0xbc, 0xd0})
-        QCOMPARE(*data++, byte);
+    buf =  QTest::toHexRepresentation((char *)data, db.blockSize());
+    QCOMPARE(db.size(), DynamicBitset::SizeType(sizeof(bytes) << 3));
+    QCOMPARE(buf, "12 AF A5 3C 23 0E");
+
+    db.clear();
+    db.push(5, 4);
+    db.push(words, sizeof(words));
+    data = db.data();
+    buf = QTest::toHexRepresentation((char *)data, db.blockSize());
+    QCOMPARE(db.size(), DynamicBitset::SizeType((sizeof(words) << 3) + 4));
+    QCOMPARE(buf, "5A EF C3 49 00 04 01 F2 A0");
+
+    db.clear();
+    db.push(dwords, sizeof(dwords));
+    data = db.data();
+    buf = QTest::toHexRepresentation((char *)data, db.blockSize());
+    QCOMPARE(db.size(), DynamicBitset::SizeType(sizeof(dwords) << 3));
+    QCOMPARE(buf, "AB 4F E8 12 AA BB CC 33 0F 1E 2D 3B");
 }
 
 QTEST_MAIN(TestDynamicBitset);
