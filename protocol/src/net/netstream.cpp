@@ -15,3 +15,6 @@ NetStream & operator <<(NetStream &ns, Bit bit) {
 NetStream & operator <<(NetStream &ns, Byte byte) {
     return ns;
 }
+
+void NetStream::read(type::Byte *, uint16_t) {
+}

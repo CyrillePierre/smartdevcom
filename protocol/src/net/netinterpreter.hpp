@@ -6,7 +6,7 @@
 namespace sdc {
 namespace net {
 
-enum class Proto {
+enum Proto : type::Byte {
     VIP  = 0,	// virtual IP
     VARP = 1	// virtual ARP
 };
@@ -20,7 +20,10 @@ struct NetInterpreter {
      * Cette méthode permet de parser la dernière requête reçue.
      * @param ns : le stream sur lequel netInterpreter va travailler
      */
-    void operator ()(NetStream const &) const;
+    void operator ()(NetStream &) const;
+
+private :
+    void manageVARP(NetStream &) const;
 };
 
 } // net

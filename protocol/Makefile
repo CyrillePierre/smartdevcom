@@ -47,10 +47,14 @@ OBJECTS_DIR   = bin/
 
 SOURCES       = src/main.cpp \
 		src/net/netmanager.cpp \
-		src/net/netstream.cpp 
+		src/net/netstream.cpp \
+		src/net/netinterpreter.cpp \
+		src/net/varpheader.cpp 
 OBJECTS       = bin/main.o \
 		bin/netmanager.o \
-		bin/netstream.o
+		bin/netstream.o \
+		bin/netinterpreter.o \
+		bin/varpheader.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -107,7 +111,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		protocol.pro src/main.cpp \
 		src/net/netmanager.cpp \
-		src/net/netstream.cpp
+		src/net/netstream.cpp \
+		src/net/netinterpreter.cpp \
+		src/net/varpheader.cpp
 QMAKE_TARGET  = protocol
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = protocol
@@ -264,7 +270,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d bin/protocol1.0.0 || mkdir -p bin/protocol1.0.0
-	$(COPY_FILE) --parents $(DIST) bin/protocol1.0.0/ && $(COPY_FILE) --parents src/types.hpp src/net/netmanager.hpp src/net/netstream.hpp src/net/socket.hpp src/dynamicbitset.hpp bin/protocol1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/net/netmanager.cpp src/net/netstream.cpp bin/protocol1.0.0/ && (cd `dirname bin/protocol1.0.0` && $(TAR) protocol1.0.0.tar protocol1.0.0 && $(COMPRESS) protocol1.0.0.tar) && $(MOVE) `dirname bin/protocol1.0.0`/protocol1.0.0.tar.gz . && $(DEL_FILE) -r bin/protocol1.0.0
+	$(COPY_FILE) --parents $(DIST) bin/protocol1.0.0/ && $(COPY_FILE) --parents src/types.hpp src/net/netmanager.hpp src/net/netstream.hpp src/net/socket.hpp src/dynamicbitset.hpp src/net/netinterpreter.hpp src/net/varpheader.hpp bin/protocol1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/net/netmanager.cpp src/net/netstream.cpp src/net/netinterpreter.cpp src/net/varpheader.cpp bin/protocol1.0.0/ && (cd `dirname bin/protocol1.0.0` && $(TAR) protocol1.0.0.tar protocol1.0.0 && $(COMPRESS) protocol1.0.0.tar) && $(MOVE) `dirname bin/protocol1.0.0`/protocol1.0.0.tar.gz . && $(DEL_FILE) -r bin/protocol1.0.0
 
 
 clean:compiler_clean 
@@ -312,6 +318,21 @@ bin/netstream.o: src/net/netstream.cpp src/net/netstream.hpp \
 		src/net/socket.hpp \
 		src/dynamicbitset.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/netstream.o src/net/netstream.cpp
+
+bin/netinterpreter.o: src/net/netinterpreter.cpp src/net/netinterpreter.hpp \
+		src/net/netstream.hpp \
+		src/types.hpp \
+		src/net/socket.hpp \
+		src/dynamicbitset.hpp \
+		src/net/varpheader.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/netinterpreter.o src/net/netinterpreter.cpp
+
+bin/varpheader.o: src/net/varpheader.cpp src/net/varpheader.hpp \
+		src/net/netstream.hpp \
+		src/types.hpp \
+		src/net/socket.hpp \
+		src/dynamicbitset.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/varpheader.o src/net/varpheader.cpp
 
 ####### Install
 

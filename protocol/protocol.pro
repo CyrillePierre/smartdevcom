@@ -14,7 +14,12 @@ HEADERS += src/types.hpp \
            src/net/netmanager.hpp \
            src/net/netstream.hpp \
            src/net/socket.hpp \
-           src/dynamicbitset.hpp
+           src/dynamicbitset.hpp \
+           src/net/netinterpreter.hpp \
+           src/net/varpheader.hpp
+
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \
            src/net/netstream.cpp \
+           src/net/netinterpreter.cpp \
+           src/net/varpheader.cpp \
