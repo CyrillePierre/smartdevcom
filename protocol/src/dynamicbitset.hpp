@@ -31,7 +31,7 @@ public:
      * @param size : la taille du tableau en octets
      */
     template <typename T,
-              typename std::enable_if<std::is_integral<T>::value>::type * = nullptr>
+              std::enable_if_t<std::is_integral<T>{}> * = nullptr>
     void push(T *, SizeType);
 
     /**
@@ -40,7 +40,7 @@ public:
      * @param size : la taille en bits de la valeur
      */
     template <typename T,
-              typename std::enable_if<std::is_integral<T>::value>::type * = nullptr>
+              std::enable_if_t<std::is_integral<T>{}> * = nullptr>
     void push(T, SizeType = sizeof(T) << 3);
 
     /// @return un itérateur sur le début du bitset
@@ -69,14 +69,12 @@ public:
 };
 
 
-template <typename T,
-          typename std::enable_if<std::is_integral<T>::value>::type *>
+template <typename T, std::enable_if_t<std::is_integral<T>{}> *>
 void DynamicBitset::push(T * data, SizeType size) {
     for (; size; size -= sizeof(T)) push(*data++);
 }
 
-template <typename T,
-          typename std::enable_if<std::is_integral<T>::value>::type *>
+template <typename T, std::enable_if_t<std::is_integral<T>{}> *>
 void DynamicBitset::push(T data, SizeType size) {
     // Fin de remplissage du dernier octet du tableau
     uint16_t lBits = 8 - (_size & 7);

@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = protocol
 INCLUDEPATH += src src/net
 QT += testlib
-CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++14
 OBJECTS_DIR = bin
 
 # Input

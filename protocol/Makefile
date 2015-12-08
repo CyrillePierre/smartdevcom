@@ -14,7 +14,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/smartDevCom/protocol\"
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-CXXFLAGS      = -m64 -pipe -O2 -std=c++0x -Wall -W -D_REENTRANT -fPIE $(DEFINES)
+CXXFLAGS      = -m64 -pipe -std=c++14 -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -Isrc -Isrc/net -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
@@ -94,7 +94,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf \
-		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -184,7 +183,6 @@ Makefile: protocol.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf \
-		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -244,7 +242,6 @@ Makefile: protocol.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf:
-/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf:
