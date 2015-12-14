@@ -14,7 +14,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testDynamicBitset\"
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-CXXFLAGS      = -m64 -pipe -O2 -std=c++0x -Wall -W -D_REENTRANT -fPIE $(DEFINES)
+CXXFLAGS      = -m64 -pipe -std=c++14 -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -I../../src -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
@@ -41,12 +41,12 @@ MKDIR         = mkdir -p
 
 ####### Output directory
 
-OBJECTS_DIR   = ./
+OBJECTS_DIR   = bin/
 
 ####### Files
 
 SOURCES       = testdynamicbitset.cpp 
-OBJECTS       = testdynamicbitset.o
+OBJECTS       = bin/testdynamicbitset.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -90,7 +90,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf \
-		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -178,7 +177,6 @@ Makefile: testDynamicBitset.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf \
-		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -238,7 +236,6 @@ Makefile: testDynamicBitset.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf:
-/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf:
@@ -260,8 +257,8 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist: 
-	@test -d .tmp/testDynamicBitset1.0.0 || mkdir -p .tmp/testDynamicBitset1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/testDynamicBitset1.0.0/ && $(COPY_FILE) --parents testdynamicbitset.hpp ../../src/dynamicbitset.hpp .tmp/testDynamicBitset1.0.0/ && $(COPY_FILE) --parents testdynamicbitset.cpp .tmp/testDynamicBitset1.0.0/ && (cd `dirname .tmp/testDynamicBitset1.0.0` && $(TAR) testDynamicBitset1.0.0.tar testDynamicBitset1.0.0 && $(COMPRESS) testDynamicBitset1.0.0.tar) && $(MOVE) `dirname .tmp/testDynamicBitset1.0.0`/testDynamicBitset1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/testDynamicBitset1.0.0
+	@test -d bin/testDynamicBitset1.0.0 || mkdir -p bin/testDynamicBitset1.0.0
+	$(COPY_FILE) --parents $(DIST) bin/testDynamicBitset1.0.0/ && $(COPY_FILE) --parents testdynamicbitset.hpp ../../src/dynamicbitset.hpp bin/testDynamicBitset1.0.0/ && $(COPY_FILE) --parents testdynamicbitset.cpp bin/testDynamicBitset1.0.0/ && (cd `dirname bin/testDynamicBitset1.0.0` && $(TAR) testDynamicBitset1.0.0.tar testDynamicBitset1.0.0 && $(COMPRESS) testDynamicBitset1.0.0.tar) && $(MOVE) `dirname bin/testDynamicBitset1.0.0`/testDynamicBitset1.0.0.tar.gz . && $(DEL_FILE) -r bin/testDynamicBitset1.0.0
 
 
 clean:compiler_clean 
@@ -302,11 +299,11 @@ compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
-testdynamicbitset.o: testdynamicbitset.cpp testdynamicbitset.hpp \
+bin/testdynamicbitset.o: testdynamicbitset.cpp testdynamicbitset.hpp \
 		../../src/dynamicbitset.hpp \
 		../../src/types.hpp \
 		moc_testdynamicbitset.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o testdynamicbitset.o testdynamicbitset.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/testdynamicbitset.o testdynamicbitset.cpp
 
 ####### Install
 
