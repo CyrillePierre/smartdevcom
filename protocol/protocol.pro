@@ -13,10 +13,10 @@ OBJECTS_DIR = bin
 HEADERS += src/types.hpp \
            src/net/netmanager.hpp \
            src/net/netstream.hpp \
-           src/net/socket.hpp \
            src/dynamicbitset.hpp \
            src/net/netinterpreter.hpp \
-           src/net/varpheader.hpp
+           src/net/varpheader.hpp \
+           src/net/netdevice.hpp
 
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \

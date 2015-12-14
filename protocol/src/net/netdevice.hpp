@@ -1,5 +1,5 @@
-#ifndef SOCKET_HPP
-#define SOCKET_HPP
+#ifndef NETDEVICE_HPP
+#define NETDEVICE_HPP
 
 #include "types.hpp"
 
@@ -12,7 +12,7 @@ namespace net {
  * implémentation de cette classe abstraite.
  * @brief Support de communication
  */
-struct Socket
+struct NetDevice
 {
     /**
      * Cette méthode permet de récupérer un ensemble de données et de les

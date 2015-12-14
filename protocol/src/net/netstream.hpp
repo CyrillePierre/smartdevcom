@@ -5,8 +5,8 @@
 #include <type_traits>
 #include <iostream>
 #include "types.hpp"
-#include "net/socket.hpp"
 #include "dynamicbitset.hpp"
+#include "net/netdevice.hpp"
 
 namespace sdc {
 namespace net {
@@ -19,14 +19,14 @@ namespace net {
  * de bits.
  */
 struct NetStream {
-    Socket &   		_socket;	///< La socket sur laquelle ce flux travaille
+    NetDevice &     _netDevice;	///< La socket sur laquelle ce flux travaille
     uint8_t    		_sockId;	///< Identifiant de la socket
     type::Byte 		_byteIn;	///< Octet servant à stocker les quelque bits non lues
     uint8_t    		_nbBitsIn;	///< Nle nombre de bits contenus dans _byteIn
     DynamicBitset	_bits;		///< Buffer de bits contenant le paquet à envoyer
 
 public:
-    NetStream(Socket &s) : _socket(s) {}
+    NetStream(NetDevice &nd) : _netDevice(nd) {}
 
     DynamicBitset       &writingBitset()       { return _bits; }
     DynamicBitset const &writingBitset() const { return _bits; }
@@ -44,7 +44,7 @@ public:
      * @param size le nombre de bits à lire
      */
     template <typename T,
-              typename = std::enable_if<std::is_integral<T>::value>>
+              std::enable_if_t<std::is_integral<T>{}> * = nullptr>
     void read(T &, uint8_t);
 
     /**
@@ -62,6 +62,11 @@ public:
      * @brief Envoie le contenu du buffer d'écriture sur le réseau
      */
     void flushOut();
+
+    /**
+     * @return le netdevice
+     */
+    NetDevice const &device() const { return _netDevice; }
 
 private:
     template <typename T>
@@ -85,13 +90,13 @@ NetStream & operator <<(NetStream &, type::Bit);
 NetStream & operator <<(NetStream &, type::Byte);
 
 
-template <typename T, typename>
+template <typename T, std::enable_if_t<std::is_integral<T>{}> *>
 void NetStream::read(T & data, uint8_t size) {
     for (uint8_t i = 0; i < size;) {
         for (; i < size && _nbBitsIn; --_nbBitsIn, _byteIn >>= 1)
             set(data, i++, _byteIn & 1);
 
-        _socket.read(&_byteIn, 1);
+        _netDevice.read(&_byteIn, 1);
         _nbBitsIn = 8;
     }
 }
