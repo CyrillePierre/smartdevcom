@@ -27,7 +27,7 @@ struct NetStream {
     uint16_t         _comSize;   ///< Taille de l'adresse du support de communication
 
 public:
-    NetStream(NetDevice &nd) : _netDevice(nd) {}
+    NetStream(NetDevice &nd) : _netDevice(nd), _nbBitsIn(0) {}
 
     DynamicBitset       &writingBitset()       { return _bits; }
     DynamicBitset const &writingBitset() const { return _bits; }
@@ -56,6 +56,7 @@ public:
 
     /**
      * @brief Vide le buffer de lecture
+     * Actuellement, la méthode ne fait rien
      */
     void flushIn();
 
@@ -98,23 +99,20 @@ NetStream & operator <<(NetStream &, type::Byte);
 
 template <typename T, std::enable_if_t<std::is_integral<T>{}> *>
 void NetStream::read(T & data, uint8_t size) {
-    for (uint8_t i = 0; i < size;) {
-        for (; i < size && _nbBitsIn; --_nbBitsIn, _byteIn >>= 1)
-            set(data, i++, _byteIn & 1);
+    data = 0;
 
-        _netDevice.read(&_byteIn, 1);
-        _nbBitsIn = 8;
+    while (size) {
+        if (!_nbBitsIn) {
+            _netDevice.read(&_byteIn, 1);
+            _nbBitsIn = 8;
+        }
+
+        int8_t minNbBits = _nbBitsIn < size ? _nbBitsIn : size;
+        data = data << minNbBits | _byteIn >> (_nbBitsIn - minNbBits);
+        _byteIn &= (1 << (_nbBitsIn - minNbBits)) - 1;
+        _nbBitsIn -= minNbBits;
+        size -= minNbBits;
     }
-}
-
-template <typename T>
-constexpr type::Bit NetStream::get(T const & val, uint8_t i) {
-    return (val >> i) & 1;
-}
-
-template <typename T>
-void NetStream::set(T & val, uint8_t i, type::Bit bit) {
-    val |= bit << i;
 }
 
 } // net

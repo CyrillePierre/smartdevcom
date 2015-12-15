@@ -14,7 +14,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testnetstream\"
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-CXXFLAGS      = -m64 -pipe -O2 -std=c++0x -Wall -W -D_REENTRANT -fPIE $(DEFINES)
+CXXFLAGS      = -m64 -pipe -std=c++14 -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -I../../src -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
@@ -41,13 +41,13 @@ MKDIR         = mkdir -p
 
 ####### Output directory
 
-OBJECTS_DIR   = ./
+OBJECTS_DIR   = bin/
 
 ####### Files
 
 SOURCES       = testnetstream.cpp 
 OBJECTS       = ../../bin/netstream.o \
-		testnetstream.o
+		bin/testnetstream.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -91,7 +91,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf \
-		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -179,7 +178,6 @@ Makefile: testnetstream.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/q
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf \
-		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf \
@@ -239,7 +237,6 @@ Makefile: testnetstream.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/q
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf:
-/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/c++11.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resources.prf:
@@ -261,8 +258,8 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist: 
-	@test -d .tmp/testnetstream1.0.0 || mkdir -p .tmp/testnetstream1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.hpp .tmp/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.cpp .tmp/testnetstream1.0.0/ && (cd `dirname .tmp/testnetstream1.0.0` && $(TAR) testnetstream1.0.0.tar testnetstream1.0.0 && $(COMPRESS) testnetstream1.0.0.tar) && $(MOVE) `dirname .tmp/testnetstream1.0.0`/testnetstream1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/testnetstream1.0.0
+	@test -d bin/testnetstream1.0.0 || mkdir -p bin/testnetstream1.0.0
+	$(COPY_FILE) --parents $(DIST) bin/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.hpp bin/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.cpp bin/testnetstream1.0.0/ && (cd `dirname bin/testnetstream1.0.0` && $(TAR) testnetstream1.0.0.tar testnetstream1.0.0 && $(COMPRESS) testnetstream1.0.0.tar) && $(MOVE) `dirname bin/testnetstream1.0.0`/testnetstream1.0.0.tar.gz . && $(DEL_FILE) -r bin/testnetstream1.0.0
 
 
 clean:compiler_clean 
@@ -290,7 +287,8 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_testnetstream.cpp
 moc_testnetstream.cpp: ../../src/net/netstream.hpp \
 		../../src/types.hpp \
-		../../src/net/socket.hpp \
+		../../src/dynamicbitset.hpp \
+		../../src/net/netdevice.hpp \
 		testnetstream.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testnetstream -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testnetstream -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtTest -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include testnetstream.hpp -o moc_testnetstream.cpp
 
@@ -306,12 +304,13 @@ compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
-testnetstream.o: testnetstream.cpp testnetstream.hpp \
+bin/testnetstream.o: testnetstream.cpp testnetstream.hpp \
 		../../src/net/netstream.hpp \
 		../../src/types.hpp \
-		../../src/net/socket.hpp \
+		../../src/dynamicbitset.hpp \
+		../../src/net/netdevice.hpp \
 		moc_testnetstream.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o testnetstream.o testnetstream.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/testnetstream.o testnetstream.cpp
 
 ####### Install
 

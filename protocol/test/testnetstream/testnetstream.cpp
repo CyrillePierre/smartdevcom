@@ -4,58 +4,53 @@
 namespace type = sdc::type;
 using sdc::net::NetStream;
 
-void TestNetStream::SockTest::write(type::Byte const *b, int size) {
+void TestNetStream::DeviceTest::write(type::Byte const *b, int size) {
     type::Byte *it = buf;
     while (size--) *it++ = *b++;
 }
 
-void TestNetStream::SockTest::read(type::Byte *b, int size) {
-    type::Byte *it = buf;
-    while (size--) *b++ = *it++;
+void TestNetStream::DeviceTest::read(type::Byte *b, int size) {
+    while (size--) *b++ = buf[pos++];
 }
 
-void TestNetStream::write() {
-    NetStream ns(st);
-    uint32_t a = 0x23ff12ee;
-    uint16_t c = 0xff00;
-    uint8_t  d = 0xa2;
+void TestNetStream::testRead() {
+    type::Byte deviceBuf[32] = {0xa2, 0xf3, 0xee, 0x28, 0x90, 0xf7, 0xa4};
+    type::Byte buf[32];
+    DeviceTest dt;
+    NetStream ns(dt);
+    char *hex;
 
-    ns.write(d, 8);
-    ns.flushOut();
-    QCOMPARE(*(uint8_t *)st.buf, uint8_t(0xa2));
+    dt.buf = deviceBuf;
 
-    ns.write(d, 6);
-    ns.flushOut();
-    QCOMPARE(uint8_t(*(uint8_t *)st.buf & 0x3f), uint8_t(0x22));
+    // 1010 0010 1111 0011 1110 1110 0010 1000 1001 0000 1111 0111 1010 0100
+    //                     |-----||--||||-----------||---------------------|
 
-    ns.write(c, 13);
-    ns.flushOut();
-    qDebug() << QTest::toHexRepresentation((char *)st.buf, 8);
-    qDebug() << QTest::toHexRepresentation((char *)&c, 2);
-    QCOMPARE(uint16_t(*(uint16_t *)st.buf & 0x1fff), uint16_t(0x1f00));
+    ns.read(buf, 2);
+    hex = QTest::toHexRepresentation((char *) buf, 2);
+    QCOMPARE(hex, "A2 F3");
 
-//    ns.write(c, 16);
-//    ns.flushOut();
-//    QCOMPARE(*(uint16_t *)st.buf, uint16_t(0xff00));
+    type::Byte i;
+    ns.read(i, 6);
+    hex = QTest::toHexRepresentation((char *) &i, 1);
+    QCOMPARE(hex, "3B");
 
-//    ns.write(a, 32);
-//    ns.flushOut();
-//    QCOMPARE(*(uint32_t *)st.buf, uint32_t(0x23ff12ee));
+    ns.read(i, 3);
+    hex = QTest::toHexRepresentation((char *) &i, 1);
+    QCOMPARE(hex, "04");
 
-//    ns.write(a, 25);
-//    ns.flushOut();
-//    QCOMPARE(*(uint32_t *)st.buf, uint32_t(0x1ff12ee));
+    ns.read(i, 2);
+    hex = QTest::toHexRepresentation((char *) &i, 1);
+    QCOMPARE(hex, "01");
 
-//    ns.write(a, 7);
-//    ns.flushOut();
-//    QCOMPARE(*(uint32_t *)st.buf, uint32_t(0x6e));
+    type::Word w;
+    ns.read(w, 10);
+    hex = QTest::toHexRepresentation((char *) &w, 2);
+    QCOMPARE(hex, "12 01");
 
-//    ns.write(a, 11);
-//    ns.flushOut();
-//    QCOMPARE(*(uint32_t *)st.buf, uint32_t(0x2ee));
-}
-
-void TestNetStream::read() {
+    type::DWord d;
+    ns.read(d, 19);
+    hex = QTest::toHexRepresentation((char *) &d, 4);
+    QCOMPARE(hex, "A4 F7 00 00");
 }
 
 QTEST_APPLESS_MAIN(TestNetStream)

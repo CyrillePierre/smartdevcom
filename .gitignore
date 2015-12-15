@@ -8,3 +8,5 @@
 *.autosave
 moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
+Makefile
+protocol/protocol
