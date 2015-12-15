@@ -5,10 +5,16 @@ using sdc::net::VARPHeader;
 VARPHeader::VARPHeader(uint8_t scAddrSize)
     : version(0),
       op(0),
-      scal(0),
-      addr_src{0},
-      addr_dest{0}
+      scale(0),
+      addrSrc{0},
+      addrDest{0}
 {
-    sc_addr_src  = new sdc::type::Byte[scAddrSize];
-    sc_addr_dest = new sdc::type::Byte[scAddrSize];
+    scAddrSrc  = new sdc::type::Byte[scAddrSize];
+    scAddrDest = new sdc::type::Byte[scAddrSize];
+}
+
+VARPHeader::~VARPHeader()
+{
+    delete [] scAddrDest;
+    delete [] scAddrSrc;
 }

@@ -24,6 +24,7 @@ struct NetStream {
     type::Byte 		_byteIn;	///< Octet servant à stocker les quelque bits non lues
     uint8_t    		_nbBitsIn;	///< Nle nombre de bits contenus dans _byteIn
     DynamicBitset	_bits;		///< Buffer de bits contenant le paquet à envoyer
+    uint16_t         _comSize;   ///< Taille de l'adresse du support de communication
 
 public:
     NetStream(NetDevice &nd) : _netDevice(nd) {}
@@ -67,6 +68,11 @@ public:
      * @return le netdevice
      */
     NetDevice const &device() const { return _netDevice; }
+
+    /**
+     * @return La taille de l'adresse du support de communication
+     */
+    uint16_t comSize() const { return _comSize; }
 
 private:
     template <typename T>

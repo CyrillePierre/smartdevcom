@@ -18,3 +18,5 @@ NetStream & operator <<(NetStream &ns, Byte byte) {
 
 void NetStream::read(type::Byte *buf, uint16_t size) {
 }
+
+

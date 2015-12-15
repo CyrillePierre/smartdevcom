@@ -2,6 +2,9 @@
 #define NETINTERPRETER_HPP
 
 #include "net/netstream.hpp"
+#include "net/varpheader.hpp"
+
+
 
 namespace sdc {
 namespace net {
@@ -22,8 +25,11 @@ struct NetInterpreter {
      */
     void operator ()(NetStream &) const;
 
+    static constexpr int VIRTUAL_SIZE = 3;
+
 private :
     void manageVARP(NetStream &) const;
+    void sendVARP(NetStream &ns, const sdc::net::VARPHeader &header) const;
 };
 
 } // net

@@ -12,11 +12,20 @@ namespace net {
  * implémentation de cette classe abstraite.
  * @brief Support de communication
  */
-struct NetDevice
+class NetDevice
 {
+public :
+    static const type::Byte BROADCAST[];
+
+private :
+    const type::Byte* comAddr;       // adresse dans le support de com
+    const type::Byte* virtualAddr;   // adresse dans le réseau virtuel
+
+public :
+
     /**
      * Cette méthode permet de récupérer un ensemble de données et de les
-     * stocker dnas un buffer. Il faut cependant avoir allouer l'espace mémoire
+     * stocker dans un buffer. Il faut cependant avoir allouer l'espace mémoire
      * suffisant pour que la totalité des données demandées tiennent dans le
      * buffer.
      * @brief Lecture de données
@@ -33,6 +42,9 @@ struct NetDevice
      * @param size : la taille du buffer
      */
     virtual void write(type::Byte const *, int) = 0;
+
+    const type::Byte* getComAddr()        const { return comAddr; }
+    const type::Byte* getVirtualAddr()    const { return virtualAddr; }
 };
 
 } // net

@@ -142,10 +142,13 @@ Version : 0.1
 								 (en octets)
 		SC_ADDR_SRC  (xx bits) : adresse du support de communication de
 								 l'objet source
-		ADDR_SRC     (24 bits) : adresse de l'objet source
+		ADDR_SRC     (24 bits) : adresse de l'objet source dans le réseau
+								 virtuel
 		SC_ADDR_DEST (xx bits) : adresse du support de communication de
 								 l'objet destinataire
-		ADDR_DEST    (24 bits) : adresse de l'objet destinataire
+		ADDR_DEST    (24 bits) : adresse de l'objet destinataire dans le réseau
+								 virtuel
+								 
 
 	3.2 - Protocole
 		Dans le cas du protocole VARP, la valeur du premier champ P du
@@ -159,11 +162,11 @@ Version : 0.1
 		interprété le paquet envoyé. Il existe actuellement 3 valeurs
 		possibles :
 			- 0b000 : Le paquet est une demande d'adresse de support. Cela
-					  signifie que l'on connais l'adresse de l'objet dans
+					  signifie que l'on connait l'adresse de l'objet dans
 					  le réseau virtuelle mais pas son adresse dans le
 					  support de com.
 			- 0b001 : Le paquet est une demande d'adresse virtuel. Cela
-					  signifie que l'on connais l'adresse de l'objet dans
+					  signifie que l'on connait l'adresse de l'objet dans
 					  le support de com mais pas dans le réseau virtuel
 			- 0b010 : Réponse à une demande d'adresse
 
