@@ -55,6 +55,7 @@ public:
 
     /**
      * @brief Vide le buffer de lecture
+     * Actuellement, la méthode ne fait rien
      */
     void flushIn();
 
@@ -92,22 +93,11 @@ void NetStream::read(T & data, uint8_t size) {
             _nbBitsIn = 8;
         }
 
-        std::cout << "data = " << std::hex << (int)data << std::endl
-                  << "_btyeIn = " << std::hex << (int)_byteIn << std::endl
-                  << "_nbBitsIn = " << (int)_nbBitsIn << std::endl
-                  << "size = " << (int)size << std::endl << std::endl;
-
         int8_t minNbBits = _nbBitsIn < size ? _nbBitsIn : size;
         data = data << minNbBits | _byteIn >> (_nbBitsIn - minNbBits);
         _byteIn &= (1 << (_nbBitsIn - minNbBits)) - 1;
         _nbBitsIn -= minNbBits;
         size -= minNbBits;
-
-        std::cout << "minNbBits = " << (int)minNbBits << std::endl
-                  << "data = " << std::hex << (int)data << std::endl
-                  << "_btyeIn = " << std::hex << (int)_byteIn << std::endl
-                  << "_nbBitsIn = " << (int)_nbBitsIn << std::endl
-                  << "size = " << (int)size << std::endl << std::endl;
     }
 }
 

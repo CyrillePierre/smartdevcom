@@ -5,8 +5,12 @@ using sdc::net::NetStream;
 using namespace sdc::type;
 
 void NetStream::flushOut() {
-//    _socket.write((type::Byte *) _bits.begin(), _bits.size() >> 3);
-//    _b)its.clear();
+    _netDevice.write(_bits.data(), _bits.blockSize());
+    _bits.clear();
+}
+
+void NetStream::flushIn() {
+
 }
 
 NetStream & operator <<(NetStream &ns, Bit bit) {
