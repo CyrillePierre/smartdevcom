@@ -103,7 +103,7 @@ void NetStream::read(T & data, uint8_t size) {
         _nbBitsIn -= minNbBits;
         size -= minNbBits;
 
-        std::cout << "minNbBits = " << std::hex << (int)minNbBits << std::endl
+        std::cout << "minNbBits = " << (int)minNbBits << std::endl
                   << "data = " << std::hex << (int)data << std::endl
                   << "_btyeIn = " << std::hex << (int)_byteIn << std::endl
                   << "_nbBitsIn = " << (int)_nbBitsIn << std::endl

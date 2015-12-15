@@ -48,7 +48,7 @@ void TestNetStream::testRead() {
     QCOMPARE(hex, "12 01");
 
     type::DWord d;
-    ns.read(d, 10);
+    ns.read(d, 19);
     hex = QTest::toHexRepresentation((char *) &d, 4);
     QCOMPARE(hex, "A4 F7 00 00");
 }
