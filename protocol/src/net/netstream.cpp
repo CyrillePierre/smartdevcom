@@ -1,3 +1,4 @@
+#include <iostream>
 #include "netstream.hpp"
 
 using sdc::net::NetStream;
@@ -17,4 +18,5 @@ NetStream & operator <<(NetStream &ns, Byte byte) {
 }
 
 void NetStream::read(type::Byte *buf, uint16_t size) {
+    _netDevice.read(buf, size);
 }

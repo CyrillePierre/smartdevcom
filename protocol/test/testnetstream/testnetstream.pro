@@ -5,10 +5,11 @@
 TEMPLATE = app
 TARGET = testnetstream
 INCLUDEPATH += . ../../src
-CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++14
+OBJECTS_DIR = bin
 QT += testlib
 
 # Input
-HEADERS += testnetstream.hpp ../../src/net/netstream.hpp
+HEADERS += testnetstream.hpp
 SOURCES += testnetstream.cpp
 OBJECTS += ../../bin/netstream.o
