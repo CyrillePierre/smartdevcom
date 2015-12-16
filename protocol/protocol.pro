@@ -18,7 +18,8 @@ HEADERS += src/types.hpp \
            src/net/varpheader.hpp \
            src/net/netdevice.hpp \
 	   src/net/vipinterpreter.h \
-    src/net/vipheader.h
+    src/net/vipheader.h \
+    src/vnet/sdcpinterpreter.hpp
 
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \
@@ -27,4 +28,5 @@ SOURCES += src/main.cpp \
            src/net/varpheader.cpp \
 	   src/net/netdevice.cpp \
 	   src/net/vipinterpreter.cpp \
-    src/net/vipheader.cpp
+    src/net/vipheader.cpp \
+    src/vnet/sdcpinterpreter.cpp
