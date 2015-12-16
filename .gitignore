@@ -11,5 +11,6 @@ moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
 Makefile
 protocol/protocol
-
-
+protocol/test/testDynamicBitset/testDynamicBitset
+procotol/test/testnetinterpreter/
+protocol/test/testnetstream/testnetstream
