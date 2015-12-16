@@ -1,11 +1,21 @@
 #ifndef VIPINTERPRETER_H
 #define VIPINTERPRETER_H
 
+#include "net/netstream.hpp"
 
-class VIPInterpreter
+namespace sdc {
+namespace net {
+
+struct VIPInterpreter
 {
-public:
+    static constexpr int VIRTUAL_SIZE = 3;
+
     VIPInterpreter();
+
+    void operator() (NetStream &ns) const;
 };
+
+}
+}
 
 #endif // VIPINTERPRETER_H

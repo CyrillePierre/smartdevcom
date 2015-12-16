@@ -1,4 +1,5 @@
 .*.swp
+.*.swo
 *.files
 *.includes
 *.user
@@ -10,3 +11,5 @@ moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
 Makefile
 protocol/protocol
+
+

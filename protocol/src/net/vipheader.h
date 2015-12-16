@@ -8,6 +8,8 @@ namespace net {
 
 struct VIPHeader
 {
+    static const uint8_t TTL_LIFE;
+
     unsigned    version:3;    ///< Version du procotol VIP
     uint8_t     ttl;          ///< Durée de vie du paquet
 
