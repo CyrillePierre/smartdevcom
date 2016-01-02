@@ -1,6 +1,6 @@
 #include "vipheader.h"
 
-using sdc::net::VIPHeader;
+using sdc::vnet::VIPHeader;
 
 const uint8_t VIPHeader::TTL_LIFE = 50;
 

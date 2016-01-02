@@ -4,7 +4,7 @@
 #include "net/netstream.hpp"
 
 namespace sdc {
-namespace net {
+namespace vnet {
 
 struct VIPInterpreter
 {
@@ -12,7 +12,7 @@ struct VIPInterpreter
 
     VIPInterpreter();
 
-    void operator() (NetStream &ns) const;
+    void operator() (net::NetStream &ns) const;
 };
 
 }

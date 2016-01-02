@@ -4,7 +4,7 @@
 #include "types.hpp"
 
 namespace sdc {
-namespace net {
+namespace vnet {
 
 struct VIPHeader
 {

@@ -5,7 +5,7 @@
 #include <string.h>
 
 using namespace sdc;
-using sdc::net::VIPInterpreter;
+using sdc::vnet::VIPInterpreter;
 
 VIPInterpreter::VIPInterpreter()
 {
@@ -20,7 +20,7 @@ void VIPInterpreter::operator() (net::NetStream &ns) const
 {
     const net::NetDevice &device = ns.device();
 
-    net::VIPHeader readingVarp, writingVarp;
+    vnet::VIPHeader readingVarp, writingVarp;
     type::Byte  byte;
 
     ns.read(byte, 3);
@@ -40,6 +40,5 @@ void VIPInterpreter::operator() (net::NetStream &ns) const
     {
         //manage SDCP
 
-        return;
     }
 }

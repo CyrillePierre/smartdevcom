@@ -46,7 +46,7 @@ public:
      */
     template <typename T,
               std::enable_if_t<std::is_integral<T>{}> * = nullptr>
-    void read(T &, uint8_t);
+    void read(T &, uint8_t = sizeof(T) << 3);
 
     /**
      * @brief getter de sockId

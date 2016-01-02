@@ -9,15 +9,19 @@ namespace net {
     class NetStream;
 }
 
+
 namespace vnet {
 
-struct ErrorCode {
+/**
+ * @brief Structure servant à stocker un code d'erreur
+ */
+struct ActionErrorCode {
     enum Error : uint8_t {
-        SUCCESS,
-        UNKNOWN,
-        FORMAT,
-        PRMS_NB,
-        EXEC
+        success,	///< tout s'est bien passé
+        unknown,	///< identifiant de l'action inconnu
+        format,
+        prms_nb,
+        exec
     };
 
     unsigned error:4;
@@ -25,17 +29,53 @@ struct ErrorCode {
 };
 
 
-class SDCPInterpreter {
-public:
+/**
+ * @brief Liste des types de trames
+ */
+enum FrameType : type::Byte {
+    request,	///< La trame est une demande
+    response,	///< La trame est une réponse
+    event		///< La trame est un évènement
+};
+
+
+/**
+ * @brief Identifiant des types de requêtes
+ */
+enum ReqID : type::Byte {
+    test = 0,		///< test de présence
+    getSensors,		///< récupération de la liste des capteurs
+    getActuators,	///< récupération de la liste des actionneurs
+    getActions,		///< récupération de la liste des actions
+    getActionDef,	///< récupération du prototype d'une action
+    execAction		///< exécution d'un action
+};
+
+
+/**
+ * Cette classe s'occupe du parsage et de l'interpretation des données d'une
+ * trame possédant une couche SDCP. En fonction de l'identifiant de la requête,
+ * elle va pouvoir interagir avec les classes décrivant les différentes
+ * fonctionnalité que propose l'objet.
+ */
+struct SDCPInterpreter {
     SDCPInterpreter();
 
     /**
      * Cette méthode permet d'interpreter une requête SDCP
      */
-    void operator()(net::NetStream &);
+    void operator ()(net::NetStream &);
+
+private:
+    void test(net::NetStream &, type::Byte);
+    void getSensors(net::NetStream &, type::Byte);
+    void getActuators(net::NetStream &, type::Byte);
+    void getActions(net::NetStream &, type::Byte);
+    void getActionDef(net::NetStream &, type::Byte);
+    void execAction(net::NetStream &, type::Byte);
 };
 
-}
-}
+} // vnet
+} // sdc
 
 #endif // SDCPINTERPRETER_HPP
