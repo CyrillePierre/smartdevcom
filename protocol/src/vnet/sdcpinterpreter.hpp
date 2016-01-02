@@ -5,12 +5,14 @@
 
 namespace sdc {
 
-namespace net {
-    class NetStream;
-}
+class DynamicBitset;
 
+namespace net { class NetStream; }
 
 namespace vnet {
+
+class VIPInterpreter;
+class VIPHeader;
 
 /**
  * @brief Structure servant à stocker un code d'erreur
@@ -58,21 +60,34 @@ enum ReqID : type::Byte {
  * elle va pouvoir interagir avec les classes décrivant les différentes
  * fonctionnalité que propose l'objet.
  */
-struct SDCPInterpreter {
-    SDCPInterpreter();
+class SDCPInterpreter {
+    VIPInterpreter const & _vip;
+
+public:
+    SDCPInterpreter(VIPInterpreter const &);
 
     /**
      * Cette méthode permet d'interpreter une requête SDCP
      */
-    void operator ()(net::NetStream &);
+    void operator ()(net::NetStream &, VIPHeader const &);
 
 private:
-    void test(net::NetStream &, type::Byte);
-    void getSensors(net::NetStream &, type::Byte);
-    void getActuators(net::NetStream &, type::Byte);
-    void getActions(net::NetStream &, type::Byte);
-    void getActionDef(net::NetStream &, type::Byte);
-    void execAction(net::NetStream &, type::Byte);
+    void test        (net::NetStream &, VIPHeader const &, type::Byte);
+    void getSensors  (net::NetStream &, VIPHeader const &, type::Byte);
+    void getActuators(net::NetStream &, VIPHeader const &, type::Byte);
+    void getActions  (net::NetStream &, VIPHeader const &, type::Byte);
+    void getActionDef(net::NetStream &, VIPHeader const &, type::Byte);
+    void execAction  (net::NetStream &, VIPHeader const &, type::Byte);
+
+    /**
+     * Construction de l'header SDCP. Il faut cependant construir l'header des
+     * couches du dessus au préalable.
+     * @param db le bitset qui va contenir l'header
+     * @param id l'identifiant de la requête
+     * @param reqType le type de requête
+     * @param length la longueur des données que va contenir la trame
+     */
+    void buildHeader(DynamicBitset &, type::Byte, type::Byte, type::Word);
 };
 
 } // vnet

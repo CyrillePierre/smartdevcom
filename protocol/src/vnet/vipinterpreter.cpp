@@ -1,6 +1,7 @@
 #include "vipinterpreter.h"
+#include "netinterpreter.hpp"
 #include "vipheader.h"
-#include "types.hpp"
+#include "netstream.hpp"
 
 #include <string.h>
 
@@ -20,25 +21,43 @@ void VIPInterpreter::operator() (net::NetStream &ns) const
 {
     const net::NetDevice &device = ns.device();
 
-    vnet::VIPHeader readingVarp, writingVarp;
+    vnet::VIPHeader readingVip;
     type::Byte  byte;
 
     ns.read(byte, 3);
-    readingVarp.version = byte;
+    readingVip.version = byte;
 
     ns.read(byte, 8);
-    readingVarp.ttl = byte;
+    readingVip.ttl = byte;
 
-    if(readingVarp.ttl == 0)
+    if(readingVip.ttl == 0)
         return;
 
-    ns.read(readingVarp.addrSrc,    VIRTUAL_SIZE);
-    ns.read(readingVarp.addrDest,   VIRTUAL_SIZE);
+    ns.read(readingVip.addrSrc,    VIRTUAL_SIZE);
+    ns.read(readingVip.addrDest,   VIRTUAL_SIZE);
 
-    if(memcmp(readingVarp.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)  ||
-       memcmp(readingVarp.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))
+    if(memcmp(readingVip.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)  ||
+       memcmp(readingVip.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))
     {
         //manage SDCP
 
     }
 }
+
+void VIPInterpreter::buildHeader(DynamicBitset &    bitset,
+                                 const type::Byte * src,
+                                 const type::Byte * dest,
+                                 type::Byte         ttl) const
+{
+    bitset.push((type::Byte) net::Proto::VIP, 5);	// Protocole sur 5 bits
+    bitset.push(VIP_VERSION, 3);		// Version sur 3 bits
+    bitset.push(ttl, 8);				// Durée de vie sur 8 bits
+    bitset.push(src, 3);				// Adresse source sur 3 octets
+    bitset.push(dest, 3);				// Adresse de destination sur 3 octets
+}
+
+
+
+
+
+
