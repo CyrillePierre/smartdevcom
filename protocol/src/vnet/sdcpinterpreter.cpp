@@ -35,9 +35,9 @@ void SDCPInterpreter::buildHeader(sdc::DynamicBitset & db,
                                   Byte                 reqType,
                                   Word                 length)
 {
-    db.push(id,       8);
-    db.push(reqType,  2);
-    db.push(length,  14);
+    db.push(id,       8);	// Identifiant (sur 8 bits)
+    db.push(reqType,  2);	// Type de requête (sur 2 bits)
+    db.push(length,  14);	// Longueur des données (sur 14 bits)
 }
 
 

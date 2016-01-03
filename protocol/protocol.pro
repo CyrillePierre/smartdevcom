@@ -20,6 +20,10 @@ HEADERS += src/types.hpp \
 		   src/vnet/vipinterpreter.h \
 		   src/vnet/vipheader.h \
 		   src/vnet/sdcpinterpreter.hpp \
+    src/device.hpp \
+    src/sensor.hpp \
+    src/element.hpp \
+    src/actuator.hpp
 
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \
@@ -30,3 +34,4 @@ SOURCES += src/main.cpp \
 		   src/vnet/vipinterpreter.cpp \
 		   src/vnet/vipheader.cpp \
 		   src/vnet/sdcpinterpreter.cpp \
+    src/device.cpp
