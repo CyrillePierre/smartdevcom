@@ -2,6 +2,9 @@
 #include "sdcpinterpreter.hpp"
 #include "netstream.hpp"
 #include "vipinterpreter.h"
+#include "device.hpp"
+#include "sensor.hpp"
+#include "actuator.hpp"
 
 using sdc::net::NetStream;
 using namespace sdc::vnet;
@@ -30,11 +33,14 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
 }
 
 
-void SDCPInterpreter::buildHeader(sdc::DynamicBitset & db,
-                                  Byte                 id,
-                                  Byte                 reqType,
-                                  Word                 length)
+void SDCPInterpreter::buildHeader(NetStream &       ns,
+                                  VIPHeader const & vhead,
+                                  Byte              id,
+                                  Byte              reqType,
+                                  Word              length)
 {
+    DynamicBitset & db = ns.writingBitset();
+    _vip.buildHeader(db, ns.device().getVirtualAddr(), vhead.addrSrc);
     db.push(id,       8);	// Identifiant (sur 8 bits)
     db.push(reqType,  2);	// Type de requête (sur 2 bits)
     db.push(length,  14);	// Longueur des données (sur 14 bits)
@@ -45,19 +51,40 @@ void SDCPInterpreter::test(NetStream &       ns,
                            VIPHeader const & vhead,
                            Byte              type)
 {
-    DynamicBitset & db = ns.writingBitset();
-
-    // Construction du début de la trame (VIP)
-    _vip.buildHeader(db, ns.device().getVirtualAddr(), vhead.addrSrc);
-    buildHeader(db, type, FrameType::response, 0);
+    buildHeader(ns, vhead, type, FrameType::response, 0);
+    ns.flushOut();
 }
 
 
-void SDCPInterpreter::getSensors(NetStream &, VIPHeader const &, Byte) {
+void SDCPInterpreter::getSensors(NetStream &       ns,
+                                 VIPHeader const & vhead,
+                                 Byte              type)
+{
+    DynamicBitset db      = ns.writingBitset();
+    auto          sensors = Device::get().sensors();
+
+    buildHeader(ns, vhead, type, FrameType::response, (Byte) sensors.size());
+    for (Sensor * sensor : sensors) {
+        db.push(sensor->id(), 8);
+        db.push(sensor->type(), 16);
+    }
+    ns.flushOut();
 }
 
 
-void SDCPInterpreter::getActuators(NetStream &, VIPHeader const &, Byte) {
+void SDCPInterpreter::getActuators(NetStream &       ns,
+                                   VIPHeader const & vhead,
+                                   Byte              type)
+{
+    DynamicBitset db        = ns.writingBitset();
+    auto          actuators = Device::get().actuators();
+
+    buildHeader(ns, vhead, type, FrameType::response, (Byte) actuators.size());
+    for (Actuator * actuator : actuators) {
+        db.push(actuator->id(), 8);
+        db.push(actuator->type(), 16);
+    }
+    ns.flushOut();
 }
 
 

@@ -6,6 +6,7 @@
 namespace sdc {
 
 class DynamicBitset;
+class Device;
 
 namespace net { class NetStream; }
 
@@ -80,14 +81,18 @@ private:
     void execAction  (net::NetStream &, VIPHeader const &, type::Byte);
 
     /**
-     * Construction de l'header SDCP. Il faut cependant construir l'header des
-     * couches du dessus au préalable.
-     * @param db le bitset qui va contenir l'header
+     * Construction de l'header SDCP. La méthode s'occupe également de la
+     * construction des couches du dessus
+     * @param ns le netstream lié à l'émetteur
      * @param id l'identifiant de la requête
      * @param reqType le type de requête
      * @param length la longueur des données que va contenir la trame
      */
-    void buildHeader(DynamicBitset &, type::Byte, type::Byte, type::Word);
+    void buildHeader(net::NetStream &,
+                     VIPHeader const &,
+                     type::Byte,
+                     type::Byte,
+                     type::Word);
 };
 
 } // vnet
