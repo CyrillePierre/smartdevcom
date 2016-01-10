@@ -332,11 +332,12 @@ Version : 0.1
 				- le reste est défini par le prototype de l'action
 
 	4.6 - Format des prototypes d'actions
-		Chaque action ne possèdant pas forcément les même formats de
+		Chaque action ne possedant pas forcément les même formats de
 		paramètre. Il est nécessaire de pouvoir connaitre comment utiliser
 		correctement l'action. La syntaxe de déclaration d'un prototype
-		d'action doit être défini manière protocolaire pour que n'importe
-		quel objet puisse comprendre comment exécuter l'action définie.
+		d'action doit être définie de manière protocolaire pour que 
+		n'importe quel objet puisse comprendre comment exécuter l'action 
+		définie.
 
 		4.6.1 - Format de déclaration d'un prototype
 			- ID       (16 bits) : identifiant de l'action
@@ -366,6 +367,10 @@ Version : 0.1
 
 			Dans le cas des paramètres de type chaine de caractère, les
 			champs MIN et MAX sont omis. Le paramètre SIZE n'est pas lu.
+
+		4.6.3 - Prototype d'action inconnue
+			Si l'action passé en paramètre n'existe pas, l'objet répondra
+			avec un paquet ne contenant que l'identifiant de l'action.
 
 	4.7 - Code d'erreur d'exécution d'une action
 		Si l'exécution d'une action ne respecte pas le prototype de

@@ -23,7 +23,8 @@ HEADERS += src/types.hpp \
     src/device.hpp \
     src/sensor.hpp \
     src/element.hpp \
-    src/actuator.hpp
+    src/actuator.hpp \
+    src/action.hpp
 
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \

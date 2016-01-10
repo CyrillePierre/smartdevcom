@@ -11,8 +11,8 @@ namespace sdc {
  */
 class Element {
 protected:
-    type::Byte _id;
-    type::Word _type;
+    type::Byte const _id;
+    type::Word const _type;
 
 public:
     explicit Element(type::Byte id, type::Word type) : _id(id), _type(type) {}

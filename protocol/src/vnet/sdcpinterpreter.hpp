@@ -85,14 +85,14 @@ private:
      * construction des couches du dessus
      * @param ns le netstream lié à l'émetteur
      * @param id l'identifiant de la requête
-     * @param reqType le type de requête
      * @param length la longueur des données que va contenir la trame
+     * @param reqType le type de requête
      */
     void buildHeader(net::NetStream &,
                      VIPHeader const &,
                      type::Byte,
-                     type::Byte,
-                     type::Word);
+                     type::Word,
+                     type::Byte = FrameType::response);
 };
 
 } // vnet
