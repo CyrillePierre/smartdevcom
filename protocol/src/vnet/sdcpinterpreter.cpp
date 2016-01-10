@@ -124,15 +124,38 @@ void SDCPInterpreter::getActionDef(NetStream &       ns,
 
     // Sinon on envoie que l'identifiant
     else {
-        db.push(actionId, 16);
         buildHeader(ns, vhead, type, 2);
+        db.push(actionId, 16);
     }
 
     ns.flushOut();
 }
 
 
-void SDCPInterpreter::execAction(NetStream &, VIPHeader const &, Byte) {
+void SDCPInterpreter::execAction(NetStream &       ns,
+                                 VIPHeader const & vhead,
+                                 Byte              type)
+{
+    // Lecture de l'identifiant de l'action
+    Word actionId;
+    ns.read(actionId, 16);
+
+
+    Action * a = Device::get().action(actionId);
+    if (a) {
+        buildHeader(ns, vhead, type, (Byte) a->returnSize());
+        (*a)(ns);
+    }
+
+    // Sinon on envoie le code d'erreur "action inconnue"
+    else {
+        buildHeader(ns, vhead, type, 1);
+        DynamicBitset & db = ns.writingBitset();
+        db.push((Byte) ErrorCode::UNKNOWN, 4);
+        db.push(0, 4);
+    }
+
+    ns.flushOut();
 }
 
 
