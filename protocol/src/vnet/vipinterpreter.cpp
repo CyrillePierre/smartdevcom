@@ -8,11 +8,6 @@
 using namespace sdc;
 using sdc::vnet::VIPInterpreter;
 
-VIPInterpreter::VIPInterpreter()
-{
-
-}
-
 /**
  * @brief Cette méthode permet de gérer une trame VIP
  * @param ns : la trame reçue

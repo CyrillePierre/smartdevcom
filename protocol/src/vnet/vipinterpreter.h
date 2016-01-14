@@ -3,6 +3,7 @@
 
 #include "types.hpp"
 #include "vipheader.h"
+#include "sdcpinterpreter.hpp"
 
 namespace sdc {
 
@@ -13,13 +14,16 @@ namespace net { class NetStream; }
 namespace vnet {
 
 // TODO Description de la classe
-struct VIPInterpreter
-{
+struct VIPInterpreter {
     static constexpr type::Byte VIP_VERSION = 0;	// Version du procotole de cet interpreteur
     static constexpr type::Byte DEFAULT_TTL = 50;	// Valeur par défaut pour le TTL
     static constexpr int VIRTUAL_SIZE = 3;
 
-    VIPInterpreter();
+private:
+    SDCPInterpreter _sdcp;
+
+public:
+    VIPInterpreter() : _sdcp(*this) {}
 
     void operator() (net::NetStream &ns) const;
 

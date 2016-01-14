@@ -3,14 +3,19 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = testnetstream
-INCLUDEPATH += . ../../src .. ../../src/net
+TARGET = testVipInterpreter
+INCLUDEPATH += . ../../src
 QMAKE_CXXFLAGS += -std=c++14
 OBJECTS_DIR = bin
 QT += testlib
 
 # Input
-HEADERS += testnetstream.hpp \
-    ../fakedevice.hpp
-SOURCES += testnetstream.cpp
-OBJECTS += ../../bin/netstream.o
+HEADERS += \ 
+    testvipinterpreter.hpp \
+    ../../src/vnet/vipinterpreter.h
+SOURCES += \ 
+    testvipinterpreter.cpp
+OBJECTS += \
+    ../../bin/vipinterpreter.o \
+    ../../bin/vipheader.o \
+    ../../bin/netstream.o

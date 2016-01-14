@@ -12,16 +12,19 @@ namespace net {
  * implémentation de cette classe abstraite.
  * @brief Support de communication
  */
-class NetDevice
-{
-public :
+struct NetDevice {
     static const type::Byte BROADCAST[];
 
 private :
-    const type::Byte* comAddr;       // adresse dans le support de com
-    const type::Byte* virtualAddr;   // adresse dans le réseau virtuel
+    type::Byte const * const _comAddr;       // adresse dans le support de com
+    type::Byte const * const _virtualAddr;   // adresse dans le réseau virtuel
 
 public :
+    /**
+     * @param comAddr l'adresse sur le support de communication
+     * @param virtualAddr l'adresse sur le réseau virtuelle
+     */
+    NetDevice(type::Byte const *, type::Byte const *);
 
     /**
      * Cette méthode permet de récupérer un ensemble de données et de les
@@ -43,9 +46,15 @@ public :
      */
     virtual void write(type::Byte const *, int) = 0;
 
-    const type::Byte* getComAddr()        const { return comAddr; }
-    const type::Byte* getVirtualAddr()    const { return virtualAddr; }
+    const type::Byte* getComAddr()        const { return _comAddr; }
+    const type::Byte* getVirtualAddr()    const { return _virtualAddr; }
 };
+
+inline NetDevice::NetDevice(type::Byte const * comAddr,
+                            type::Byte const * virtualAddr)
+    : _comAddr(comAddr), _virtualAddr(virtualAddr)
+{
+}
 
 } // net
 } // sdc

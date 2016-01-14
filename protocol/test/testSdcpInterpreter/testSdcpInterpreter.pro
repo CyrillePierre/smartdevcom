@@ -3,19 +3,20 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = testVipInterpreter
-INCLUDEPATH += . ../../src ../../src/net ..
+TARGET = testSdcpInterpreter
+INCLUDEPATH += . ../../src ../../src/vnet .. ../../src/net
 QMAKE_CXXFLAGS += -std=c++14
 OBJECTS_DIR = bin
 QT += testlib
 
 # Input
-HEADERS += \
-    testnetinterpreter.hpp \
-    ../../src/net/netinterpreter.hpp
+HEADERS += \ 
+    testsdcpinterpreter.hpp
 SOURCES += \
-    testnetinterpreter.cpp
+    testsdcpinterpreter.cpp
 OBJECTS += \
-	../../bin/netstream.o \
-	../../bin/varpheader.o \
-	../../bin/netinterpreter.o
+    ../../bin/device.o \
+    ../../bin/vipinterpreter.o \
+    ../../bin/sdcpinterpreter.o \
+    ../../bin/vipheader.o \
+    ../../bin/netstream.o

@@ -19,13 +19,13 @@ enum Proto : type::Byte {
  * couche réseau. Les protocoles qui peuvent être géré sont VIP et VARP.
  */
 struct NetInterpreter {
+    static constexpr int VIRTUAL_SIZE = 3;
+
     /**
      * Cette méthode permet de parser la dernière requête reçue.
      * @param ns : le stream sur lequel netInterpreter va travailler
      */
     void operator ()(NetStream &) const;
-
-    static constexpr int VIRTUAL_SIZE = 3;
 
 private :
     void manageVARP(NetStream &) const;
