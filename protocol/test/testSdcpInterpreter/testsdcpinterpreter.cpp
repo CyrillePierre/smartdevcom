@@ -3,7 +3,7 @@
 #include "sdcpinterpreter.hpp"
 #include "fakedevice.hpp"
 #include "netstream.hpp"
-#include "vipinterpreter.h"
+#include "netinterpreter.hpp"
 
 using namespace sdc;
 
@@ -14,17 +14,16 @@ void TestSDCPInterpreter::testTest() {
                                 0x00, 0x00, 0x00};
     test::FakeDevice fd(com, virt);
     net::NetStream ns(fd);
-    vnet::VIPInterpreter vip;
+    net::NetInterpreter ni;
     char *hex;
 
     fd.buf = deviceBuf;
-    vip(ns);
+    ni(ns);
     hex = QTest::toHexRepresentation((char *) deviceBuf, 11);
-    QCOMPARE(hex, "00 FF B0 B1 B2 A0 A1 A2 00 80 00");
+    QCOMPARE(hex, "00 32 B0 B1 B2 A0 A1 A2 00 40 00");
 }
 
 void TestSDCPInterpreter::testSensors() {
-
 }
 
 void TestSDCPInterpreter::testActuators() {

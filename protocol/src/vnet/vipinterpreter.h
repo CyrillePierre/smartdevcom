@@ -25,7 +25,7 @@ private:
 public:
     VIPInterpreter() : _sdcp(*this) {}
 
-    void operator() (net::NetStream &ns) const;
+    void operator() (net::NetStream &ns);
 
     /**
      * Cette méhtode permet de construire l'header de la trame VIP et de stocker

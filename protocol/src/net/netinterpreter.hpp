@@ -3,6 +3,7 @@
 
 #include "net/netstream.hpp"
 #include "net/varpheader.hpp"
+#include "vnet/vipinterpreter.h"
 
 
 
@@ -21,11 +22,15 @@ enum Proto : type::Byte {
 struct NetInterpreter {
     static constexpr int VIRTUAL_SIZE = 3;
 
+private:
+    vnet::VIPInterpreter _vip;
+
+public:
     /**
      * Cette méthode permet de parser la dernière requête reçue.
      * @param ns : le stream sur lequel netInterpreter va travailler
      */
-    void operator ()(NetStream &) const;
+    void operator ()(NetStream &);
 
 private :
     void manageVARP(NetStream &) const;

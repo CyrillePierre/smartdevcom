@@ -69,6 +69,9 @@ public:
 
     /**
      * Cette méthode permet d'interpreter une requête SDCP
+     * @param ns le stream permettant de lire et d'écrire les données sur
+     *           le réseau
+     * @param header les informations provenant de la couche VIP
      */
     void operator ()(net::NetStream &, VIPHeader const &);
 

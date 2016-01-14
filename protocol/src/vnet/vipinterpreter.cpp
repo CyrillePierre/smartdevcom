@@ -12,30 +12,29 @@ using sdc::vnet::VIPInterpreter;
  * @brief Cette méthode permet de gérer une trame VIP
  * @param ns : la trame reçue
  */
-void VIPInterpreter::operator() (net::NetStream &ns) const
+void VIPInterpreter::operator() (net::NetStream &ns)
 {
     const net::NetDevice &device = ns.device();
 
-    vnet::VIPHeader readingVip;
+    vnet::VIPHeader header;
     type::Byte  byte;
 
     ns.read(byte, 3);
-    readingVip.version = byte;
+    header.version = byte;
 
     ns.read(byte, 8);
-    readingVip.ttl = byte;
+    header.ttl = byte;
 
-    if(readingVip.ttl == 0)
+    if(header.ttl == 0)
         return;
 
-    ns.read(readingVip.addrSrc,    VIRTUAL_SIZE);
-    ns.read(readingVip.addrDest,   VIRTUAL_SIZE);
+    ns.read(header.addrSrc,  VIRTUAL_SIZE);
+    ns.read(header.addrDest, VIRTUAL_SIZE);
 
-    if(memcmp(readingVip.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)  ||
-       memcmp(readingVip.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))
+    if(memcmp(header.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)  ||
+       memcmp(header.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))
     {
-        //manage SDCP
-
+        _sdcp(ns, header);
     }
 }
 

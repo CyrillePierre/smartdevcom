@@ -15,8 +15,11 @@ HEADERS += \
 SOURCES += \
     testsdcpinterpreter.cpp
 OBJECTS += \
+    ../../bin/netdevice.o \
     ../../bin/device.o \
+    ../../bin/netinterpreter.o \
     ../../bin/vipinterpreter.o \
     ../../bin/sdcpinterpreter.o \
+    ../../bin/varpheader.o \
     ../../bin/vipheader.o \
     ../../bin/netstream.o

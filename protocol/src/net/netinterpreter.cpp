@@ -13,13 +13,13 @@ namespace type = sdc::type;
  * @brief Cette méthode permet de traiter la trame
  * @param ns : la trame
  */
-void NetInterpreter::operator ()(NetStream &ns) const {
+void NetInterpreter::operator ()(NetStream &ns) {
     // Lecture du protocole (5 bits)
     type::Byte protocol;
     ns.read(protocol, 5);
 
     switch (protocol) {
-        case Proto::VIP: break;
+        case Proto::VIP:  _vip(ns);       break;
         case Proto::VARP: manageVARP(ns); break;
     }
 }
