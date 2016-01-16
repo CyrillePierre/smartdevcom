@@ -11,11 +11,6 @@ using sdc::net::NetStream;
 using namespace sdc::vnet;
 using namespace sdc::type;
 
-SDCPInterpreter::SDCPInterpreter(VIPInterpreter const & vip) : _vip(vip)
-{
-}
-
-
 void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
     Byte id, type;
     ns.read(id);
@@ -35,13 +30,13 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
 
 
 void SDCPInterpreter::buildHeader(NetStream &       ns,
-                                  VIPHeader const & vhead,
+                                  VIPHeader const & vh,
                                   Byte              id,
                                   Word              length,
                                   Byte              reqType)
 {
     DynamicBitset & db = ns.writingBitset();
-    _vip.buildHeader(db, ns.device().getVirtualAddr(), vhead.addrSrc);
+    VIPInterpreter::buildHeader(db, ns.device().getVirtualAddr(), vh.addrSrc);
     db.push(id,       8);	// Identifiant (sur 8 bits)
     db.push(reqType,  2);	// Type de requête (sur 2 bits)
     db.push(length,  14);	// Longueur des données (sur 14 bits)

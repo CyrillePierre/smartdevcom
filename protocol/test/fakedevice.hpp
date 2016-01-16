@@ -14,15 +14,17 @@ struct FakeDevice : public net::NetDevice {
     type::Byte *buf;
     int pos;
 
-    FakeDevice(type::Byte const * comAddr, type::Byte const * virtualAddr)
-        : net::NetDevice(comAddr, virtualAddr), pos(0) {}
+    FakeDevice(type::Byte const * comAddr,
+               type::Byte const * virtualAddr,
+               std::size_t        comAddrSize)
+        : net::NetDevice(comAddr, virtualAddr, comAddrSize), pos(0) {}
 
     virtual void read(type::Byte * b, int size)
     { while (size--) *b++ = buf[pos++]; }
 
 
     virtual void write(type::Byte const * b, int size)
-    {  for (type::Byte * it = buf; size--;) *it++ = *b++; }
+    { for (type::Byte * it = buf; size--;) *it++ = *b++; }
 
     void reset() { pos = 0; }
 };

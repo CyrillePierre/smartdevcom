@@ -1,6 +1,6 @@
+#include "types.hpp"
 #include "net/netinterpreter.hpp"
 #include "net/varpheader.hpp"
-#include "types.hpp"
 #include "net/netdevice.hpp"
 
 #include <string.h>
@@ -29,10 +29,11 @@ void NetInterpreter::operator ()(NetStream &ns) {
  * @param ns : la trame reçue
  */
 void NetInterpreter::manageVARP(NetStream &ns) const {
-    uint16_t size = ns.comSize();
-    const NetDevice &device = ns.device();
+    NetDevice const & device = ns.device();
+    uint16_t const cSize = device.comAddrSize(),
+                   vSize = NetDevice::virtualAddrSize;
 
-    VARPHeader  readingVarp(size), writingVarp(size);
+    VARPHeader  readingVarp(cSize), writingVarp(cSize);
     type::Byte  byte;
 
     ns.read(byte, 3);
@@ -41,27 +42,27 @@ void NetInterpreter::manageVARP(NetStream &ns) const {
     ns.read(byte, 5);
     readingVarp.scale = byte;
 
-    ns.read(readingVarp.scAddrSrc,  size);
-    ns.read(readingVarp.addrSrc,    VIRTUAL_SIZE);
-    ns.read(readingVarp.scAddrDest, size);
-    ns.read(readingVarp.addrDest,   VIRTUAL_SIZE);
+    ns.read(readingVarp.scAddrSrc,  cSize);
+    ns.read(readingVarp.addrSrc,    vSize);
+    ns.read(readingVarp.scAddrDest, cSize);
+    ns.read(readingVarp.addrDest,   vSize);
 
     /* Si l'adresse de destination dans le support ou dans le réseau virtuel,
      * c'est moi ou si c'est du broadcast, et que c'est une demande d'adresse */
     if((memcmp(readingVarp.scAddrDest, device.getComAddr(), readingVarp.scale)  ||
-        memcmp(readingVarp.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)     ||
+        memcmp(readingVarp.addrDest, device.getVirtualAddr(), vSize)     ||
         memcmp(readingVarp.scAddrDest, NetDevice::BROADCAST, readingVarp.scale) ||
-        memcmp(readingVarp.addrDest, NetDevice::BROADCAST, VIRTUAL_SIZE))       &&
+        memcmp(readingVarp.addrDest, NetDevice::BROADCAST, vSize))       &&
        (readingVarp.op == 0x01 || readingVarp.op == 0x00))
     {
         writingVarp.version = readingVarp.version;
         writingVarp.scale   = readingVarp.scale;
         writingVarp.op      = 0x02;
 
-        memcpy((char*) writingVarp.scAddrSrc, (char*) device.getComAddr(), size);
-        memcpy((char*) writingVarp.addrSrc, (char*) device.getVirtualAddr(), VIRTUAL_SIZE);
-        memcpy((char*) writingVarp.scAddrDest, (char*) readingVarp.scAddrSrc, size);
-        memcpy((char*) writingVarp.addrDest, (char*) readingVarp.addrSrc, VIRTUAL_SIZE);
+        memcpy((char*) writingVarp.scAddrSrc, (char*) device.getComAddr(), cSize);
+        memcpy((char*) writingVarp.addrSrc, (char*) device.getVirtualAddr(), vSize);
+        memcpy((char*) writingVarp.scAddrDest, (char*) readingVarp.scAddrSrc, cSize);
+        memcpy((char*) writingVarp.addrDest, (char*) readingVarp.addrSrc, vSize);
 
         sendVARP(ns, writingVarp);
     }
@@ -75,7 +76,8 @@ void NetInterpreter::manageVARP(NetStream &ns) const {
 void NetInterpreter::sendVARP(NetStream &ns, const VARPHeader &header) const
 {
     DynamicBitset dbs = ns.writingBitset();
-    uint16_t size = ns.comSize();
+    uint16_t const cSize = ns.device().comAddrSize(),
+                   vSize = NetDevice::virtualAddrSize;
 
     dbs.push(header.version);
     dbs.push(header.scale);
@@ -83,10 +85,10 @@ void NetInterpreter::sendVARP(NetStream &ns, const VARPHeader &header) const
 
     std::cout << dbs.data();
 
-    dbs.push(header.scAddrSrc, size);
-    dbs.push(header.addrSrc, VIRTUAL_SIZE);
-    dbs.push(header.scAddrDest, size);
-    dbs.push(header.addrDest, VIRTUAL_SIZE);
+    dbs.push(header.scAddrSrc,  cSize);
+    dbs.push(header.addrSrc,    vSize);
+    dbs.push(header.scAddrDest, cSize);
+    dbs.push(header.addrDest,   vSize);
 
     ns.flushOut();
 }

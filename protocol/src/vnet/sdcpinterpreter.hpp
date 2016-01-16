@@ -12,8 +12,8 @@ namespace net { class NetStream; }
 
 namespace vnet {
 
-class VIPInterpreter;
 class VIPHeader;
+
 
 /**
  * @brief Structure servant à stocker un code d'erreur
@@ -61,12 +61,7 @@ enum ReqID : type::Byte {
  * elle va pouvoir interagir avec les classes décrivant les différentes
  * fonctionnalité que propose l'objet.
  */
-class SDCPInterpreter {
-    VIPInterpreter const & _vip;
-
-public:
-    SDCPInterpreter(VIPInterpreter const &);
-
+struct SDCPInterpreter {
     /**
      * Cette méthode permet d'interpreter une requête SDCP
      * @param ns le stream permettant de lire et d'écrire les données sur

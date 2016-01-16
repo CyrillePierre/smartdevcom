@@ -3,7 +3,6 @@
 
 #include "types.hpp"
 #include "vipheader.h"
-#include "sdcpinterpreter.hpp"
 
 namespace sdc {
 
@@ -13,6 +12,9 @@ namespace net { class NetStream; }
 
 namespace vnet {
 
+class SDCPInterpreter;
+
+
 // TODO Description de la classe
 struct VIPInterpreter {
     static constexpr type::Byte VIP_VERSION = 0;	// Version du procotole de cet interpreteur
@@ -20,13 +22,9 @@ struct VIPInterpreter {
     static constexpr int VIRTUAL_SIZE = 3;
 
 private:
-    SDCPInterpreter _sdcp;
+    SDCPInterpreter & _sdcp;
 
 public:
-    VIPInterpreter() : _sdcp(*this) {}
-
-    void operator() (net::NetStream &ns);
-
     /**
      * Cette méhtode permet de construire l'header de la trame VIP et de stocker
      * cet header dans le bitset passé en paramètre.
@@ -35,10 +33,18 @@ public:
      * @param dest l'adresse du destinataire
      * @param ttl la durée de vie du paquet
      */
-    void buildHeader(DynamicBitset &    bitset,
-                     type::Byte const * src,
-                     type::Byte const * dest,
-                     type::Byte         ttl = DEFAULT_TTL) const;
+    static void buildHeader(DynamicBitset &    bitset,
+                            type::Byte const * src,
+                            type::Byte const * dest,
+                            type::Byte         ttl = DEFAULT_TTL);
+
+    /**
+     * @brief VIPInterpreter
+     * @param sdcp l'interpreteur de la couche SDCP
+     */
+    VIPInterpreter(SDCPInterpreter & sdcp) : _sdcp(sdcp) {}
+
+    void operator() (net::NetStream &ns);
 };
 
 }

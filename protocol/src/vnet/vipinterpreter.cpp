@@ -1,5 +1,6 @@
 #include "vipinterpreter.h"
 #include "netinterpreter.hpp"
+#include "sdcpinterpreter.hpp"
 #include "vipheader.h"
 #include "netstream.hpp"
 
@@ -41,7 +42,7 @@ void VIPInterpreter::operator() (net::NetStream &ns)
 void VIPInterpreter::buildHeader(DynamicBitset &    bitset,
                                  const type::Byte * src,
                                  const type::Byte * dest,
-                                 type::Byte         ttl) const
+                                 type::Byte         ttl)
 {
     bitset.push((type::Byte) net::Proto::VIP, 5);	// Protocole sur 5 bits
     bitset.push(VIP_VERSION, 3);		// Version sur 3 bits
