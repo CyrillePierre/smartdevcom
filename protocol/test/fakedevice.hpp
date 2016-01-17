@@ -19,12 +19,12 @@ struct FakeDevice : public net::NetDevice {
                std::size_t        comAddrSize)
         : net::NetDevice(comAddr, virtualAddr, comAddrSize), pos(0) {}
 
-    virtual void read(type::Byte * b, int size)
-    { while (size--) *b++ = buf[pos++]; }
+    virtual std::size_t read(type::Byte * b, std::size_t size)
+    { while (size--) *b++ = buf[pos++]; return size; }
 
 
-    virtual void write(type::Byte const * b, int size)
-    { for (type::Byte * it = buf; size--;) *it++ = *b++; }
+    virtual std::size_t write(type::Byte const * b, std::size_t size)
+    { for (type::Byte * it = buf; size--;) *it++ = *b++; return size; }
 
     void reset() { pos = 0; }
 };

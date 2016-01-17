@@ -2,7 +2,7 @@
 ## Stable Section: usually no need to be changed. But you can add more.
 ##==========================================================================
 
-SHELL   = /bin/sh
+SHELL   = /bin/bash
 EMPTY   =
 SPACE   = $(EMPTY) $(EMPTY)
 
@@ -196,3 +196,9 @@ show:
 ##=============================
 ## End of the Makefile
 ##=============================
+
+t:
+	find -L $(wildcard $(INCLUDES_DIRS)) $(MAXDEPTH_OPTION) -type d
+	@echo $(filter-out $(patsubst ./%, %, $(EXPANDED_EXCLUDE_DIRS)), $(patsubst ./%, %, \
+                                   $(shell find -L $(wildcard $(INCLUDES_DIRS)) $(MAXDEPTH_OPTION) \
+                                                                 \( ! -regex '.*/\..*' \) -type d)))

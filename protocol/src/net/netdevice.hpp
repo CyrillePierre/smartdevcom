@@ -19,7 +19,7 @@ struct NetDevice {
 private :
     type::Byte const * const _comAddr;       // adresse dans le support de com
     type::Byte const * const _virtualAddr;   // adresse dans le réseau virtuel
-    std::size_t const _comAddrSize;
+    std::size_t const        _comAddrSize;
 
 public :
     /**
@@ -38,7 +38,7 @@ public :
      * @param buf : le buffer servant à stocker les données lues
      * @param size : le nombre d'octets à lire
      */
-    virtual void read(type::Byte *, int) = 0;
+    virtual std::size_t read(type::Byte *, std::size_t) = 0;
 
     /**
      * Elle permet d'envoyer un buffer de données sur le support de
@@ -47,7 +47,7 @@ public :
      * @param buf : le buffer contenant les données à envoyer
      * @param size : la taille du buffer
      */
-    virtual void write(type::Byte const *, int) = 0;
+    virtual std::size_t write(type::Byte const *, std::size_t) = 0;
 
     const type::Byte* getComAddr()        const { return _comAddr; }
     const type::Byte* getVirtualAddr()    const { return _virtualAddr; }
@@ -61,8 +61,7 @@ inline NetDevice::NetDevice(type::Byte const * comAddr,
                             type::Byte const * virtualAddr,
                             std::size_t        comAddrSize)
     : _comAddr(comAddr), _virtualAddr(virtualAddr), _comAddrSize(comAddrSize)
-{
-}
+{}
 
 } // net
 } // sdc
