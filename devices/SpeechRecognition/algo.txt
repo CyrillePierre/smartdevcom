@@ -1,0 +1,41 @@
+Il existe principalement deux algorithmes pour comparer la similarité de deux
+chaines de caractères :
+ - Distance de Levenshtein
+ - Distance de Jaro-Winkler
+
+ La première distance se caractérise simplement par la somme des différences
+ entre les deux chaines, ces différences peuvent être une suppression d'un
+ caractère, l'ajout d'un caractère, ou le remplacement d'un caractère.
+
+ La deuxième distance possède une formule plus complexe.
+
+ Allume la télé : 
+ - Allume la télé
+ LevenshteinDistance : 0
+ JaroWinklerDistance : 1.0
+ FuzzyDistance : 40
+
+ - Rien à la télé
+ LevenshteinDistance : 6
+ JaroWinklerDistance : 0.69
+ FuzzyDistance : 2
+
+ - Salut ma télé
+ LevenshteinDistance : 6
+ JaroWinklerDistance : 0.69
+ FuzzyDistance : 2
+
+ - Salut la télé
+ LevenshteinDistance : 6
+ JaroWinklerDistance : 0.69
+ FuzzyDistance : 2
+
+ - Toto la télé
+ LevenshteinDistance : 6
+ JaroWinklerDistance : 0.69
+ FuzzyDistance : 2
+
+ - Allumer télé
+LevenshteinDistance : 4
+JaroWinklerDistance : 0.87
+FuzzyDistance : 18
