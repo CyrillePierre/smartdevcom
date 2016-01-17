@@ -4,7 +4,5 @@ using namespace sdc;
 
 int main() {
 
-
-
     return 0;
 }

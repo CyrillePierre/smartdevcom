@@ -17,16 +17,22 @@ HEADERS += src/types.hpp \
            src/net/netinterpreter.hpp \
            src/net/varpheader.hpp \
            src/net/netdevice.hpp \
-	   src/net/vipinterpreter.h \
-    src/net/vipheader.h \
-    src/vnet/sdcpinterpreter.hpp
+		   src/vnet/vipinterpreter.h \
+		   src/vnet/vipheader.h \
+		   src/vnet/sdcpinterpreter.hpp \
+    src/device.hpp \
+    src/sensor.hpp \
+    src/element.hpp \
+    src/actuator.hpp \
+    src/action.hpp
 
 SOURCES += src/main.cpp \
            src/net/netmanager.cpp \
            src/net/netstream.cpp \
            src/net/netinterpreter.cpp \
            src/net/varpheader.cpp \
-	   src/net/netdevice.cpp \
-	   src/net/vipinterpreter.cpp \
-    src/net/vipheader.cpp \
-    src/vnet/sdcpinterpreter.cpp
+		   src/net/netdevice.cpp \
+		   src/vnet/vipinterpreter.cpp \
+		   src/vnet/vipheader.cpp \
+		   src/vnet/sdcpinterpreter.cpp \
+    src/device.cpp

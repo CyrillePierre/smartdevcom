@@ -4,23 +4,14 @@
 namespace type = sdc::type;
 using sdc::net::NetStream;
 
-void TestNetStream::DeviceTest::write(type::Byte const *b, int size) {
-    type::Byte *it = buf;
-    while (size--) *it++ = *b++;
-}
-
-void TestNetStream::DeviceTest::read(type::Byte *b, int size) {
-    while (size--) *b++ = buf[pos++];
-}
-
 void TestNetStream::testRead() {
     type::Byte deviceBuf[32] = {0xa2, 0xf3, 0xee, 0x28, 0x90, 0xf7, 0xa4};
     type::Byte buf[32];
-    DeviceTest dt;
-    NetStream ns(dt);
+    sdc::test::FakeDevice fk;
+    NetStream ns(fk);
     char *hex;
 
-    dt.buf = deviceBuf;
+    fk.buf = deviceBuf;
 
     // 1010 0010 1111 0011 1110 1110 0010 1000 1001 0000 1111 0111 1010 0100
     //                     |-----||--||||-----------||---------------------|

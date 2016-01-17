@@ -3,11 +3,11 @@
 
 #include "net/netstream.hpp"
 #include "net/varpheader.hpp"
-
-
+#include "vnet/vipinterpreter.h"
 
 namespace sdc {
 namespace net {
+
 
 enum Proto : type::Byte {
     VIP  = 0,	// virtual IP
@@ -18,14 +18,21 @@ enum Proto : type::Byte {
  * Cette classe s'occupe de l'interpretation des paquets reçues au niveau de la
  * couche réseau. Les protocoles qui peuvent être géré sont VIP et VARP.
  */
-struct NetInterpreter {
+class NetInterpreter {
+    vnet::VIPInterpreter & _vip;
+
+public:
+    /**
+     * @brief NetInterpreter
+     * @param vip l'interpreteur de la couche VIP
+     */
+    NetInterpreter(vnet::VIPInterpreter & vip) : _vip(vip) {}
+
     /**
      * Cette méthode permet de parser la dernière requête reçue.
      * @param ns : le stream sur lequel netInterpreter va travailler
      */
-    void operator ()(NetStream &) const;
-
-    static constexpr int VIRTUAL_SIZE = 3;
+    void operator ()(NetStream &);
 
 private :
     void manageVARP(NetStream &) const;

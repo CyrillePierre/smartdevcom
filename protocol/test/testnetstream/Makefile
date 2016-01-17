@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testnetstream\"
+DEFINES       = -DQT_NO_DEBUG -DQT_TESTLIB_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR=\"/home/cyrille/projets/smartDevCom/protocol/test/testnetstream\"
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -m64 -pipe -std=c++14 -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -I../../src -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
+INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -I../../src -I.. -I../../src/net -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtTest -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Test -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -259,7 +259,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d bin/testnetstream1.0.0 || mkdir -p bin/testnetstream1.0.0
-	$(COPY_FILE) --parents $(DIST) bin/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.hpp bin/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.cpp bin/testnetstream1.0.0/ && (cd `dirname bin/testnetstream1.0.0` && $(TAR) testnetstream1.0.0.tar testnetstream1.0.0 && $(COMPRESS) testnetstream1.0.0.tar) && $(MOVE) `dirname bin/testnetstream1.0.0`/testnetstream1.0.0.tar.gz . && $(DEL_FILE) -r bin/testnetstream1.0.0
+	$(COPY_FILE) --parents $(DIST) bin/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.hpp ../fakedevice.hpp bin/testnetstream1.0.0/ && $(COPY_FILE) --parents testnetstream.cpp bin/testnetstream1.0.0/ && (cd `dirname bin/testnetstream1.0.0` && $(TAR) testnetstream1.0.0.tar testnetstream1.0.0 && $(COMPRESS) testnetstream1.0.0.tar) && $(MOVE) `dirname bin/testnetstream1.0.0`/testnetstream1.0.0.tar.gz . && $(DEL_FILE) -r bin/testnetstream1.0.0
 
 
 clean:compiler_clean 
@@ -289,8 +289,9 @@ moc_testnetstream.cpp: ../../src/net/netstream.hpp \
 		../../src/types.hpp \
 		../../src/dynamicbitset.hpp \
 		../../src/net/netdevice.hpp \
+		../fakedevice.hpp \
 		testnetstream.hpp
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testnetstream -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/test/testnetstream -I/home/cyrille/projets/smartDevCom/smartDevCom/protocol/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtTest -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include testnetstream.hpp -o moc_testnetstream.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/cyrille/projets/smartDevCom/protocol/test/testnetstream -I/home/cyrille/projets/smartDevCom/protocol/test/testnetstream -I/home/cyrille/projets/smartDevCom/protocol/src -I/home/cyrille/projets/smartDevCom/protocol/test -I/home/cyrille/projets/smartDevCom/protocol/src/net -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtTest -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include testnetstream.hpp -o moc_testnetstream.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -309,6 +310,7 @@ bin/testnetstream.o: testnetstream.cpp testnetstream.hpp \
 		../../src/types.hpp \
 		../../src/dynamicbitset.hpp \
 		../../src/net/netdevice.hpp \
+		../fakedevice.hpp \
 		moc_testnetstream.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/testnetstream.o testnetstream.cpp
 

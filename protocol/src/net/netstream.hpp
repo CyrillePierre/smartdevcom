@@ -20,11 +20,9 @@ namespace net {
  */
 struct NetStream {
     NetDevice &     _netDevice;	///< La socket sur laquelle ce flux travaille
-    uint8_t    		_sockId;	///< Identifiant de la socket
     type::Byte 		_byteIn;	///< Octet servant à stocker les quelque bits non lues
     uint8_t    		_nbBitsIn;	///< Nle nombre de bits contenus dans _byteIn
     DynamicBitset	_bits;		///< Buffer de bits contenant le paquet à envoyer
-    uint16_t         _comSize;   ///< Taille de l'adresse du support de communication
 
 public:
     NetStream(NetDevice &nd) : _netDevice(nd), _nbBitsIn(0) {}
@@ -46,13 +44,7 @@ public:
      */
     template <typename T,
               std::enable_if_t<std::is_integral<T>{}> * = nullptr>
-    void read(T &, uint8_t);
-
-    /**
-     * @brief getter de sockId
-     * @return l'identifiant de la socket
-     */
-    int sockId() const { return _sockId; }
+    void read(T &, uint8_t = sizeof(T) << 3);
 
     /**
      * @brief Vide le buffer de lecture
@@ -69,11 +61,6 @@ public:
      * @return le netdevice
      */
     NetDevice const &device() const { return _netDevice; }
-
-    /**
-     * @return La taille de l'adresse du support de communication
-     */
-    uint16_t comSize() const { return _comSize; }
 
 private:
     template <typename T>

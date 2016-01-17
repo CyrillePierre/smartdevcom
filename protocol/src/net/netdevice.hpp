@@ -12,16 +12,22 @@ namespace net {
  * implémentation de cette classe abstraite.
  * @brief Support de communication
  */
-class NetDevice
-{
-public :
-    static const type::Byte BROADCAST[];
+struct NetDevice {
+    static type::Byte const BROADCAST[];
+    static constexpr std::size_t virtualAddrSize = 3;
 
 private :
-    const type::Byte* comAddr;       // adresse dans le support de com
-    const type::Byte* virtualAddr;   // adresse dans le réseau virtuel
+    type::Byte const * const _comAddr;       // adresse dans le support de com
+    type::Byte const * const _virtualAddr;   // adresse dans le réseau virtuel
+    std::size_t const        _comAddrSize;
 
 public :
+    /**
+     * @param comAddr l'adresse sur le support de communication
+     * @param virtualAddr l'adresse sur le réseau virtuelle
+     * @param comAddrSize la taille de l'adresse du support de com en octets
+     */
+    NetDevice(type::Byte const *, type::Byte const *, std::size_t);
 
     /**
      * Cette méthode permet de récupérer un ensemble de données et de les
@@ -32,7 +38,7 @@ public :
      * @param buf : le buffer servant à stocker les données lues
      * @param size : le nombre d'octets à lire
      */
-    virtual void read(type::Byte *, int) = 0;
+    virtual std::size_t read(type::Byte *, std::size_t) = 0;
 
     /**
      * Elle permet d'envoyer un buffer de données sur le support de
@@ -41,11 +47,21 @@ public :
      * @param buf : le buffer contenant les données à envoyer
      * @param size : la taille du buffer
      */
-    virtual void write(type::Byte const *, int) = 0;
+    virtual std::size_t write(type::Byte const *, std::size_t) = 0;
 
-    const type::Byte* getComAddr()        const { return comAddr; }
-    const type::Byte* getVirtualAddr()    const { return virtualAddr; }
+    const type::Byte* getComAddr()        const { return _comAddr; }
+    const type::Byte* getVirtualAddr()    const { return _virtualAddr; }
+
+    /** @return la taille de l'adresse du support de com en octets */
+    std::size_t comAddrSize() const { return _comAddrSize; }
+
 };
+
+inline NetDevice::NetDevice(type::Byte const * comAddr,
+                            type::Byte const * virtualAddr,
+                            std::size_t        comAddrSize)
+    : _comAddr(comAddr), _virtualAddr(virtualAddr), _comAddrSize(comAddrSize)
+{}
 
 } // net
 } // sdc
