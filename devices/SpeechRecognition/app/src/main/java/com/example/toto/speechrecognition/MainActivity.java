@@ -1,5 +1,6 @@
 package com.example.toto.speechrecognition;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -14,19 +15,14 @@ import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class MainActivity extends Activity implements Thread.UncaughtExceptionHandler {
+public class MainActivity extends Activity{
     private Button btnSpeak;
     private TextToSpeech tts;
 
-    private static final String[] voiceData = new String[2];
-    static
-    {
-        voiceData[0] = "allume la télé";
-        voiceData[1] = "allume la lumière";
-    }
-
     // distance minimale entre deux phrases, pouhr savoir si elles veulent dire la même chose
     private static final int DISTANCE_MIN = 5;
+
+    private ArrayList<VoiceCommands> commands;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -46,8 +42,7 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
 
                 if(getIntent().getData() != null)
                 {
-                    Toast.makeText(getApplicationContext(), getIntent().getDataString(), Toast.LENGTH_SHORT);
-                    System.out.println(getIntent().getDataString());
+                    //Toast.makeText(getApplicationContext(), getIntent().getDataString(), Toast.LENGTH_SHORT);
                     manageQuery(getIntent().getDataString());
                 }
             }
@@ -60,6 +55,8 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
             }
         });
 
+        commands = Parser.parse(getApplicationContext().getResources().getXml(R.xml.voice_data));
+
         /*MyService service = new MyService();
         startService(new Intent(this, MyService.class));*/
     }
@@ -71,29 +68,29 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
     private void manageQuery(String query)
     {
         // On met en minuscule, on enlève le "jarvis" qui est déjà dans toutes les requetes, et on remplace les ',' par des ' '
-        //String newQuery = query.toLowerCase().replace("jarvis,", "").replaceAll(","," ");
-        String newQuery = ((EditText) findViewById(R.id.edit_text)).getText().toString();
+        String newQuery = query.toLowerCase().replace("jarvis,", "").replaceAll(","," ");
+        //String newQuery = ((EditText) findViewById(R.id.edit_text)).getText().toString();
 
         int minDistance = 1000, distance;
-        String goodRequest = "";
+        VoiceCommands goodRequest = null;
 
         /*  On regarde la distance entre la requête, et l'ensemble des reqûetes dans la BDD pour trouver
             laquelle faire */
-        /*for(String str: voiceData)
+        for(VoiceCommands vc: commands)
         {
-            distance = StringUtils.getLevenshteinDistance(newQuery, str);
+            distance = StringUtils.getLevenshteinDistance(newQuery, vc.voiceActivation);
 
             if(distance < minDistance)
             {
                 minDistance = distance;
-                goodRequest = str;
+                goodRequest = vc;
             }
-        }*/
+        }
 
-        System.out.println("LevenshteinDistance : " + StringUtils.getLevenshteinDistance(newQuery, voiceData[0]));
+        /*System.out.println("LevenshteinDistance : " + StringUtils.getLevenshteinDistance(newQuery, voiceData[0]));
         System.out.println("JaroWinklerDistance : " + StringUtils.getJaroWinklerDistance(newQuery, voiceData[0]));
         System.out.println("FuzzyDistance : " + StringUtils.getFuzzyDistance(newQuery, voiceData[0], Locale.FRENCH));
-        System.out.println();
+        System.out.println();*/
 
         // On fait la bonne requpete, s'il y en a une
         /*if(minDistance < DISTANCE_MIN)
@@ -102,7 +99,7 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
            System.out.println(minDistance);
         }*/
 
-        //tts.speak("J'allume la télé", TextToSpeech.QUEUE_FLUSH, null, null);
+        tts.speak(goodRequest.voiceDiction, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     /**
@@ -118,11 +115,6 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
-        ex.printStackTrace();
     }
 
     @Override
