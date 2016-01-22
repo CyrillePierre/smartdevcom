@@ -1,6 +1,6 @@
 Description du protocole de communication du réseau virtuelle.
 Auteurs : Thomas IMPERY, Cyrille PIERRE
-Version : 0.1
+Version : 0.2
 
 1 - Presentation
 	Ce document décrit le fonctionnement du protocole mis en place pour
@@ -25,15 +25,18 @@ Version : 0.1
 
         |0  |4  |8  |12 |16 |20 |24 |28 |32 |36 |40 |44 |48 |52 |56 |60 |64
 
-        ,---------------------------------------------------------------,
-        | P  |V |  TTL  |       ADDR_SRC        |       ADDR_DEST       |
-        '---------------------------------------------------------------'
+     -- ,---------------------------------------------------------------,
+     00 | P  |V |  TTL  |       ADDR_SRC        |       ADDR_DEST       |
+     -- ;---------------------------------------------------------------'
+	 64 |     LENGTH    |
+	 -- '---------------'
 
 		P         (5 bits)  : protocole (0b00000)
 		V         (3 bits)  : version du protocole (0b000)
 		TTL       (8 bits)  : durée de vie du paquet
 		ADDR_SRC  (24 bits) : addresse de l'objet qui envoie la commande
 		ADDR_DEST (24 bits) : addresse de l'objet qui reçoit la commande
+		LENGTH    (16 bits) : longueur des données transportées (en octets)
 
 	2.2 - Protocole (P)
 		Les 5 premiers bits sont dédié à la détermination du protocole qui
@@ -116,6 +119,13 @@ Version : 0.1
 				ff:ff:ff	broadcast à tous le monde (à modérer)
 				00:00:00	adresse du réseau virtuel (utile pour les
 							routeurs)
+
+	2.6 - La longueur des données (LENGTH)
+		Le dernier champs de l'en-tête VIP contient la longueur des données
+		qui sont encapsulées dans un paquet VIP. Cette information est
+		nécessaire si l'on souhaite faire du routage car elle permet de
+		déterminer la taille totale du paquet sans avoir à interpréter ses
+		données.
 
 3 - Protocole VARP
 	Le protocole VARP est une imitation du protocole ARP mais appliqué au
@@ -228,13 +238,12 @@ Version : 0.1
 	4.1 - En-tête du protocole
 		|0  |2  |4  |6  |8  |10 |12 |14 |16 |18 |20 |22 |24 |26 |28 |
 		
-		,---------------------------------------------------------------
-		|      ID       | T |          LENGTH           |   DATA  . . .
-		'---------------------------------------------------------------
+		,-----------------------------------
+		|      ID   | T |   DATA  . . .
+		'-----------------------------------
 		
-		ID     (8 bits)  : identifiant de la requête
+		ID     (6 bits)  : identifiant de la requête
 		T      (2 bits)  : type de la requête
-		LENGTH (14 bits) : longueur des données (en octets)
 		DATA   (xx bits) : les données des requêtes
 
 	4.2 - Identifiant de la requête
@@ -321,7 +330,7 @@ Version : 0.1
 			Identifiant : 0x05
 			Adresse : unicast
 			Description : Cette requête permet d'exécuter une action sur un
-				objet. En fonction de l'action, les paramètres diffèrent.a
+				objet. En fonction de l'action, les paramètres diffèrent.
 				Certaines actions peuvent renvoyer des informations,
 				d'autres ne font que renvoyer le code d'erreur
 			Paramètre : LENGTH = xxx (indéterminé)
@@ -343,13 +352,13 @@ Version : 0.1
 			- ID       (16 bits) : identifiant de l'action
 			- TYPE_ACT (16 bits) : type de l'action (voir fichier "actions")
 			- PARAM_NB (8 bits)  : nombre de paramètres
-			Pour chaque paramètres :
+			- Pour chaque paramètres :
 				- TYPE     (4 bits)      : type du paramètre
 				- SIZE     (4 bits)      : nombre d'octets du paramètre
 				- MIN      (SIZE octets) : valeur minimal autorisée
 				- MAX      (SIZE octets) : valeur maximal autorisée
 			- RET_NB (8 bits) : nombre de paramètres de la réponse
-			Pour chaque paramètres :
+			- Pour chaque paramètres :
 				- TYPE     (4 bits)      : type du paramètre
 				- SIZE     (4 bits)      : nombre d'octets du paramètre
 				- MIN      (SIZE octets) : valeur minimal autorisée
