@@ -71,18 +71,6 @@ private:
     void set(T &, uint8_t, type::Bit = 1);
 };
 
-/**
- * @brief Ajout d'un bit dans le buffer à envoyer sur le réseau.
- * @param bit : le bit à ajouter
- */
-NetStream & operator <<(NetStream &, type::Bit);
-
-/**
- * @brief Ajout d'un octet dans le buffer à envoyer sur le réseau.
- * @param byte : l'octet à ajouter.
- */
-NetStream & operator <<(NetStream &, type::Byte);
-
 
 template <typename T, std::enable_if_t<std::is_integral<T>{}> *>
 void NetStream::read(T & data, uint8_t size) {

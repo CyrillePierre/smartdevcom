@@ -19,7 +19,9 @@ GID         = $(shell id -g)
 MOUNTPOINT  = /firmware
 MEDIA       = /$(shell lsblk|grep $(NUCLEO)|tr -d ' '|cut -d'/' -f2-)
 MEDIAOK     = $(shell [ $(MEDIA) = "/" ] && echo -n "1")
-DOCKERMOUNT = -v $(PWD):$(MOUNTPOINT) -v $(PWD)/../../protocol/src:$(MOUNTPOINT)/inc/protocol
+DOCKERMOUNT = \
+	-v $(PWD):$(MOUNTPOINT) \
+	-v $(PWD)/../../protocol/src:$(MOUNTPOINT)/inc/protocol
 ifneq ($(DEBUGMODE),)
 DFLAGS      = -DDEBUG -O0 -ggdb
 else
@@ -63,3 +65,7 @@ e:
 
 %:
 	@$(DOCKER) $@
+
+t:
+	@echo "$(DOCKER)"
+	@echo "$(LIBOBJ)"

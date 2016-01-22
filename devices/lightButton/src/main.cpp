@@ -11,10 +11,8 @@ int main() {
 
     type::Byte const comAddr[]  = {0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6},
                      virtAddr[] = {0xaa, 0xbb, 0xcc};
+
     DeviceManager dm;
-
     dm.add(new net::Uart{comAddr, virtAddr, sizeof(comAddr), D8, D2});
-
-    for(;;) {
-    }
+    dm.run();
 }

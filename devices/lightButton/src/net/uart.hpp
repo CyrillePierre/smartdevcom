@@ -2,13 +2,13 @@
 #define UART_HPP
 
 #include "mbed.h"
-#include <net/netdevice.hpp>
+#include "readablenetdevice.hpp"
 
 namespace sdc {
 namespace net {
 
 
-class Uart : public NetDevice {
+class Uart : public ReadableNetDevice {
     Serial _sr;
 
 public:
@@ -30,6 +30,9 @@ public:
 
     /** @see sdc::net::NetDevice::write */
     virtual std::size_t write(type::Byte const *, std::size_t);
+
+    virtual bool readable() { return _sr.readable(); }
+    virtual bool writeable() { return _sr.writeable(); }
 };
 
 
@@ -38,7 +41,7 @@ inline Uart::Uart(type::Byte const * comAddr,
                   std::size_t        comAddrSize,
                   PinName			 tx,
                   PinName   		 rx)
-    : NetDevice(comAddr, virtualAddr, comAddrSize), _sr(tx, rx) {}
+    : ReadableNetDevice(comAddr, virtualAddr, comAddrSize), _sr(tx, rx) {}
 
 } // net
 } // sdc

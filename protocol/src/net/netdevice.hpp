@@ -29,6 +29,8 @@ public :
      */
     NetDevice(type::Byte const *, type::Byte const *, std::size_t);
 
+    virtual ~NetDevice() {}
+
     /**
      * Cette méthode permet de récupérer un ensemble de données et de les
      * stocker dans un buffer. Il faut cependant avoir allouer l'espace mémoire

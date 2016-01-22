@@ -16,7 +16,7 @@ LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys $(LDFLAGS)
 
 MAXDEPTH = 5
 
-SOURCES_DIRS = mbed src
+SOURCES_DIRS = mbed src inc
 INCLUDES_DIRS = mbed inc
 
 EXCLUDE_DIRS = mbed/targets/cmsis/TARGET_STM/TARGET_NUCLEO_F401RE/* \
