@@ -14,7 +14,7 @@ void TestSDCPInterpreter::testTest() {
     type::Byte virt[] = {0xB0, 0xB1, 0xB2};
     type::Byte deviceBuf[32] = {0x00, 0xff, 0xa0, 0xa1, 0xa2, 0xb0, 0xb1, 0xb2,
                                 0x00, 0x00, 0x00};
-    test::FakeDevice fd(com, virt, 3);
+    test::FakeDevice fd(com, virt, 2);
     net::NetStream ns(fd);
     vnet::SDCPInterpreter sdcp;
     vnet::VIPInterpreter vip(sdcp);

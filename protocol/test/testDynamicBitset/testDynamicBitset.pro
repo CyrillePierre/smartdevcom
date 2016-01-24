@@ -3,12 +3,16 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = testDynamicBitset
-INCLUDEPATH += . ../../src
+TARGET = testSdcpInterpreter
+INCLUDEPATH += . ../../src ../../src/vnet .. ../../src/net
+DEPENDPATH  += . ../../src ../../src/vnet .. ../../src/net
 QMAKE_CXXFLAGS += -std=c++14
 OBJECTS_DIR = bin
 QT += testlib
 
+unix:!macx: LIBS += -L$$OUT_PWD/../../ -lprotocol
+unix:!macx: PRE_TARGETDEPS += $$OUT_PWD/../../libprotocol.a
+
 # Input
-HEADERS += testdynamicbitset.hpp ../../src/dynamicbitset.hpp
+HEADERS += testdynamicbitset.hpp
 SOURCES += testdynamicbitset.cpp

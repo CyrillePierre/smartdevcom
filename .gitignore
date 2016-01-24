@@ -6,6 +6,7 @@
 *.creator
 */bin/
 *.o
+*.a
 *.autosave
 moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
@@ -14,3 +15,4 @@ protocol/protocol
 protocol/test/testDynamicBitset/testDynamicBitset
 procotol/test/testnetinterpreter/
 protocol/test/testnetstream/testnetstream
+protocol/test/testSdcpInterpreter/testSdcpInterpreter

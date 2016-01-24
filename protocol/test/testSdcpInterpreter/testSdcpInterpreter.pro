@@ -5,21 +5,17 @@
 TEMPLATE = app
 TARGET = testSdcpInterpreter
 INCLUDEPATH += . ../../src ../../src/vnet .. ../../src/net
+DEPENDPATH  += . ../../src ../../src/vnet .. ../../src/net
 QMAKE_CXXFLAGS += -std=c++14
 OBJECTS_DIR = bin
 QT += testlib
+
+unix:!macx: LIBS += -L$$OUT_PWD/../../ -lprotocol
+unix:!macx: PRE_TARGETDEPS += $$OUT_PWD/../../libprotocol.a
 
 # Input
 HEADERS += \ 
     testsdcpinterpreter.hpp
 SOURCES += \
     testsdcpinterpreter.cpp
-OBJECTS += \
-    ../../bin/netdevice.o \
-    ../../bin/device.o \
-    ../../bin/netinterpreter.o \
-    ../../bin/vipinterpreter.o \
-    ../../bin/sdcpinterpreter.o \
-    ../../bin/varpheader.o \
-    ../../bin/vipheader.o \
-    ../../bin/netstream.o
+

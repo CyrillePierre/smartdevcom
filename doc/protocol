@@ -285,7 +285,8 @@ Version : 0.2
 				capteurs dont l'objet cible est équipé. Chaque capteur
 				possède un identifiant et un type.
 			Paramètre : LENGTH = 0 (Aucun)
-			Réponse : LENGTH = N * 3 avec N le nombre de capteurs
+			Réponse : LENGTH = N * 3 + 1 avec N le nombre de capteurs
+				- entier (1 octet)  : nombre de capteurs
 				- entier (1 octet)  : identifiant du capteur k (k = 0)
 				- entier (2 octets) : type du capteur k
 				- N-1 fois les deux lignes d'avant avec k = k + 1
@@ -297,7 +298,8 @@ Version : 0.2
 				actionneurs dont l'objet cible est équipé. Chaque
 				actionneur possède un identifiant et un type.
 			Paramètre : LENGTH = 0 (Aucun)
-			Réponse : LENGTH = N * 3 avec N le nombre d'actionneur
+			Réponse : LENGTH = N * 3 avec N le nombre d'actionneurs
+				- entier (1 octet)  : nombre d'actionneurs
 				- entier (1 octet)  : identifiant de l'actionneur k (k = 0)
 				- entier (2 octets) : type de l'actionneur k
 				- N-1 fois les deux lignes d'avant avec k = k + 1
@@ -309,6 +311,7 @@ Version : 0.2
 				actions disponibles chez l'objet cible.
 			Paramètre : LENGTH = 0 (Aucun)
 			Réponse : LENGTH = N * 2 avec N le nombre d'actions
+				- entier (1 octet)  : nombre d'actions
 				- entier (2 octets) : identifiant de l'action k (k = 0)
 				- entier (2 octets) : type de l'action (voir fichier
 						"actions")

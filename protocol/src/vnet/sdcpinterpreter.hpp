@@ -83,13 +83,11 @@ private:
      * construction des couches du dessus
      * @param ns le netstream lié à l'émetteur
      * @param id l'identifiant de la requête
-     * @param length la longueur des données que va contenir la trame
      * @param reqType le type de requête
      */
     void buildHeader(net::NetStream &,
                      VIPHeader const &,
                      type::Byte,
-                     type::Word,
                      type::Byte = FrameType::response);
 };
 

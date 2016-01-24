@@ -8,7 +8,6 @@ INCLUDEPATH += src src/net
 QT += testlib
 QMAKE_CXXFLAGS += -std=c++14 -fPIC
 OBJECTS_DIR = bin
-DESTDIR = lib
 CONFIG += static
 
 # Input
@@ -38,3 +37,6 @@ SOURCES +=  \
 		   src/vnet/vipheader.cpp \
 		   src/vnet/sdcpinterpreter.cpp \
     src/device.cpp
+
+SUBDIRS += \
+    test/testSdcpInterpreter/testSdcpInterpreter.pro
