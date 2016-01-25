@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<devices>
+
+    <data name="allumer_television">
+        <voice_activation>allume la télé</voice_activation>
+        <voice_diction>j'allume la télé</voice_diction>
+        <code_bluetooth>0x0000</code_bluetooth>
+    </data>
+
+    <data name="allumer_lumiere">
+        <voice_activation>allume la lumière</voice_activation>
+        <voice_diction>j'allume la lumière</voice_diction>
+        <code_bluetooth>0x0001</code_bluetooth>
+    </data>
+
+</devices>
