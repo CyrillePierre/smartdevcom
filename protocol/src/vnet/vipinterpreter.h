@@ -36,6 +36,7 @@ public:
     static void buildHeader(DynamicBitset &    bitset,
                             type::Byte const * src,
                             type::Byte const * dest,
+                            type::Word         length,
                             type::Byte         ttl = DEFAULT_TTL);
 
     /**

@@ -88,6 +88,7 @@ private:
     void buildHeader(net::NetStream &,
                      VIPHeader const &,
                      type::Byte,
+                     type::Word,
                      type::Byte = FrameType::response);
 };
 

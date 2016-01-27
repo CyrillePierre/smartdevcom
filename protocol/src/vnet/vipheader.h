@@ -13,8 +13,7 @@ struct VIPHeader
 
     type::Byte 	addrSrc[3];     ///< Adresse de l'objet source
     type::Byte 	addrDest[3];    ///< Adresse de l'objet destinataire
-
-    VIPHeader();
+    type::Word  length;			///< Longueur des données en octets
 };
 
 }

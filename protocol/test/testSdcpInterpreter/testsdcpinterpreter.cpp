@@ -24,7 +24,7 @@ void TestSDCPInterpreter::testTest() {
     fd.buf = deviceBuf;
     net(ns);
     hex = QTest::toHexRepresentation((char *) deviceBuf, 11);
-    QCOMPARE(hex, "00 32 B0 B1 B2 A0 A1 A2 00 40 00");
+    QCOMPARE(hex, "00 32 B0 B1 B2 A0 A1 A2 00 01 01");
 }
 
 void TestSDCPInterpreter::testSensors() {

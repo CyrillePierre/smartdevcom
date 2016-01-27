@@ -34,7 +34,6 @@ SOURCES +=  \
            src/net/varpheader.cpp \
 		   src/net/netdevice.cpp \
 		   src/vnet/vipinterpreter.cpp \
-		   src/vnet/vipheader.cpp \
 		   src/vnet/sdcpinterpreter.cpp \
     src/device.cpp
 

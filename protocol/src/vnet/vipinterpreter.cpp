@@ -32,6 +32,8 @@ void VIPInterpreter::operator() (net::NetStream &ns)
     ns.read(header.addrSrc,  VIRTUAL_SIZE);
     ns.read(header.addrDest, VIRTUAL_SIZE);
 
+    ns.read(header.length, 16);
+
     if(memcmp(header.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)  ||
        memcmp(header.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))
     {
@@ -42,6 +44,7 @@ void VIPInterpreter::operator() (net::NetStream &ns)
 void VIPInterpreter::buildHeader(DynamicBitset &    bitset,
                                  const type::Byte * src,
                                  const type::Byte * dest,
+                                 type::Word         length,
                                  type::Byte         ttl)
 {
     bitset.push((type::Byte) net::Proto::VIP, 5);	// Protocole sur 5 bits
@@ -49,6 +52,7 @@ void VIPInterpreter::buildHeader(DynamicBitset &    bitset,
     bitset.push(ttl, 8);				// Durée de vie sur 8 bits
     bitset.push(src, 3);				// Adresse source sur 3 octets
     bitset.push(dest, 3);				// Adresse de destination sur 3 octets
+    bitset.push(length, 16);
 }
 
 

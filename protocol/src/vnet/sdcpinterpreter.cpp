@@ -32,11 +32,13 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
 void SDCPInterpreter::buildHeader(NetStream &       ns,
                                   VIPHeader const & vh,
                                   Byte              id,
+                                  Word              size,
                                   Byte              reqType)
 {
     DynamicBitset & db = ns.writingBitset();
-    VIPInterpreter::buildHeader(db, ns.device().getVirtualAddr(), vh.addrSrc);
-    db.push(id,       8);	// Identifiant (sur 8 bits)
+    net::NetDevice const & nd = ns.device();
+    VIPInterpreter::buildHeader(db, nd.getVirtualAddr(), vh.addrSrc, size + 1);
+    db.push(id,       6);	// Identifiant (sur 8 bits)
     db.push(reqType,  2);	// Type de requête (sur 2 bits)
 }
 
@@ -57,7 +59,7 @@ void SDCPInterpreter::getSensors(NetStream &       ns,
     DynamicBitset & db      = ns.writingBitset();
     auto            sensors = Device::get().sensors();
 
-    buildHeader(ns, vhead, type);
+    buildHeader(ns, vhead, type, sensors.size() * 3 + 1);
     db.push((Byte) sensors.size(), 8);
     for (Sensor * sensor : sensors) {
         db.push(sensor->id()  ,  8);
@@ -74,7 +76,7 @@ void SDCPInterpreter::getActuators(NetStream &       ns,
     DynamicBitset & db        = ns.writingBitset();
     auto            actuators = Device::get().actuators();
 
-    buildHeader(ns, vhead, type);
+    buildHeader(ns, vhead, type, actuators.size() * 3 + 1);
     db.push((Byte) actuators.size(), 8);
     for (Actuator * actuator : actuators){
         db.push(actuator->id(),    8);
@@ -91,7 +93,7 @@ void SDCPInterpreter::getActions(NetStream &       ns,
     DynamicBitset & db      = ns.writingBitset();
     auto            actions = Device::get().actions();
 
-    buildHeader(ns, vhead, type);
+    buildHeader(ns, vhead, type, actions.size() * 3 + 1);
     db.push((Byte) actions.size(), 8);
     for (Action * action : actions) {
         db.push(action->id(),   16);
