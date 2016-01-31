@@ -1,12 +1,9 @@
+#include "rtos/Thread.h"
 #include "devicemanager.hpp"
 #include "debug.hpp"
 
 using sdc::DeviceManager;
 
-
-DeviceManager::DeviceManager() : _vip{_sdcp}, _ni{_vip} {
-    _readTicker.attach_us(this, &DeviceManager::listenNetDevice, LISTEN_PERIOD);
-}
 
 DeviceManager::~DeviceManager()
 {
@@ -14,7 +11,7 @@ DeviceManager::~DeviceManager()
         delete nde.nd;
 }
 
-void DeviceManager::run() {
+void DeviceManager::parseData() {
     for (;;) {
         while (!_queue.empty()) {
             dbg::ledSignal();
@@ -29,11 +26,14 @@ void DeviceManager::run() {
     }
 }
 
-void DeviceManager::listenNetDevice() {
-    for (NetDeviceElem & nde : _nds) {
-        if (nde.nd->readable() && !nde.queued) {
-            nde.queued = true;
-            _queue.push_back(&nde);
+void DeviceManager::listenNetDevices() {
+    for (;;) {
+        for (NetDeviceElem & nde : _nds) {
+            if (nde.nd->readable() && !nde.queued) {
+                nde.queued = true;
+                _queue.push_back(&nde);
+            }
         }
+        rtos::Thread::wait(LISTEN_PERIOD);
     }
 }

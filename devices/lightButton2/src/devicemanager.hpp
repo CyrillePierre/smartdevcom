@@ -1,7 +1,6 @@
 #ifndef NETMANAGER_HPP
 #define NETMANAGER_HPP
 
-#include "mbed.h"
 #include <vector>
 #include <list>
 #include <types.hpp>
@@ -29,7 +28,7 @@ class DeviceManager {
     };
 
 public:
-    static constexpr int LISTEN_PERIOD = 40000; // Période entre 2 écoutes (en us)
+    static constexpr int LISTEN_PERIOD = 40; // Période entre 2 écoutes (en ms)
 
 private:
     std::vector<NetDeviceElem> _nds;
@@ -39,14 +38,8 @@ private:
     vnet::VIPInterpreter  _vip;
     net::NetInterpreter   _ni;
 
-    Ticker  _readTicker;	// Timer d'écoute des périphériques réseaux
-
 public:
-    /**
-     * @brief DeviceManager
-     */
-    DeviceManager();
-
+    DeviceManager() : _vip{_sdcp}, _ni{_vip} {}
     ~DeviceManager();
 
     /**
@@ -54,20 +47,16 @@ public:
      * s'occupera de libérer la mémoire.
      * @param nd le NetDevice à ajouter
      */
-    void add(net::ReadableNetDevice * nd)
-    { _nds.push_back(NetDeviceElem{nd}); }
+    void add(net::ReadableNetDevice * nd) { _nds.push_back(NetDeviceElem{nd}); }
 
-    /**
-     * Démarre l'écoute des périphériques réseaux et traite les messages reçus
-     */
-    void run();
-
-private:
     /**
      * @brief Mise à jour de la file si un nouveau périphérique contient des
      * données à lire.
      */
-    void listenNetDevice();
+    void listenNetDevices();
+
+    /** Traite les messages reçus */
+    void parseData();
 };
 
 } // sdc

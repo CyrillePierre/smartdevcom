@@ -89,8 +89,9 @@ bin/debug.o: src/debug.cpp src/debug.hpp src/mbed/mbed.h src/mbed/platform.h \
  src/mbed/LocalFileSystem.h src/mbed/InterruptIn.h \
  src/mbed/gpio_irq_api.h src/mbed/wait_api.h src/mbed/sleep_api.h \
  src/mbed/rtc_time.h
-bin/devicemanager.o: src/devicemanager.cpp src/devicemanager.hpp \
- src/mbed/mbed.h src/mbed/platform.h \
+bin/devicemanager.o: src/devicemanager.cpp src/rtos/Thread.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/devicemanager.hpp src/mbed/mbed.h src/mbed/platform.h \
  src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
  src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
  src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
@@ -188,7 +189,8 @@ bin/devicemanager.o: src/devicemanager.cpp src/devicemanager.hpp \
  src/net/readablenetdevice.hpp src/debug.hpp
 bin/lightbutton.o: src/lightbutton.cpp src/lightbutton.hpp \
  src/inc/actuator.hpp src/inc/element.hpp src/inc/types.hpp
-bin/main.o: src/main.cpp src/mbed/mbed.h src/mbed/platform.h \
+bin/main.o: src/main.cpp src/devicemanager.hpp src/mbed/mbed.h \
+ src/mbed/platform.h \
  src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
  src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
  src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
@@ -278,26 +280,13 @@ bin/main.o: src/main.cpp src/mbed/mbed.h src/mbed/platform.h \
  src/mbed/LowPowerTicker.h src/mbed/LowPowerTimer.h \
  src/mbed/LocalFileSystem.h src/mbed/InterruptIn.h \
  src/mbed/gpio_irq_api.h src/mbed/wait_api.h src/mbed/sleep_api.h \
- src/mbed/rtc_time.h src/mbed-rtos/rtos/rtos.h \
- src/mbed-rtos/rtos/Thread.h src/mbed-rtos/rtx/TARGET_CORTEX_M/cmsis_os.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/os_tcb.h src/mbed-rtos/rtos/Mutex.h \
- src/mbed-rtos/rtos/RtosTimer.h src/mbed-rtos/rtos/Semaphore.h \
- src/mbed-rtos/rtos/Mail.h src/mbed-rtos/rtos/MemoryPool.h \
- src/mbed-rtos/rtos/Queue.h src/mbed/mbed_error.h
-bin/mbed-rtos/rtos/Mutex.o: src/mbed-rtos/rtos/Mutex.cpp src/mbed-rtos/rtos/Mutex.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/cmsis_os.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/os_tcb.h src/mbed/mbed_error.h
-bin/mbed-rtos/rtos/RtosTimer.o: src/mbed-rtos/rtos/RtosTimer.cpp \
- src/mbed-rtos/rtos/RtosTimer.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/cmsis_os.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/os_tcb.h src/mbed/mbed_error.h
-bin/mbed-rtos/rtos/Semaphore.o: src/mbed-rtos/rtos/Semaphore.cpp \
- src/mbed-rtos/rtos/Semaphore.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/cmsis_os.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/os_tcb.h
-bin/mbed-rtos/rtos/Thread.o: src/mbed-rtos/rtos/Thread.cpp src/mbed-rtos/rtos/Thread.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/cmsis_os.h \
- src/mbed-rtos/rtx/TARGET_CORTEX_M/os_tcb.h src/mbed/mbed_error.h
+ src/mbed/rtc_time.h src/inc/types.hpp src/inc/net/netinterpreter.hpp \
+ src/inc/net/netstream.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
+ src/inc/net/netdevice.hpp src/inc/net/varpheader.hpp \
+ src/inc/net/netstream.hpp src/inc/vnet/vipinterpreter.h \
+ src/inc/vnet/vipheader.h src/inc/vnet/sdcpinterpreter.hpp \
+ src/net/readablenetdevice.hpp src/net/uart.hpp \
+ src/net/readablenetdevice.hpp src/inc/device.hpp src/debug.hpp
 bin/inc/device.o: src/inc/device.cpp src/inc/device.hpp src/inc/types.hpp \
  src/inc/actuator.hpp src/inc/element.hpp src/inc/sensor.hpp \
  src/inc/action.hpp
@@ -328,6 +317,17 @@ bin/inc/vnet/vipinterpreter.o: src/inc/vnet/vipinterpreter.cpp \
  src/inc/net/varpheader.hpp src/inc/net/netstream.hpp \
  src/inc/vnet/vipinterpreter.h src/inc/vnet/sdcpinterpreter.hpp \
  src/inc/net/netstream.hpp
+bin/rtos/Mutex.o: src/rtos/Mutex.cpp src/rtos/Mutex.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/mbed/mbed_error.h
+bin/rtos/RtosTimer.o: src/rtos/RtosTimer.cpp src/rtos/RtosTimer.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/mbed/mbed_error.h
+bin/rtos/Semaphore.o: src/rtos/Semaphore.cpp src/rtos/Semaphore.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h
+bin/rtos/Thread.o: src/rtos/Thread.cpp src/rtos/Thread.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/mbed/mbed_error.h
 bin/net/uart.o: src/net/uart.cpp src/net/uart.hpp src/mbed/mbed.h \
  src/mbed/platform.h \
  src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
