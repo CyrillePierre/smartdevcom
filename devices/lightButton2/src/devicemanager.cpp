@@ -1,6 +1,7 @@
 #include "rtos/Thread.h"
 #include "devicemanager.hpp"
 #include "debug.hpp"
+#include "mbed.h"
 
 using sdc::DeviceManager;
 
@@ -13,7 +14,7 @@ DeviceManager::~DeviceManager()
 
 void DeviceManager::parseData() {
     for (;;) {
-        while (!_queue.empty()) {
+        if (!_queue.empty()) {
             dbg::ledSignal();
             NetDeviceElem * nde = _queue.front();
             sdc::net::NetStream ns{*nde->nd};
@@ -22,7 +23,7 @@ void DeviceManager::parseData() {
             nde->queued = false;
         }
 
-        wait_ms(100);
+        rtos::Thread::wait(100);
     }
 }
 

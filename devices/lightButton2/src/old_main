@@ -1,6 +1,17 @@
 #include "mbed.h"
-#include "rtos.h"
- 
+#include "rtos/Thread.h"
+#include "debug.hpp"
+#include "types.hpp"
+#include "devicemanager.hpp"
+#include "net/uart.hpp"
+
+using namespace rtos;
+using namespace sdc;
+
+type::Byte const comAddr[]  = {0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6};
+type::Byte const vAddrBLE[] = {0xaa, 0xbb, 0xcc};
+type::Byte const vAddrPC[]  = {0x1a, 0x2a, 0x3a};
+
 DigitalOut led1(LED1);
 DigitalOut led2(LED2);
  
@@ -10,10 +21,35 @@ void led2_thread(void const *args) {
         Thread::wait(1000);
     }
 }
- 
+
+void test(void const *) {
+    for (;;) dbg::ledSignal(), rtos::Thread::wait(2000);
+}
+
 int main() {
-    Thread thread(led2_thread);
-    
+    for (int i = 0; i < 4; ++i) dbg::ledSignal(), wait_ms(140);
+
+    DeviceManager dm;
+//    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2});
+    dm.add(new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX});
+
+//    Thread thread(led2_thread);
+    Thread thread2(test);
+    Thread::wait(200);
+    Thread thread3(test);
+    Thread::wait(200);
+
+    puts("OK");
+    using Dm = DeviceManager;
+    rtos::Thread t(test);
+    puts("test ok");
+//    rtos::Thread(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);
+    puts("thread ok");
+//    dm.parseData();
+
+    Thread::wait(400);
+    test(nullptr);
+
     while (true) {
         led1 = !led1;
         Thread::wait(400);
