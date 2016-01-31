@@ -11,15 +11,11 @@ namespace sdc {
  */
 class Element {
 protected:
-    type::Byte const _id;
     type::Word const _type;
 
 public:
-    explicit Element(type::Byte id, type::Word type) : _id(id), _type(type) {}
+    explicit Element(type::Word type) : _type{type} {}
     virtual ~Element() {}
-
-    /** @return l'identifiant de l'élément */
-    type::Byte id()   const { return _id; }
 
     /** @return le type de l'élément */
     type::Word type() const { return _type; }

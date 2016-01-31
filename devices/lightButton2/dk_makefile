@@ -1,0 +1,139 @@
+
+OBJ_PATH = bin
+SRC_DIR  = src
+
+#PROGRAM	= $(notdir $(shell pwd))
+PROGRAM  = bin/nucleo
+SUBDIRS  = $(shell find -L $(SRC_DIR) -type d | grep -v '^\.\w')
+OBJ_DIRS = $(patsubst $(SRC_DIR)%,$(OBJ_PATH)%,$(SUBDIRS))
+
+SRC_CPP	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.cpp))
+SRC_CC	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.c))
+SRC_AS	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.S))
+OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_PATH)/%.o,$(SRC_CPP)) \
+		  $(patsubst $(SRC_DIR)/%.c,$(OBJ_PATH)/%.o,$(SRC_CC)) \
+		  $(patsubst $(SRC_DIR)/%.s,$(OBJ_PATH)/%.o,$(SRC_AS))
+INCLUDE_PATHS = $(addprefix -I, $(SUBDIRS))
+
+SYS_OBJECTS   = $(wildcard $(SRC_DIR)/mbed/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM/*.o)
+LIBRARY_PATHS = -L$(SRC_DIR)/mbed/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM 
+LIBRARIES     = -lmbed 
+LINKER_SCRIPT = $(SRC_DIR)/mbed/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM/STM32F401XE.ld
+
+############################################################################### 
+GCC_BIN =
+AS      = $(GCC_BIN)arm-none-eabi-as
+CC      = $(GCC_BIN)arm-none-eabi-gcc
+CPP     = $(GCC_BIN)arm-none-eabi-g++
+LD      = $(GCC_BIN)arm-none-eabi-gcc
+OBJCOPY = $(GCC_BIN)arm-none-eabi-objcopy
+OBJDUMP = $(GCC_BIN)arm-none-eabi-objdump
+SIZE 	= $(GCC_BIN)arm-none-eabi-size
+AR	    = $(GCC_BIN)arm-none-eabi-ar rvs
+
+CPU = -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=$(FLOAT_ABI)
+CC_FLAGS = $(CPU) -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer
+#CC_FLAGS += -fPIC
+VERSION = -std=c++14
+
+#CC_FLAGS += -MMD -MP
+CC_SYMBOLS = -DTARGET_RTOS_M4_M7 -DTARGET_FF_ARDUINO -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC \
+			 -DTARGET_STM32F401RE -DTARGET_FF_MORPHO -DTARGET_CORTEX_M -D__FPU_PRESENT=1 \
+			 -D__MBED__=1 -DTARGET_NUCLEO_F401RE -DTARGET_M4 -DTARGET_STM \
+			 -DMBED_BUILD_TIMESTAMP=1454240865.25 -DTARGET_STM32F4 -D__CORTEX_M4 -DARM_MATH_CM4 
+
+LD_FLAGS = $(CPU) -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+LD_FLAGS += -Wl,-Map=$(PROGRAM).map,--cref
+LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+# Divers
+MAKE		= make --no-print-directory
+DEPFILE		= .depends
+RM			= rm -f
+SHELL		= bash
+CHOWN       = chown $(UID):$(GID)
+CHOWNR      = chown -R $(UID):$(GID)
+
+# information about Nucleo F401RE
+FLASHSIZE   = 524288
+RAMSIZE     = 98304
+NODEP       = true
+SHOWSIZE    = ./.memory $(SIZE) $(PROGRAM).elf $(FLASHSIZE) $(RAMSIZE)
+
+ifeq ($(HARDFP),1)
+	FLOAT_ABI = hard
+else
+	FLOAT_ABI = softfp
+endif
+
+ifeq ($(DEBUG), 1)
+  CC_FLAGS += -DDEBUG -O0
+else
+  CC_FLAGS += -DNDEBUG -Os
+endif
+
+.SUFFIXES: .cpp .hpp .o .h .c .S
+
+.PHONY : all clean deps check_dirs
+
+vpath %.cpp $(SUBDIRS)
+vpath %.c   $(SUBDIRS)
+vpath %.S   $(SUBDIRS)
+
+define make-goal
+$1/%.o : %.cpp
+	@echo "Compilation de $$@..."
+	@$(CPP) $(CC_FLAGS) $(CC_SYMBOLS) $(VERSION) -fno-rtti $(INCLUDE_PATHS) -o $$@ $$<
+
+$1/%.o : %.s
+	@echo "Compilation de $$@..."
+	@$(AS) $(CPU) -o $$@ $$<
+
+$1/%.o : %.c
+	@echo "Compilation de $$@..."
+	@$(CC)  $(CC_FLAGS) $(CC_SYMBOLS) $(INCLUDE_PATHS) -o $$@ $$<
+endef
+
+
+all: check_dirs $(PROGRAM).bin $(PROGRAM).hex 
+
+$(PROGRAM).elf: $(OBJECTS) $(SYS_OBJECTS)
+	@echo Compilation de $@...
+	@$(LD) $(LD_FLAGS) -T$(LINKER_SCRIPT) $(LIBRARY_PATHS) -o $@ $^ $(LIBRARIES) $(LD_SYS_LIBS) $(LIBRARIES) $(LD_SYS_LIBS)
+	@$(CHOWN) $@
+
+$(PROGRAM).bin: $(PROGRAM).elf size
+	@$(OBJCOPY) -O binary $< $@
+	@$(CHOWN) $@
+	@$(CHOWN) $(PROGRAM).map
+	@$(CHOWNR) $(OBJ_PATH)
+
+$(PROGRAM).hex: $(PROGRAM).elf
+	@$(OBJCOPY) -O ihex $< $@
+	@$(CHOWN) $@
+
+$(PROGRAM).lst: $(PROGRAM).elf
+	@$(OBJDUMP) -Sdh $< > $@
+	@$(CHOWN) $@
+
+lst: $(PROGRAM).lst
+
+size:
+	@$(SHOWSIZE)
+
+# Création des commandes de compilation pour chaque répertoire
+$(foreach sdir,$(OBJ_DIRS),$(eval $(call make-goal,$(sdir))))
+
+check_dirs : $(OBJ_DIRS)
+
+$(OBJ_DIRS) :
+	@mkdir -p $@
+
+clean : 
+	$(RM) -r $(OBJ_PATH) $(PROGRAM).bin $(PROGRAM).elf $(PROGRAM).hex $(PROGRAM).map $(PROGRAM).lst
+
+deps : $(SRC_CPP)
+	@$(CPP) $(VERSION) $(INCLUDE_PATHS) -MM $+ \
+		| sed -r 's|^(\S*:\s)($(SRC_DIR)/(\S*/))?|$(OBJ_PATH)/\3\1\2|' > $(DEPFILE)
+
+sinclude $(DEPFILE)

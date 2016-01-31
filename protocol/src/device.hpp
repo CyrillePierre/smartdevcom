@@ -30,13 +30,9 @@ public:
     static Device & get() { static Device d; return d; }
 
 private:
-    /**
-     * Le constructeur prend en paramètre des tailles pour les conteneurs afin
-     * d'éviter d'allouer trop de mémoire.
-     * @param nbSensors le nombre de capteur que va posséder l'objet connecté
-     * @param nbActuators le nombre d'actionneur
-     */
-    explicit Device(Sensors::size_type = 2, Actuators::size_type = 2);
+    Device()               = default;
+    Device(Device const &) = delete;
+    Device(Device &&)      = delete;
 
 public:
     /** Le destructeur s'occupe de la destruction des éléments contenus */

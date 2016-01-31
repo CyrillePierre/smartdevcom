@@ -8,7 +8,7 @@ PROGRAM = build/nucleo.elf
 FLAGS = -D__HEAP_SIZE=0x0000 -D__STACK_SIZE=0x0100 -DSTM32F401RE \
         -fno-strict-aliasing -DSTM32F4XX -Wall -fdata-sections -ffunction-sections \
         -DTARGET_NUCLEO_F401RE --specs=nosys.specs -mcpu=cortex-m4 -mlittle-endian \
-        -mthumb -mthumb-interwork -DSTM32F401xE -Tsrc/stm32f401re_flash.ld \
+        -mthumb -mthumb-interwork -DSTM32F401xE -Tsrc/stm32f401re_flash.ld -D__CORTEX_M4 \
         -Wl,--gc-sections,--defsym=__HEAP_SIZE=0x0000,--defsym=__STACK_SIZE=0x0100 $(DFLAGS)
 CPPFLAGS = -std=c++14
 
@@ -22,7 +22,10 @@ INCLUDES_DIRS = mbed inc
 EXCLUDE_DIRS = mbed/targets/cmsis/TARGET_STM/TARGET_NUCLEO_F401RE/* \
                lib/Emulator lib/Emulator/* tests tests/*
 
-EXCLUDE_FILES = src/periodiccaller.cpp mbed/targets/cmsis/TARGET_STM/TARGET_NUCLEO_F401RE/TOOLCHAIN_ARM_STD/sys.cpp mbed/targets/cmsis/TARGET_STM/TARGET_NUCLEO_F401RE/TOOLCHAIN_ARM_MICRO/sys.cpp
+EXCLUDE_FILES = src/periodiccaller.cpp \
+				mbed/targets/cmsis/TARGET_STM/TARGET_NUCLEO_F401RE/TOOLCHAIN_ARM_STD/sys.cpp \
+				mbed/targets/cmsis/TARGET_STM/TARGET_NUCLEO_F401RE/TOOLCHAIN_ARM_MICRO/sys.cpp
+
 
 OBJECT_FILES = mbed/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM/*.o
 
@@ -40,8 +43,7 @@ CHOWN = chown $(UID):$(GID)
 CHOWNR= chown -R $(UID):$(GID)
 
 # Generating directory tree for building
-BUILDING_SRC_DIRS =$(shell find mbed -type d -links 2)
-BUILDING_SRC_DIRS+=$(shell find src -type d -links 2)
+BUILDING_SRC_DIRS =$(shell find $(SOURCES_DIRS) -type d -links 2)
 BUILDING_DIRS=$(addsuffix /,$(addprefix build/,$(BUILDING_SRC_DIRS)))
 
 include .generic.mk
