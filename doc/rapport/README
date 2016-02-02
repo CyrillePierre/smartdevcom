@@ -1,0 +1,6 @@
+Pour écrire le rapport :
+	Uniquement modifier les fichiers correspondant aux différentes parties.
+	Le fichier rapport.tex ne fait rien d'autre que les inclures
+
+Pour compiler :
+	make

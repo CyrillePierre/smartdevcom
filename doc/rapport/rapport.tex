@@ -1,0 +1,109 @@
+
+\documentclass[a4paper, 11pt]{book}
+
+\usepackage[utf8]{inputenc}      % Pour gérer correctement les accents
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}     % Indentation et style français
+\usepackage[babel=true]{csquotes}
+\usepackage[bindingoffset=1cm, hmargin=2cm, vmargin=3cm, headheight=14pt]{geometry}
+\usepackage{graphicx}
+\usepackage{textcomp}      % Pour les symboles comme 'degré'
+\usepackage{tocloft}       % Config des espacements des titres
+\usepackage{amsmath}       % Pour les équations
+\usepackage{numprint}      % Pour les nombres en style français
+\usepackage{units}         % Pour \unit
+\usepackage{gensymb}       % Pour le degré en math
+\usepackage{subfig}        % Pour les sous-figures
+\usepackage{hyperref}      % Pour faire des liens dans le document
+\usepackage{fancyhdr}      % Pour l'en-tête et le pied de page
+\usepackage{dsfont}		   % Pour une jolie lettre pour l'esnemble des réels
+\usepackage{setspace}
+\usepackage[vlined, french, nofillcomment]{algorithm2e}            
+
+\title{Les chevals sont rouges}
+\author{Thomas \textsc{Impery} \\ Cyrille \textsc{Pierre}}
+
+\setlength{\parskip}{10pt}             % Espace entre les paragraphes
+
+\makeatletter  % Pour les variables @author et @date
+
+% Configuration de l'en-tête et du pied de page
+\fancypagestyle{plain}{%
+   \renewcommand{\headrulewidth}{0pt}
+   \renewcommand{\footrulewidth}{.4pt}
+   \fancyhf{}
+   \fancyfoot[C]{\thepage}
+   \fancyfoot[L]{\@author}
+   \fancyfoot[R]{\@date}}
+   
+\renewcommand{\headrulewidth}{.4pt}
+\renewcommand{\footrulewidth}{.4pt}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{\@author}
+\fancyfoot[R]{\@date}
+\pagestyle{fancy}
+
+% Config page blanche
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\pagestyle{empty}\origdoublepage}%
+}
+
+\renewcommand{\baselinestretch}{1.2}   % interligne à 1.5
+   
+
+\begin{document}
+	\include{titlepage}
+   \makeatother
+   
+   \clearemptydoublepage
+   
+   \frontmatter   % Numérotation romaine minuscule
+   
+   \tableofcontents
+   \clearemptydoublepage
+   
+   \listoffigures
+   \clearemptydoublepage
+   
+   \include{resume}
+   \clearemptydoublepage
+
+   \mainmatter    % Numérotation arabe
+
+   \include{automatisation_maison}
+   \clearemptydoublepage
+   
+   \include{protocole}
+   \clearemptydoublepage
+   
+   \include{communication_objets}
+   \clearemptydoublepage
+   
+   \include{conclusion}
+   \clearemptydoublepage
+   
+   \frontmatter   % Numérotation romaine minuscule
+   \include{lexique}
+   \clearemptydoublepage
+   
+   \include{bibliographie}
+   \clearemptydoublepage
+   
+   \renewcommand{\thesection}{\Alph{section}}
+   \setcounter{section}{0}
+   
+   \let\origappendix\appendix % save the existing appendix command
+   \renewcommand\appendix{\clearpage\pagenumbering{Roman}\origappendix}
+   
+   \appendix
+   
+%    \chapter{Diagramme de Gantt}
+%       {\centering
+%       \includegraphics[width=.8\textwidth]{}}
+
+\end{document}
+
