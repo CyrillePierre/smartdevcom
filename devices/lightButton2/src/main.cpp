@@ -22,7 +22,7 @@ int main() {
     for (int i = 0; i < 4; ++i) dbg::ledSignal(), rtos::Thread::wait(140);
 
     DeviceManager dm;
-//    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2});
+    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2});
     dm.add(new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX});
 
     using Dm = DeviceManager;
