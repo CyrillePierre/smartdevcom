@@ -1,15 +1,24 @@
 #ifndef UART_HPP
 #define UART_HPP
 
-#include "mbed.h"
+#include <deque>
+#include "mbed/Serial.h"
+#include "rtos/Semaphore.h"
 #include "readablenetdevice.hpp"
 
 namespace sdc {
 namespace net {
 
 
-class Uart : public ReadableNetDevice {
-    Serial _sr;
+struct Uart : public ReadableNetDevice {
+    static constexpr uint32_t QUEUE_SIZE = 64;
+
+    using Buffer = std::deque<type::Byte>;
+
+private:
+    mbed::Serial    _sr;
+    Buffer          _buffer;
+    rtos::Semaphore _bufSem;
 
 public:
     /**
@@ -31,17 +40,17 @@ public:
     /** @see sdc::net::NetDevice::write */
     virtual std::size_t write(type::Byte const *, std::size_t);
 
-    virtual bool readable() { return _sr.readable(); }
+    virtual bool readable() { return _buffer.size(); }
     virtual bool writeable() { return _sr.writeable(); }
+
+private:
+    /** @brief Intéruption gérant la lecture du port série */
+    void readHandler();
+
+    void print();
 };
 
 
-inline Uart::Uart(type::Byte const * comAddr,
-                  type::Byte const * virtualAddr,
-                  std::size_t        comAddrSize,
-                  PinName			 tx,
-                  PinName   		 rx)
-    : ReadableNetDevice(comAddr, virtualAddr, comAddrSize), _sr(tx, rx) {}
 
 } // net
 } // sdc

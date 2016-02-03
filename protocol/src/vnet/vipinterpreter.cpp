@@ -13,9 +13,11 @@ using sdc::vnet::VIPInterpreter;
  * @brief Cette méthode permet de gérer une trame VIP
  * @param ns : la trame reçue
  */
-void VIPInterpreter::operator() (net::NetStream &ns)
+void VIPInterpreter::operator()(net::NetStream &ns)
 {
     const net::NetDevice &device = ns.device();
+
+//    std::cout << "VIPInterpreter::operator()" << std::endl;
 
     vnet::VIPHeader header;
     type::Byte  byte;
@@ -23,16 +25,33 @@ void VIPInterpreter::operator() (net::NetStream &ns)
     ns.read(byte, 3);
     header.version = byte;
 
+//    std::cout << "vip.version = " << (int) header.version << std::endl;
+
     ns.read(byte, 8);
     header.ttl = byte;
+
+//    std::cout << "vip.ttl     = " << (int) header.ttl << std::endl;
 
     if(header.ttl == 0)
         return;
 
     ns.read(header.addrSrc,  VIRTUAL_SIZE);
+
+//    int i;
+//    std::cout << "vip.addrSrc = " << std::hex;
+//    for (i = 0; i < VIRTUAL_SIZE - 1; ++i)
+//        std::cout << (int) header.addrSrc[i] << ":";
+//    std::cout << (int) header.addrSrc[i] << std::endl;
+
     ns.read(header.addrDest, VIRTUAL_SIZE);
 
+//    std::cout << "vip.addrSrc = ";
+//    for (i = 0; i < VIRTUAL_SIZE - 1; ++i)
+//        std::cout << (int) header.addrDest[i] << ":";
+//    std::cout << (int) header.addrDest[i] << std::endl;
+
     ns.read(header.length, 16);
+//    std::cout << "vip.length  = " << (int) header.length << std::endl;
 
     if(memcmp(header.addrDest, device.getVirtualAddr(), VIRTUAL_SIZE)  ||
        memcmp(header.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))

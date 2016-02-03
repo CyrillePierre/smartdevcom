@@ -2,8 +2,9 @@
 #define NETMANAGER_HPP
 
 #include <vector>
-#include <list>
 #include <types.hpp>
+#include "rtos/Queue.h"
+#include "rtos/Mutex.h"
 #include <net/netinterpreter.hpp>
 #include <vnet/vipinterpreter.h>
 #include <vnet/sdcpinterpreter.hpp>
@@ -29,14 +30,17 @@ class DeviceManager {
 
 public:
     static constexpr int LISTEN_PERIOD = 40; // Période entre 2 écoutes (en ms)
+    static constexpr sdc::type::Byte START_DELIM = 0xcc;
 
 private:
     std::vector<NetDeviceElem> _nds;
-    std::list<NetDeviceElem *> _queue;
+    rtos::Queue<NetDeviceElem, 4> _queue;
 
     vnet::SDCPInterpreter _sdcp;
     vnet::VIPInterpreter  _vip;
     net::NetInterpreter   _ni;
+
+    rtos::Mutex _mutex;
 
 public:
     DeviceManager() : _vip{_sdcp}, _ni{_vip} {}

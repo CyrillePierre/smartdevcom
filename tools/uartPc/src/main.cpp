@@ -1,6 +1,8 @@
 #include <iostream>
+#include <chrono>
 #include <cstdint>
 #include <unistd.h>
+#include <thread>
 #include "uart.h"
 
 int main(int argc, char **argv) {
@@ -10,18 +12,26 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    std::uint8_t c;
-    std::uint8_t msg[] = {0x00, 0xff, 0xa0, 0xa1, 0xa2, 0x1a,
-                          0x2a, 0x3a, 0x00, 0x00, 0x00};
-//    Uart uart(argv[1]);
-//    uart.write(msg, sizeof(msg));
+    Uart uart(argv[1]);
+    if (!uart.open(B9600)) {
+        std::cerr << "Erreur d'ouverture du fichier" << std::endl;
+        return 2;
+    }
 
-    write(1, msg, sizeof(msg));
+    std::uint8_t const msg[] = {0x36, 0xcc, 0x00, 0xff, 0xa0, 0xa1, 0xa2,
+                                0x1a, 0x2a, 0x3a, 0x00, 0x00, 0x00};
 
-//    std::cout << std::hex;
-//    while (uart.read(&c, 1))
-//        std::cout << "read : " << (unsigned) c << std::endl;
-//        write(1, &c, 1);
+    std::thread t([&] {
+        using namespace std::literals;
+        for (;;) {
+            uart.write(msg, 12);
+            std::this_thread::sleep_for(1000ms);
+        }
+    });
+
+    std::uint8_t buf[32];
+    ssize_t nb;
+    while (nb = uart.read(buf, 32)) write(1, buf, nb);
 
     return 0;
 }

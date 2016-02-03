@@ -8,6 +8,10 @@
 *.o
 *.a
 *.autosave
+*.aux
+*.loc
+*.out
+*.log
 moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
 Makefile

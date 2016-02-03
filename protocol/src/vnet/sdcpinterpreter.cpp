@@ -16,6 +16,8 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
     ns.read(id, 6);
     ns.read(type, 2);
 
+//    std::cout << "SDCPInterpreter::operator()" << std::endl;
+
     switch (id) {
     case ReqID::test:         return test(ns, vhead, type);
     case ReqID::getSensors:   return getSensors(ns, vhead, type);

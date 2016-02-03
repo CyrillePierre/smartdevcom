@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unistd.h>
+#include <termios.h>
 
 struct Uart {
 	int         _fd;
@@ -14,7 +15,7 @@ public:
 
 	Uart(std::string const &);
 
-	bool open();
+    bool open(speed_t baudrate);
 	void close();
 
 	template <typename Buffer>

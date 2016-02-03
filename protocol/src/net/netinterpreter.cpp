@@ -18,6 +18,9 @@ void NetInterpreter::operator ()(NetStream &ns) {
     type::Byte protocol;
     ns.read(protocol, 5);
 
+//    std::cout << "NetInterpreter::operator()" << std::endl;
+//    std::cout << "protocol = " << std::dec << (int) protocol << std::endl;
+
     switch (protocol) {
         case Proto::VIP:  _vip(ns);       break;
         case Proto::VARP: manageVARP(ns); break;

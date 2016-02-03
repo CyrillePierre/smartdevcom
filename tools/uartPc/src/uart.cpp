@@ -2,7 +2,6 @@
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>                            
-#include <termios.h>                             
 #include <stdio.h>
 #include <pthread.h>
 
@@ -26,7 +25,7 @@ Uart::Uart(std::string const & filename)
  * pour la communication rs-232
  * @return false si une erreur est survenue sinon true
  */
-bool Uart::open() {
+bool Uart::open(speed_t baudrate) {
 	struct termios options;
 	//  fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY);
 	_fd = ::open(_filename.c_str(), O_RDWR); // open device for read&write
@@ -36,8 +35,8 @@ bool Uart::open() {
 	//    fcntl(fd, F_SETFL, FNDELAY); //ne pas bloquer sur le read
 	tcgetattr(_fd,&options);
 	usleep(10000);
-	cfsetospeed(&options,B115200);
-	cfsetispeed(&options,B115200);
+    cfsetospeed(&options, baudrate);
+    cfsetispeed(&options, baudrate);
 	options.c_cflag &= ~PARENB; /* Parite   : none */
 	options.c_cflag &= ~CSTOPB; /* Stop bit : 1    */
 	options.c_cflag &= ~CSIZE;  /* Bits     : 8    */
