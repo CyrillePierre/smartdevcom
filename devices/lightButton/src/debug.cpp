@@ -1,7 +1,7 @@
 #include "debug.hpp"
 
-DigitalOut dbg::led{LED1};
-static Timeout ledTimeout;
+mbed::DigitalOut dbg::led{LED1};
+static mbed::Timeout ledTimeout;
 
 static void ledOff() {
     dbg::led = 0;

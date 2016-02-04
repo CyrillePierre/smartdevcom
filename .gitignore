@@ -12,6 +12,7 @@
 *.loc
 *.out
 *.log
+*.bin
 moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
 Makefile

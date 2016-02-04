@@ -1,9 +1,9 @@
-#include <mbed.h>
-#include <ST_F401_84MHZ.h>
+#include "rtos/Thread.h"
 #include "devicemanager.hpp"
 #include "net/uart.hpp"
 #include "device.hpp"
 #include "debug.hpp"
+#include "mbed/Serial.h"
 
 using namespace sdc;
 
@@ -12,15 +12,24 @@ type::Byte const vAddrBLE[] = {0xaa, 0xbb, 0xcc};
 type::Byte const vAddrPC[]  = {0x1a, 0x2a, 0x3a};
 
 
+template <class C, void (C::*fn)()>
+void thread_cast(void const * arg) {
+    C & c = *const_cast<C *>(static_cast<C const *>(arg));
+    (c.*fn)();
+}
+
 int main() {
-    F401_init84 nucleoF401RE{0};
-
-    for (int i = 0; i < 4; ++i) dbg::ledSignal(), wait_ms(140);
-
-//    auto uart = new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
+    for (int i = 0; i < 4; ++i) dbg::ledSignal(), rtos::Thread::wait(140);
 
     DeviceManager dm;
-//    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2});
+    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2});
+    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12});
     dm.add(new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX});
-    dm.run();
+
+    using Dm = DeviceManager;
+    rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);
+
+    dm.parseData();
+
+    tListen.terminate();
 }

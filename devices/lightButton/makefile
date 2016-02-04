@@ -1,6 +1,7 @@
 # These variables are to be modified so it correspond to your system
 IMAGE       = nucleo            # The Docker image name (given at build time by -t)
 NUCLEO      = NODE_F401RE       # The Nucleo directory name when mounted
+NUCLEO_DIR	= /media/nucleo
 DEBUGGER    = gdb               # The debugger to use with make debug
 #DEBUGMODE   = 1                # comment this line to enter in release mode
 
@@ -18,17 +19,20 @@ UID         = $(shell id -u)
 GID         = $(shell id -g)
 MOUNTPOINT  = /firmware
 MEDIA       = /$(shell lsblk|grep $(NUCLEO)|tr -d ' '|cut -d'/' -f2-)
-MEDIAOK     = $(shell [ $(MEDIA) = "/" ] && echo -n "1")
 DOCKERMOUNT = \
 	-v $(PWD):$(MOUNTPOINT) \
-	-v $(PWD)/../../protocol/src:$(MOUNTPOINT)/inc/protocol
+	-v $(PWD)/../../protocol/src:$(MOUNTPOINT)/src/inc
+
 ifneq ($(DEBUGMODE),)
 DFLAGS      = -DDEBUG -O0 -ggdb
 else
 DFLAGS      = -DNDEBUG -Os
 endif
+
+DK_MAKEFILE = dk_makefile
+MAKE        = make --no-print-directory
 MAKEARGS    = UID="$(UID)" GID="$(GID)" LDFLAGS="$(LDFLAGS)" DFLAGS="$(DFLAGS)"
-DOCKERMAKE  = make -C$(MOUNTPOINT) $(MAKEARGS) -f.nucleo.mk
+DOCKERMAKE  = $(MAKE) -C$(MOUNTPOINT) $(MAKEARGS) -f$(DK_MAKEFILE)
 DOCKER      = docker run --rm $(DOCKERMOUNT) $(IMAGE) $(DOCKERMAKE)
 BINARY      = build/nucleo.bin
 ELF         = build/nucleo.elf
@@ -36,36 +40,16 @@ CP          = cp -p
 AR          = ar rvs
 
 all:
-	@$(DOCKER) bin
+	@$(DOCKER) all
 ifneq ($(LIBOBJ),)
 	@$(AR) build/lib$(LIBNAME).a $(LIBOBJ)
 endif
 
-upload: all
-ifeq ($(MEDIAOK), 1)
-	$(error $(NUCLEO) is not mounted)
-else
-	$(CP) $(BINARY) $(MEDIA)
-endif
-
-flash:
-	@$(DOCKER) flash
-
-debug:
-	@$(DEBUGGER) $(ELF)
-
-clean:
-	@$(DOCKER) clean
-
-purge:
-	@$(DOCKER) distclean
-
-e:
-	@echo docker run --rm $(DOCKERMOUNT) $(IMAGE)
+upload :
+	mountpoint -q $(NUCLEO_DIR) && umount LABEL=$(NUCLEO) || :
+	mount LABEL=$(NUCLEO)
+	cp bin/nucleo.bin $(NUCLEO_DIR)
+	umount LABEL=$(NUCLEO)
 
 %:
 	@$(DOCKER) $@
-
-t:
-	@echo "$(DOCKER)"
-	@echo "$(LIBOBJ)"

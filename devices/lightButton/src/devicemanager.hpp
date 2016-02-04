@@ -1,10 +1,10 @@
 #ifndef NETMANAGER_HPP
 #define NETMANAGER_HPP
 
-#include "mbed.h"
 #include <vector>
-#include <list>
 #include <types.hpp>
+#include "rtos/Queue.h"
+#include "rtos/Mutex.h"
 #include <net/netinterpreter.hpp>
 #include <vnet/vipinterpreter.h>
 #include <vnet/sdcpinterpreter.hpp>
@@ -29,24 +29,21 @@ class DeviceManager {
     };
 
 public:
-    static constexpr int LISTEN_PERIOD = 40000; // Période entre 2 écoutes (en us)
+    static constexpr int LISTEN_PERIOD = 40; // Période entre 2 écoutes (en ms)
+    static constexpr sdc::type::Byte START_DELIM = 0xcc;
 
 private:
     std::vector<NetDeviceElem> _nds;
-    std::list<NetDeviceElem *> _queue;
+    rtos::Queue<NetDeviceElem, 4> _queue;
 
     vnet::SDCPInterpreter _sdcp;
     vnet::VIPInterpreter  _vip;
     net::NetInterpreter   _ni;
 
-    Ticker  _readTicker;	// Timer d'écoute des périphériques réseaux
+    rtos::Mutex _mutex;
 
 public:
-    /**
-     * @brief DeviceManager
-     */
-    DeviceManager();
-
+    DeviceManager() : _vip{_sdcp}, _ni{_vip} {}
     ~DeviceManager();
 
     /**
@@ -54,20 +51,16 @@ public:
      * s'occupera de libérer la mémoire.
      * @param nd le NetDevice à ajouter
      */
-    void add(net::ReadableNetDevice * nd)
-    { _nds.push_back(NetDeviceElem{nd}); }
+    void add(net::ReadableNetDevice * nd) { _nds.push_back(NetDeviceElem{nd}); }
 
-    /**
-     * Démarre l'écoute des périphériques réseaux et traite les messages reçus
-     */
-    void run();
-
-private:
     /**
      * @brief Mise à jour de la file si un nouveau périphérique contient des
      * données à lire.
      */
-    void listenNetDevice();
+    void listenNetDevices();
+
+    /** Traite les messages reçus */
+    void parseData();
 };
 
 } // sdc
