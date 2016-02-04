@@ -40,7 +40,7 @@ bool Uart::open(speed_t baudrate) {
 	options.c_cflag &= ~PARENB; /* Parite   : none */
 	options.c_cflag &= ~CSTOPB; /* Stop bit : 1    */
 	options.c_cflag &= ~CSIZE;  /* Bits     : 8    */
-	options.c_cflag |= CS8;
+    options.c_cflag |= CS8;
 	options.c_oflag &= ~CRTSCTS;
 	// options.c_iflag &= ~(IXON);
 	// tcsetattr(fd,TCSANOW,&options);

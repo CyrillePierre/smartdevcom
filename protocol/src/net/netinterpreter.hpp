@@ -18,7 +18,10 @@ enum Proto : type::Byte {
  * Cette classe s'occupe de l'interpretation des paquets reçues au niveau de la
  * couche réseau. Les protocoles qui peuvent être géré sont VIP et VARP.
  */
-class NetInterpreter {
+struct NetInterpreter {
+    static constexpr sdc::type::Byte START_DELIM = 0xcc;
+
+private:
     vnet::VIPInterpreter & _vip;
 
 public:

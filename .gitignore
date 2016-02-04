@@ -1,9 +1,7 @@
 .*.swp
 .*.swo
 *.files
-*.includes
 *.user
-*.creator
 */bin/
 *.o
 *.a

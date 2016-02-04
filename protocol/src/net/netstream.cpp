@@ -1,10 +1,13 @@
 #include <iostream>
-#include "netstream.hpp"
+#include "net/netstream.hpp"
+#include "net/netinterpreter.hpp"
 
 using sdc::net::NetStream;
 using namespace sdc::type;
 
 void NetStream::flushOut() {
+    type::Byte b = sdc::net::NetInterpreter::START_DELIM;
+    _netDevice.write(&b, 1);
     _netDevice.write(_bits.data(), _bits.blockSize());
     _bits.clear();
 }

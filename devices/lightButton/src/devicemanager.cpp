@@ -32,7 +32,7 @@ void DeviceManager::listenNetDevices() {
                 sdc::type::Byte b;
                 nde.nd->read(&b, 1);
 
-                if (b == START_DELIM) {
+                if (b == sdc::net::NetInterpreter::START_DELIM) {
                     nde.queued = true;
                     _queue.put(&nde);
                 }

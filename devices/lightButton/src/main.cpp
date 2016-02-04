@@ -2,8 +2,8 @@
 #include "devicemanager.hpp"
 #include "net/uart.hpp"
 #include "device.hpp"
+#include "lightbutton.hpp"
 #include "debug.hpp"
-#include "mbed/Serial.h"
 
 using namespace sdc;
 
@@ -21,10 +21,12 @@ void thread_cast(void const * arg) {
 int main() {
     for (int i = 0; i < 4; ++i) dbg::ledSignal(), rtos::Thread::wait(140);
 
+    Device::get() += new LightButton(D3);
+
     DeviceManager dm;
-    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2});
-    dm.add(new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12});
-    dm.add(new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX});
+    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
+    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
+    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
 
     using Dm = DeviceManager;
     rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);

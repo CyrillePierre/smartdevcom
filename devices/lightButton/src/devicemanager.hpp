@@ -30,7 +30,6 @@ class DeviceManager {
 
 public:
     static constexpr int LISTEN_PERIOD = 40; // Période entre 2 écoutes (en ms)
-    static constexpr sdc::type::Byte START_DELIM = 0xcc;
 
 private:
     std::vector<NetDeviceElem> _nds;
@@ -51,7 +50,8 @@ public:
      * s'occupera de libérer la mémoire.
      * @param nd le NetDevice à ajouter
      */
-    void add(net::ReadableNetDevice * nd) { _nds.push_back(NetDeviceElem{nd}); }
+    DeviceManager & operator +=(net::ReadableNetDevice * nd)
+    { _nds.push_back(NetDeviceElem{nd}); return *this; }
 
     /**
      * @brief Mise à jour de la file si un nouveau périphérique contient des

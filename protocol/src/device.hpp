@@ -42,19 +42,20 @@ public:
      * Ajout d'un capteur
      * @param s le capteur à ajouter
      */
-    void operator +=(Sensor * s) { _sensors.push_back(s); }
+    Device & operator +=(Sensor * s) { _sensors.push_back(s);  return *this; }
 
     /**
      * Ajout d'un actionneur
      * @param a l'actionneur à ajouter
      */
-    void operator +=(Actuator * a) { _actuators.push_back(a); }
+    Device & operator +=(Actuator * a)
+    { _actuators.push_back(a);  return *this; }
 
     /**
      * Ajout d'une action
      * @param a l'action à ajouter
      */
-    void operator +=(Action * a) { _actions.push_back(a); }
+    Device & operator +=(Action * a) { _actions.push_back(a);  return *this; }
 
     /** @return la liste des capteurs */
     Sensors const & sensors() const { return _sensors; }
