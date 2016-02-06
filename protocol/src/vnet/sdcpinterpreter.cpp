@@ -47,6 +47,8 @@ void SDCPInterpreter::test(NetStream &       ns,
                            VIPHeader const & vhead,
                            Byte              type)
 {
+    std::cout << "test()" << std::endl;
+
     buildHeader(ns, vhead, type, 0);
     ns.flushOut();
 }
@@ -145,7 +147,7 @@ void SDCPInterpreter::execAction(NetStream &       ns,
     Word actionId;
     ns.read(actionId, 16);
 
-    std::cout << "getActionDef()" << std::endl;
+    std::cout << "execAction()" << std::endl;
 
     Action * a = Device::get().action(actionId);
     if (a) {
