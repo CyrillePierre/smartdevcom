@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = testSdcpInterpreter
+TARGET = testDynamicBitset
 INCLUDEPATH += . ../../src ../../src/vnet .. ../../src/net
 DEPENDPATH  += . ../../src ../../src/vnet .. ../../src/net
 QMAKE_CXXFLAGS += -std=c++14

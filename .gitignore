@@ -19,3 +19,6 @@ protocol/test/testDynamicBitset/testDynamicBitset
 procotol/test/testnetinterpreter/
 protocol/test/testnetstream/testnetstream
 protocol/test/testSdcpInterpreter/testSdcpInterpreter
+protocol/test/testVipInterpreter/testVipInterpreter
+protocol/test/testnetinterpreter/testNetInterpreter
+build/
