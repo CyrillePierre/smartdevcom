@@ -40,6 +40,5 @@ void Uart::readHandler() {
         char b = _sr.getc();
         _buffer.push_back(b);
         _bufSem.release();
-        std::cout << b << std::endl;
     }
 }
