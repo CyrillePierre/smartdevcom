@@ -1,5 +1,12 @@
 #include "lightbutton.hpp"
+#include "rtos/Thread.h"
 
-namespace sdc {
+using sdc::LightButton;
 
-} // namespace sdc
+void LightButton::move(float val) {
+    _servo = val;
+    rtos::Thread::wait(moveDelay);
+    _servo = .5;
+    rtos::Thread::wait(moveDelay);
+    _servo.stop();
+}

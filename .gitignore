@@ -11,6 +11,9 @@
 *.out
 *.log
 *.bin
+*.elf
+*.hex
+*.map
 moc_*
 protocol/test/testDynamicBitset/testDynamicBitset
 Makefile
@@ -22,3 +25,5 @@ protocol/test/testSdcpInterpreter/testSdcpInterpreter
 protocol/test/testVipInterpreter/testVipInterpreter
 protocol/test/testnetinterpreter/testNetInterpreter
 build/
+tools/uartPc
+.hg/

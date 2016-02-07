@@ -3,6 +3,7 @@
 #include "net/uart.hpp"
 #include "device.hpp"
 #include "lightbutton.hpp"
+#include "lightaction.hpp"
 #include "debug.hpp"
 #include "mbed.h"
 
@@ -22,17 +23,16 @@ void thread_cast(void const * arg) {
 int main() {
     for (int i = 0; i < 4; ++i) dbg::ledSignal(), rtos::Thread::wait(140);
 
-    Device::get() += new LightButton(D3);
+    LightButton * lb = new LightButton(D3);
+
+    Device & d = Device::get();
+    d += lb;
+    d += new LightAction(*lb);
 
     DeviceManager dm;
 //    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
 //    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
-//    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
-
-    net::Uart * uart = new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
-    dm += uart;
-
-    rtos::Thread tUart(&thread_cast<net::Uart, &net::Uart::bufferInfo>, uart);
+    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
 
     using Dm = DeviceManager;
     rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);

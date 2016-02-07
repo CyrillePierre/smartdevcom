@@ -377,8 +377,9 @@ Version : 0.2
 				- TYPE_BOOL   (0x3) : booléen
 				- TYPE_STRING (0x4) : chaine de caractère (termine par 0)
 
-			Dans le cas des paramètres de type chaine de caractère, les
-			champs MIN et MAX sont omis. Le paramètre SIZE n'est pas lu.
+			Dans le cas des paramètres de type chaine de caractère ou
+			booleen, les champs MIN et MAX sont omis. Le paramètre SIZE 
+			n'est pas lu.
 
 		4.6.3 - Prototype d'action inconnue
 			Si l'action passé en paramètre n'existe pas, l'objet répondra

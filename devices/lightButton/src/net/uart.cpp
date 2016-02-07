@@ -44,6 +44,7 @@ void Uart::readHandler() {
     }
 }
 
+// TODO à enlever
 void Uart::bufferInfo() {
     for (;;) {
         _sr.printf("buffer.size = %d\n", _buffer.size());
