@@ -2,15 +2,13 @@
 #define NETMANAGER_HPP
 
 #include <vector>
-#include <list>
 #include <types.hpp>
-#include "rtos/Queue.h"
 #include "rtos/Mutex.h"
-#include "rtos/Semaphore.h"
 #include <net/netinterpreter.hpp>
 #include <vnet/vipinterpreter.h>
 #include <vnet/sdcpinterpreter.hpp>
 #include "net/readablenetdevice.hpp"
+#include "util/msgqueue.hpp"
 
 namespace sdc {
 
@@ -35,9 +33,8 @@ public:
 
 private:
     std::vector<NetDeviceElem> _nds;
-//    rtos::Queue<NetDeviceElem, 4> _queue;
-    std::list<NetDeviceElem *> _queue;
-    rtos::Semaphore			   _queueSem;
+    util::MsgQueue<NetDeviceElem *, util::SingleWriter, util::SingleReader>
+        _queue;
 
     vnet::SDCPInterpreter _sdcp;
     vnet::VIPInterpreter  _vip;
@@ -46,7 +43,7 @@ private:
     rtos::Mutex _mutex;
 
 public:
-    DeviceManager() : _queueSem{0}, _vip{_sdcp}, _ni{_vip} {}
+    DeviceManager() : _vip{_sdcp}, _ni{_vip} {}
     ~DeviceManager();
 
     /**

@@ -10,3 +10,4 @@ src/
 /usr/include/
 .
 src/Servo
+src/util

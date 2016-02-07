@@ -14,14 +14,8 @@ DeviceManager::~DeviceManager()
 
 void DeviceManager::parseData() {
     for (;;) {
-//        osEvent evt = _queue.get(100);
-//        std::cout << "event : " << std::hex << evt.status << std::endl;
-//        if (evt.status & osEventMessage) {
-        _queueSem.wait();
+        NetDeviceElem * nde = _queue.pop();	// Bloquant
         dbg::ledSignal();
-//		NetDeviceElem * nde = (NetDeviceElem *) evt.value.p;
-        NetDeviceElem * nde = _queue.front();
-        _queue.pop_front();
         sdc::net::NetStream ns{*nde->nd};
         _ni(ns);
         nde->queued = false;
@@ -37,9 +31,7 @@ void DeviceManager::listenNetDevices() {
 
                 if (b == sdc::net::NetInterpreter::START_DELIM) {
                     nde.queued = true;
-//                    _queue.put(&nde);
-                    _queue.push_back(&nde);
-                    _queueSem.release();
+                    _queue.push(&nde);
                 }
             }
         }
