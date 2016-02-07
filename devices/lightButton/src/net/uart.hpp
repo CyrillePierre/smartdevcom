@@ -43,6 +43,8 @@ public:
     virtual bool readable() { return _buffer.size(); }
     virtual bool writeable() { return _sr.writeable(); }
 
+    void bufferInfo();
+
 private:
     /** @brief Intéruption gérant la lecture du port série */
     void readHandler();

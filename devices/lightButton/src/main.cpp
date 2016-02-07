@@ -4,6 +4,7 @@
 #include "device.hpp"
 #include "lightbutton.hpp"
 #include "debug.hpp"
+#include "mbed.h"
 
 using namespace sdc;
 
@@ -24,9 +25,14 @@ int main() {
     Device::get() += new LightButton(D3);
 
     DeviceManager dm;
-    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
-    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
-    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
+//    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
+//    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
+//    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
+
+    net::Uart * uart = new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
+    dm += uart;
+
+    rtos::Thread tUart(&thread_cast<net::Uart, &net::Uart::bufferInfo>, uart);
 
     using Dm = DeviceManager;
     rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);

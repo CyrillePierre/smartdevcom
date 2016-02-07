@@ -1,4 +1,5 @@
 #include "uart.hpp"
+#include "rtos/Thread.h"
 #include <iostream>
 
 using sdc::net::Uart;
@@ -42,3 +43,30 @@ void Uart::readHandler() {
         _bufSem.release();
     }
 }
+
+void Uart::bufferInfo() {
+    for (;;) {
+        _sr.printf("buffer.size = %d\n", _buffer.size());
+        rtos::Thread::wait(1000);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
