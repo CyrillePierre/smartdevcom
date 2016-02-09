@@ -20,11 +20,11 @@ class VIPHeader;
  */
 struct ActionErrorCode {
     enum Error : uint8_t {
-        success,	///< tout s'est bien passé
-        unknown,	///< identifiant de l'action inconnu
-        format,
-        prms_nb,
-        exec
+        success  = 0,	///< tout s'est bien passé
+        unknown  = 1,	///< identifiant de l'action inconnu
+        format   = 2,
+        prms_nb  = 3,
+        exec     = 4
     };
 
     unsigned error:4;
@@ -36,9 +36,9 @@ struct ActionErrorCode {
  * @brief Liste des types de trames
  */
 enum FrameType : type::Byte {
-    request,	///< La trame est une demande
-    response,	///< La trame est une réponse
-    event		///< La trame est un évènement
+    request  = 0,	///< La trame est une demande
+    response = 1,	///< La trame est une réponse
+    event    = 2	///< La trame est un évènement
 };
 
 
@@ -46,12 +46,12 @@ enum FrameType : type::Byte {
  * @brief Identifiant des types de requêtes
  */
 enum ReqID : type::Byte {
-    test = 0,		///< test de présence
-    getSensors,		///< récupération de la liste des capteurs
-    getActuators,	///< récupération de la liste des actionneurs
-    getActions,		///< récupération de la liste des actions
-    getActionDef,	///< récupération du prototype d'une action
-    execAction		///< exécution d'un action
+    test         = 0,	///< test de présence
+    getSensors   = 1,	///< récupération de la liste des capteurs
+    getActuators = 2,	///< récupération de la liste des actionneurs
+    getActions   = 3,	///< récupération de la liste des actions
+    getActionDef = 4,	///< récupération du prototype d'une action
+    execAction   = 5	///< exécution d'un action
 };
 
 

@@ -1,5 +1,6 @@
 #include "testdynamicbitset.hpp"
 #include "dynamicbitset.hpp"
+#include <iostream>
 
 using namespace sdc;
 
@@ -98,6 +99,18 @@ void TestDynamicBitset::testPushPtr() const {
     buf = QTest::toHexRepresentation((char *)data, db.blockSize());
     QCOMPARE(db.size(), DynamicBitset::SizeType(sizeof(dwords) << 3));
     QCOMPARE(buf, "AB 4F E8 12 AA BB CC 33 0F 1E 2D 3B");
+}
+
+void TestDynamicBitset::testValue() const
+{
+    DynamicBitset db;
+
+    for (int i = 0; i < 0x100; ++i) {
+        db.clear();
+        db.push(i, 8);
+        QCOMPARE((int) *db.data(), i);
+    }
+
 }
 
 QTEST_MAIN(TestDynamicBitset);
