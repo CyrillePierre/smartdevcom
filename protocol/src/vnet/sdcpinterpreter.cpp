@@ -17,11 +17,12 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
     ns.read(type, 2);
 
     switch (id) {
-    case ReqID::test:         return test(ns, vhead, type);
-    case ReqID::getSensors:   return getSensors(ns, vhead, type);
-    case ReqID::getActuators: return getActuators(ns, vhead, type);
-    case ReqID::getActions:   return getActions(ns, vhead, type);
-    case ReqID::getActionDef: return getActionDef(ns, vhead, type);
+    case ReqID::test:         return test(ns, vhead, id);
+    case ReqID::getSensors:   return getSensors(ns, vhead, id);
+    case ReqID::getActuators: return getActuators(ns, vhead, id);
+    case ReqID::getActions:   return getActions(ns, vhead, id);
+    case ReqID::getActionDef: return getActionDef(ns, vhead, id);
+    case ReqID::execAction:   return execAction(ns, vhead, id);
     }
 
     std::cerr << "[ERR] Parsing SDCP: unknown request ID : " << (int)id
@@ -45,25 +46,25 @@ void SDCPInterpreter::buildHeader(NetStream &       ns,
 
 void SDCPInterpreter::test(NetStream &       ns,
                            VIPHeader const & vhead,
-                           Byte              type)
+                           Byte              id)
 {
     std::cout << "test()" << std::endl;
 
-    buildHeader(ns, vhead, type, 0);
+    buildHeader(ns, vhead, id, 0);
     ns.flushOut();
 }
 
 
 void SDCPInterpreter::getSensors(NetStream &       ns,
                                  VIPHeader const & vhead,
-                                 Byte              type)
+                                 Byte              id)
 {
     DynamicBitset & db      = ns.writingBitset();
     auto            sensors = Device::get().sensors();
 
     std::cout << "getSensors()" << std::endl;
 
-    buildHeader(ns, vhead, type, sensors.size() * 3 + 1);
+    buildHeader(ns, vhead, id, sensors.size() * 3 + 1);
     db.push((Byte) sensors.size(), 8);
     for (std::size_t i = 0; i < sensors.size(); ++i) {
         db.push(i, 8);
@@ -75,14 +76,14 @@ void SDCPInterpreter::getSensors(NetStream &       ns,
 
 void SDCPInterpreter::getActuators(NetStream &       ns,
                                    VIPHeader const & vhead,
-                                   Byte              type)
+                                   Byte              id)
 {
     DynamicBitset & db        = ns.writingBitset();
     auto            actuators = Device::get().actuators();
 
     std::cout << "getActuators()" << std::endl;
 
-    buildHeader(ns, vhead, type, actuators.size() * 3 + 1);
+    buildHeader(ns, vhead, id, actuators.size() * 3 + 1);
     db.push((Byte) actuators.size(), 8);
     for (std::size_t i = 0; i < actuators.size(); ++i) {
         db.push(i, 8);
@@ -94,14 +95,14 @@ void SDCPInterpreter::getActuators(NetStream &       ns,
 
 void SDCPInterpreter::getActions(NetStream &       ns,
                                  VIPHeader const & vhead,
-                                 Byte              type)
+                                 Byte              id)
 {
     DynamicBitset & db      = ns.writingBitset();
     auto            actions = Device::get().actions();
 
     std::cout << "getActions()" << std::endl;
 
-    buildHeader(ns, vhead, type, actions.size() * 3 + 1);
+    buildHeader(ns, vhead, id, actions.size() * 3 + 1);
     db.push((Byte) actions.size(), 8);
     for (std::size_t i = 0; i < actions.size(); ++i) {
         db.push(i, 8);
@@ -113,7 +114,7 @@ void SDCPInterpreter::getActions(NetStream &       ns,
 
 void SDCPInterpreter::getActionDef(NetStream &       ns,
                                    VIPHeader const & vhead,
-                                   Byte              type)
+                                   Byte              id)
 {
     // Lecture de l'identifiant de l'action
     Word actionId;
@@ -123,15 +124,19 @@ void SDCPInterpreter::getActionDef(NetStream &       ns,
 
     DynamicBitset & db = ns.writingBitset();
     Action * a = Device::get().action(actionId);
+
+    std::cout << "id = " << actionId << std::endl;
+
     // Si l'action existe on ajoute son prototype au bitset
     if (a) {
-        buildHeader(ns, vhead, type, (Byte) a->prototypeSize());
+        std::cout << "protoSize = " << a->prototypeSize() << std::endl;
+        buildHeader(ns, vhead, id, (Byte) a->prototypeSize() + 1);
         a->pushPrototype(db);
     }
 
     // Sinon on envoie que l'identifiant
     else {
-        buildHeader(ns, vhead, type, 2);
+        buildHeader(ns, vhead, id, 2);
         db.push(actionId, 16);
     }
 
@@ -141,7 +146,7 @@ void SDCPInterpreter::getActionDef(NetStream &       ns,
 
 void SDCPInterpreter::execAction(NetStream &       ns,
                                  VIPHeader const & vhead,
-                                 Byte              type)
+                                 Byte              id)
 {
     // Lecture de l'identifiant de l'action
     Word actionId;
@@ -151,13 +156,13 @@ void SDCPInterpreter::execAction(NetStream &       ns,
 
     Action * a = Device::get().action(actionId);
     if (a) {
-        buildHeader(ns, vhead, type, (Byte) a->returnSize());
+        buildHeader(ns, vhead, id, (Byte) a->returnSize());
         (*a)(ns);
     }
 
     // Sinon on envoie le code d'erreur "action inconnue"
     else {
-        buildHeader(ns, vhead, type, 1);
+        buildHeader(ns, vhead, id, 1);
         DynamicBitset & db = ns.writingBitset();
         db.push((Byte) ErrorCode::UNKNOWN, 4);
         db.push(0, 4);

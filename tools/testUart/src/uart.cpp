@@ -42,10 +42,10 @@ bool Uart::open(speed_t baudrate) {
 	options.c_cflag &= ~CSIZE;  /* Bits     : 8    */
     options.c_cflag |= CS8;
 	options.c_oflag &= ~CRTSCTS;
-    options.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
-                         | INLCR | IGNCR | ICRNL | IXON);
+	// options.c_iflag &= ~(IXON);
+	// tcsetattr(fd,TCSANOW,&options);
 	options.c_oflag &= ~OPOST;
-    options.c_lflag &= ~(ICANON | ECHO | ECHONL | IEXTEN | ISIG);
+	options.c_lflag &= ~(ICANON | ECHO | ECHONL|IEXTEN | ISIG);
 	// c_cc
 	options.c_cc[VMIN] = 1;
 	options.c_cc[VTIME] = 4;		// timeout = 0.4s

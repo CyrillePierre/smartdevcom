@@ -11,6 +11,7 @@ private slots:
     void testClear() const;
     void testPush() const;
     void testPushPtr() const;
+    void testValue() const;
 };
 
 #endif // TESTDYNAMICBITSET_HPP
