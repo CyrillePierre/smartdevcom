@@ -1,17 +1,11 @@
 package com.example.toto.speechrecognition;
 
-import android.content.Context;
 import android.content.res.XmlResourceParser;
-import android.speech.tts.Voice;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,6 +13,8 @@ import java.util.ArrayList;
  * Created by toto on 17/01/16.
  */
 public class Parser {
+
+    public final static int NB_ELEMENT = 4;
 
     /**
      * Initialisation du parseur XML
@@ -42,7 +38,7 @@ public class Parser {
             {
                 if(xrp.getName().equals("data")) // Si la balise est une balise 'data'
                 {
-                    commands.add(new VoiceCommands("", "", 0));
+                    commands.add(new VoiceCommands());
                 }
             }
             else if(eventType == XmlPullParser.END_TAG) // Si on arrive à la fin d'une balise
@@ -71,11 +67,17 @@ public class Parser {
                         commands.get(cptElement).bluetoothCode = Integer.decode(xrp.getText());
                         break;
 
+                    // Quatrième élement = le ble auquel il faut se co
+                    case 3 :
+                        commands.get(cptElement).bleName = xrp.getText();
+                        break;
+
+
                     default :
 
                 }
 
-                cptText = (cptText + 1) % 3;
+                cptText = (cptText + 1) % NB_ELEMENT;
             }
 
 

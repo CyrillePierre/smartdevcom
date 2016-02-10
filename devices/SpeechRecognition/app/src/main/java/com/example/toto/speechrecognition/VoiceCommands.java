@@ -11,17 +11,5 @@ public class VoiceCommands {
 
     public int bluetoothCode;      // code bluetooth à envoyer sur le réseau virtuel
 
-    /**
-     *
-     * @param voiceActivation   : chaine de caractère à détecter
-     * @param voiceDiction      : chaine de caractère que le portable dira
-     * @param bluetoothCode     : code bluetooth à envoyer sur le réseau virtuel
-     */
-    public VoiceCommands(String voiceActivation, String voiceDiction, int bluetoothCode)
-    {
-        this.voiceActivation    = voiceActivation;
-        this.voiceDiction       = voiceDiction;
-
-        this.bluetoothCode      = bluetoothCode;
-    }
+    public String bleName;         // nom du ble sur lequel il faut se co
 }

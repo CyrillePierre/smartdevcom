@@ -44,12 +44,13 @@
             android:layout_marginTop="110dp"/>
 
         <TextView
+            android:id="@id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/tap_on_mic"
             android:textColor="@color/white"
-            android:textSize="15dp"
+            android:textSize="25dp"
             android:textStyle="normal" />
     </LinearLayout>
 
