@@ -26,4 +26,6 @@ protocol/test/testVipInterpreter/testVipInterpreter
 protocol/test/testnetinterpreter/testNetInterpreter
 build/
 tools/uartPc
+doc/rapport/rapport.*
+\!doc/rapport/rapport.tex
 .hg/
