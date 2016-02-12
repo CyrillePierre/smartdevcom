@@ -21,9 +21,7 @@ MOUNTPOINT  = /firmware
 MEDIA       = /$(shell lsblk|grep $(NUCLEO)|tr -d ' '|cut -d'/' -f2-)
 DOCKERMOUNT = \
 	-v $(PWD):$(MOUNTPOINT) \
-	-v $(PWD)/../../protocol/src:$(MOUNTPOINT)/inc/protocol \
-	-v $(PWD)/../../lib/nucleo/src:$(MOUNTPOINT)/inc/nucleo \
-	-v $(PWD)/../../lib/nucleo/lib:$(MOUNTPOINT)/lib
+	-v $(PWD)/../../protocol/src:$(MOUNTPOINT)/src/inc
 
 ifneq ($(DEBUGMODE),)
 DFLAGS      = -DDEBUG -O0 -ggdb
@@ -39,7 +37,7 @@ DOCKER      = docker run --rm $(DOCKERMOUNT) $(IMAGE) $(DOCKERMAKE)
 BINARY      = build/nucleo.bin
 ELF         = build/nucleo.elf
 CP          = cp -p
-AR          = ar rs
+AR          = ar rvs
 
 all:
 	@$(DOCKER) all

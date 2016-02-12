@@ -4,8 +4,9 @@ SRC_DIR  = src
 
 #PROGRAM	= $(notdir $(shell pwd))
 PROGRAM  = bin/nucleo
+LIBNAME  = sdc_nucleo
+LIBFILE  = lib/lib$(LIBNAME).a
 SUBDIRS  = $(shell find -L $(SRC_DIR) -type d | grep -v '^\.\w')
-INCDIRS  = $(shell find -L inc -type d | grep -v '^\.\w')
 OBJ_DIRS = $(patsubst $(SRC_DIR)%,$(OBJ_PATH)%,$(SUBDIRS))
 
 SRC_CPP	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.cpp))
@@ -14,12 +15,12 @@ SRC_AS	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.S))
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_PATH)/%.o,$(SRC_CPP)) \
 		  $(patsubst $(SRC_DIR)/%.c,$(OBJ_PATH)/%.o,$(SRC_CC)) \
 		  $(patsubst $(SRC_DIR)/%.s,$(OBJ_PATH)/%.o,$(SRC_AS))
-INCLUDE_PATHS = $(addprefix -I, $(SUBDIRS) $(INCDIRS))
+INCLUDE_PATHS = $(addprefix -I, $(SUBDIRS))
 
 SYS_OBJECTS   = $(wildcard lib/*.o)
 LIBRARY_PATHS = -Llib
-LIBRARIES     = -lmbed -lsdc_nucleo
-LINKER_SCRIPT = lib/STM32F401XE.ld
+LIBRARIES     = -lmbed 
+LINKER_SCRIPT = $(SRC_DIR)/mbed/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM/STM32F401XE.ld
 
 ############################################################################### 
 GCC_BIN =
@@ -34,7 +35,7 @@ AR	    = $(GCC_BIN)arm-none-eabi-ar rs
 
 CPU = -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=$(FLOAT_ABI)
 CC_FLAGS = $(CPU) -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer
-#CC_FLAGS += -fPIC
+CC_FLAGS += -fPIC
 VERSION = -std=c++14
 
 #CC_FLAGS += -MMD -MP
@@ -96,12 +97,16 @@ $1/%.o : %.c
 endef
 
 
-all: check_dirs $(PROGRAM).bin $(PROGRAM).hex 
+all: check_dirs $(LIBFILE)
 
-$(PROGRAM).elf: $(OBJECTS) $(SYS_OBJECTS)
+$(PROGRAM).elf: $(OBJECTS)
 	@echo Compilation de $@...
 	@$(LD) $(LD_FLAGS) -T$(LINKER_SCRIPT) $(LIBRARY_PATHS) -o $@ $^ $(LIBRARIES) $(LD_SYS_LIBS) $(LIBRARIES) $(LD_SYS_LIBS)
 	@$(CHOWN) $@
+
+$(LIBFILE): $(OBJECTS)
+	@echo Création de la bibliothèque $@...
+	@$(AR) $@ $^
 
 $(PROGRAM).bin: $(PROGRAM).elf size
 	@$(OBJCOPY) -O binary $< $@
@@ -129,10 +134,9 @@ check_dirs : $(OBJ_DIRS)
 
 $(OBJ_DIRS) :
 	@mkdir -p $@
-	@$(CHOWN) $@
 
 clean : 
-	$(RM) -r $(OBJ_PATH) $(PROGRAM).bin $(PROGRAM).elf $(PROGRAM).hex $(PROGRAM).map $(PROGRAM).lst
+	$(RM) -r $(OBJ_PATH) $(LIBFILE)
 
 deps : $(SRC_CPP)
 	@$(CPP) $(VERSION) $(INCLUDE_PATHS) -MM $+ \

@@ -48,8 +48,6 @@ void SDCPInterpreter::test(NetStream &       ns,
                            VIPHeader const & vhead,
                            Byte              id)
 {
-    std::cout << "test()" << std::endl;
-
     buildHeader(ns, vhead, id, 0);
     ns.flushOut();
 }
@@ -61,8 +59,6 @@ void SDCPInterpreter::getSensors(NetStream &       ns,
 {
     DynamicBitset & db      = ns.writingBitset();
     auto            sensors = Device::get().sensors();
-
-    std::cout << "getSensors()" << std::endl;
 
     buildHeader(ns, vhead, id, sensors.size() * 3 + 1);
     db.push((Byte) sensors.size(), 8);
@@ -81,8 +77,6 @@ void SDCPInterpreter::getActuators(NetStream &       ns,
     DynamicBitset & db        = ns.writingBitset();
     auto            actuators = Device::get().actuators();
 
-    std::cout << "getActuators()" << std::endl;
-
     buildHeader(ns, vhead, id, actuators.size() * 3 + 1);
     db.push((Byte) actuators.size(), 8);
     for (std::size_t i = 0; i < actuators.size(); ++i) {
@@ -99,8 +93,6 @@ void SDCPInterpreter::getActions(NetStream &       ns,
 {
     DynamicBitset & db      = ns.writingBitset();
     auto            actions = Device::get().actions();
-
-    std::cout << "getActions()" << std::endl;
 
     buildHeader(ns, vhead, id, actions.size() * 3 + 1);
     db.push((Byte) actions.size(), 8);
@@ -119,8 +111,6 @@ void SDCPInterpreter::getActionDef(NetStream &       ns,
     // Lecture de l'identifiant de l'action
     Word actionId;
     ns.read(actionId, 16);
-
-    std::cout << "getActionDef()" << std::endl;
 
     DynamicBitset & db = ns.writingBitset();
     Action * a = Device::get().action(actionId);
@@ -151,8 +141,6 @@ void SDCPInterpreter::execAction(NetStream &       ns,
     // Lecture de l'identifiant de l'action
     Word actionId;
     ns.read(actionId, 16);
-
-    std::cout << "execAction()" << std::endl;
 
     Action * a = Device::get().action(actionId);
     if (a) {

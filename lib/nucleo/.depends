@@ -1,0 +1,669 @@
+bin/debug.o: src/debug.cpp src/debug.hpp src/mbed/DigitalOut.h \
+ src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/gpio_api.h src/mbed/Timeout.h src/mbed/Ticker.h \
+ src/mbed/TimerEvent.h src/mbed/ticker_api.h src/mbed/us_ticker_api.h \
+ src/mbed/FunctionPointer.h
+bin/devicemanager.o: src/devicemanager.cpp src/rtos/Thread.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/devicemanager.hpp src/inc/types.hpp src/rtos/Mutex.h \
+ src/inc/net/netinterpreter.hpp src/inc/net/netstream.hpp \
+ src/inc/dynamicbitset.hpp src/inc/types.hpp src/inc/net/netdevice.hpp \
+ src/inc/net/varpheader.hpp src/inc/net/netstream.hpp \
+ src/inc/vnet/vipinterpreter.h src/inc/vnet/vipheader.h \
+ src/inc/vnet/sdcpinterpreter.hpp src/net/readablenetdevice.hpp \
+ src/util/msgqueue.hpp src/rtos/Semaphore.h src/rtos/Mutex.h \
+ src/debug.hpp src/mbed/DigitalOut.h src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/gpio_api.h src/mbed/Timeout.h src/mbed/Ticker.h \
+ src/mbed/TimerEvent.h src/mbed/ticker_api.h src/mbed/us_ticker_api.h \
+ src/mbed/FunctionPointer.h
+bin/lightaction.o: src/lightaction.cpp src/lightaction.hpp src/inc/types.hpp \
+ src/inc/action.hpp src/inc/types.hpp src/lightbutton.hpp \
+ src/inc/actuator.hpp src/inc/element.hpp src/Servo/Servo.h \
+ src/mbed/mbed.h src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/mbed_error.h src/mbed/mbed_interface.h src/mbed/DigitalIn.h \
+ src/mbed/gpio_api.h src/mbed/DigitalOut.h src/mbed/DigitalInOut.h \
+ src/mbed/BusIn.h src/mbed/BusOut.h src/mbed/BusInOut.h src/mbed/PortIn.h \
+ src/mbed/port_api.h src/mbed/PortInOut.h src/mbed/PortOut.h \
+ src/mbed/AnalogIn.h src/mbed/analogin_api.h src/mbed/AnalogOut.h \
+ src/mbed/PwmOut.h src/mbed/pwmout_api.h src/mbed/Serial.h \
+ src/mbed/Stream.h src/mbed/FileLike.h src/mbed/FileBase.h \
+ src/mbed/FileHandle.h src/mbed/SerialBase.h src/mbed/FunctionPointer.h \
+ src/mbed/serial_api.h src/mbed/buffer.h src/mbed/dma_api.h \
+ src/mbed/SPI.h src/mbed/spi_api.h src/mbed/SPISlave.h src/mbed/I2C.h \
+ src/mbed/i2c_api.h src/mbed/I2CSlave.h src/mbed/Ethernet.h \
+ src/mbed/CAN.h src/mbed/RawSerial.h src/mbed/Timer.h \
+ src/mbed/ticker_api.h src/mbed/Ticker.h src/mbed/TimerEvent.h \
+ src/mbed/us_ticker_api.h src/mbed/Timeout.h src/mbed/LowPowerTimeout.h \
+ src/mbed/LowPowerTicker.h src/mbed/LowPowerTimer.h \
+ src/mbed/LocalFileSystem.h src/mbed/InterruptIn.h \
+ src/mbed/gpio_irq_api.h src/mbed/wait_api.h src/mbed/sleep_api.h \
+ src/mbed/rtc_time.h src/inc/dynamicbitset.hpp src/inc/net/netstream.hpp \
+ src/inc/net/netdevice.hpp
+bin/lightbutton.o: src/lightbutton.cpp src/lightbutton.hpp \
+ src/inc/actuator.hpp src/inc/element.hpp src/inc/types.hpp \
+ src/Servo/Servo.h src/mbed/mbed.h src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/mbed_error.h src/mbed/mbed_interface.h src/mbed/DigitalIn.h \
+ src/mbed/gpio_api.h src/mbed/DigitalOut.h src/mbed/DigitalInOut.h \
+ src/mbed/BusIn.h src/mbed/BusOut.h src/mbed/BusInOut.h src/mbed/PortIn.h \
+ src/mbed/port_api.h src/mbed/PortInOut.h src/mbed/PortOut.h \
+ src/mbed/AnalogIn.h src/mbed/analogin_api.h src/mbed/AnalogOut.h \
+ src/mbed/PwmOut.h src/mbed/pwmout_api.h src/mbed/Serial.h \
+ src/mbed/Stream.h src/mbed/FileLike.h src/mbed/FileBase.h \
+ src/mbed/FileHandle.h src/mbed/SerialBase.h src/mbed/FunctionPointer.h \
+ src/mbed/serial_api.h src/mbed/buffer.h src/mbed/dma_api.h \
+ src/mbed/SPI.h src/mbed/spi_api.h src/mbed/SPISlave.h src/mbed/I2C.h \
+ src/mbed/i2c_api.h src/mbed/I2CSlave.h src/mbed/Ethernet.h \
+ src/mbed/CAN.h src/mbed/RawSerial.h src/mbed/Timer.h \
+ src/mbed/ticker_api.h src/mbed/Ticker.h src/mbed/TimerEvent.h \
+ src/mbed/us_ticker_api.h src/mbed/Timeout.h src/mbed/LowPowerTimeout.h \
+ src/mbed/LowPowerTicker.h src/mbed/LowPowerTimer.h \
+ src/mbed/LocalFileSystem.h src/mbed/InterruptIn.h \
+ src/mbed/gpio_irq_api.h src/mbed/wait_api.h src/mbed/sleep_api.h \
+ src/mbed/rtc_time.h src/rtos/Thread.h src/rtx/TARGET_CORTEX_M/cmsis_os.h \
+ src/rtx/TARGET_CORTEX_M/os_tcb.h
+bin/main.o: src/main.cpp src/rtos/Thread.h src/rtx/TARGET_CORTEX_M/cmsis_os.h \
+ src/rtx/TARGET_CORTEX_M/os_tcb.h src/devicemanager.hpp src/inc/types.hpp \
+ src/rtos/Mutex.h src/inc/net/netinterpreter.hpp \
+ src/inc/net/netstream.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
+ src/inc/net/netdevice.hpp src/inc/net/varpheader.hpp \
+ src/inc/net/netstream.hpp src/inc/vnet/vipinterpreter.h \
+ src/inc/vnet/vipheader.h src/inc/vnet/sdcpinterpreter.hpp \
+ src/net/readablenetdevice.hpp src/util/msgqueue.hpp src/rtos/Semaphore.h \
+ src/rtos/Mutex.h src/net/uart.hpp src/mbed/Serial.h src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/Stream.h src/mbed/FileLike.h src/mbed/FileBase.h \
+ src/mbed/FileHandle.h src/mbed/SerialBase.h src/mbed/FunctionPointer.h \
+ src/mbed/serial_api.h src/mbed/buffer.h src/mbed/dma_api.h \
+ src/net/readablenetdevice.hpp src/inc/device.hpp src/lightbutton.hpp \
+ src/inc/actuator.hpp src/inc/element.hpp src/Servo/Servo.h \
+ src/mbed/mbed.h src/mbed/mbed_error.h src/mbed/mbed_interface.h \
+ src/mbed/DigitalIn.h src/mbed/gpio_api.h src/mbed/DigitalOut.h \
+ src/mbed/DigitalInOut.h src/mbed/BusIn.h src/mbed/BusOut.h \
+ src/mbed/BusInOut.h src/mbed/PortIn.h src/mbed/port_api.h \
+ src/mbed/PortInOut.h src/mbed/PortOut.h src/mbed/AnalogIn.h \
+ src/mbed/analogin_api.h src/mbed/AnalogOut.h src/mbed/PwmOut.h \
+ src/mbed/pwmout_api.h src/mbed/Serial.h src/mbed/SPI.h \
+ src/mbed/spi_api.h src/mbed/SPISlave.h src/mbed/I2C.h src/mbed/i2c_api.h \
+ src/mbed/I2CSlave.h src/mbed/Ethernet.h src/mbed/CAN.h \
+ src/mbed/RawSerial.h src/mbed/Timer.h src/mbed/ticker_api.h \
+ src/mbed/Ticker.h src/mbed/TimerEvent.h src/mbed/us_ticker_api.h \
+ src/mbed/Timeout.h src/mbed/LowPowerTimeout.h src/mbed/LowPowerTicker.h \
+ src/mbed/LowPowerTimer.h src/mbed/LocalFileSystem.h \
+ src/mbed/InterruptIn.h src/mbed/gpio_irq_api.h src/mbed/wait_api.h \
+ src/mbed/sleep_api.h src/mbed/rtc_time.h src/lightaction.hpp \
+ src/inc/action.hpp src/debug.hpp src/mbed/DigitalOut.h \
+ src/mbed/Timeout.h
+bin/inc/device.o: src/inc/device.cpp src/inc/device.hpp src/inc/types.hpp \
+ src/inc/actuator.hpp src/inc/element.hpp src/inc/sensor.hpp \
+ src/inc/action.hpp
+bin/inc/net/netdevice.o: src/inc/net/netdevice.cpp src/inc/net/netdevice.hpp \
+ src/inc/types.hpp
+bin/inc/net/netinterpreter.o: src/inc/net/netinterpreter.cpp src/inc/types.hpp \
+ src/inc/net/netinterpreter.hpp src/inc/net/netstream.hpp \
+ src/inc/dynamicbitset.hpp src/inc/types.hpp src/inc/net/netdevice.hpp \
+ src/inc/net/varpheader.hpp src/inc/net/netstream.hpp \
+ src/inc/vnet/vipinterpreter.h src/inc/vnet/vipheader.h
+bin/inc/net/netmanager.o: src/inc/net/netmanager.cpp src/inc/net/netmanager.hpp
+bin/inc/net/netstream.o: src/inc/net/netstream.cpp src/inc/net/netstream.hpp \
+ src/inc/types.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
+ src/inc/net/netdevice.hpp src/inc/net/netinterpreter.hpp \
+ src/inc/net/varpheader.hpp src/inc/net/netstream.hpp \
+ src/inc/vnet/vipinterpreter.h src/inc/vnet/vipheader.h
+bin/inc/net/varpheader.o: src/inc/net/varpheader.cpp src/inc/net/varpheader.hpp \
+ src/inc/net/netstream.hpp src/inc/types.hpp src/inc/dynamicbitset.hpp \
+ src/inc/types.hpp src/inc/net/netdevice.hpp
+bin/inc/vnet/sdcpinterpreter.o: src/inc/vnet/sdcpinterpreter.cpp \
+ src/inc/vnet/sdcpinterpreter.hpp src/inc/types.hpp \
+ src/inc/net/netstream.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
+ src/inc/net/netdevice.hpp src/inc/vnet/vipinterpreter.h \
+ src/inc/vnet/vipheader.h src/inc/device.hpp src/inc/sensor.hpp \
+ src/inc/element.hpp src/inc/actuator.hpp src/inc/action.hpp
+bin/inc/vnet/vipinterpreter.o: src/inc/vnet/vipinterpreter.cpp \
+ src/inc/vnet/vipinterpreter.h src/inc/types.hpp src/inc/vnet/vipheader.h \
+ src/inc/net/netinterpreter.hpp src/inc/net/netstream.hpp \
+ src/inc/dynamicbitset.hpp src/inc/types.hpp src/inc/net/netdevice.hpp \
+ src/inc/net/varpheader.hpp src/inc/net/netstream.hpp \
+ src/inc/vnet/vipinterpreter.h src/inc/vnet/sdcpinterpreter.hpp \
+ src/inc/net/netstream.hpp
+bin/rtos/Mutex.o: src/rtos/Mutex.cpp src/rtos/Mutex.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/mbed/mbed_error.h
+bin/rtos/RtosTimer.o: src/rtos/RtosTimer.cpp src/rtos/RtosTimer.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/mbed/mbed_error.h
+bin/rtos/Semaphore.o: src/rtos/Semaphore.cpp src/rtos/Semaphore.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h
+bin/rtos/Thread.o: src/rtos/Thread.cpp src/rtos/Thread.h \
+ src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
+ src/mbed/mbed_error.h
+bin/net/uart.o: src/net/uart.cpp src/net/uart.hpp src/mbed/Serial.h \
+ src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/Stream.h src/mbed/FileLike.h src/mbed/FileBase.h \
+ src/mbed/FileHandle.h src/mbed/SerialBase.h src/mbed/FunctionPointer.h \
+ src/mbed/serial_api.h src/mbed/buffer.h src/mbed/dma_api.h \
+ src/rtos/Semaphore.h src/rtx/TARGET_CORTEX_M/cmsis_os.h \
+ src/rtx/TARGET_CORTEX_M/os_tcb.h src/net/readablenetdevice.hpp \
+ src/inc/net/netdevice.hpp src/inc/types.hpp src/rtos/Thread.h
+bin/Servo/Servo.o: src/Servo/Servo.cpp src/Servo/Servo.h src/mbed/mbed.h \
+ src/mbed/platform.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/objects.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f401xe.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cm4.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmInstr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmFunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/core_cmSimd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/system_stm32f4xx.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_conf.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_def.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32_hal_legacy.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rcc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_gpio_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dma_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cortex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_adc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_can.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_crc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_cryp.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dac.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_dcmi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_eth.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_flash_ramfunc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sram.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nor.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_nand.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pccard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hash.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2c_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_i2s_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_iwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_ltdc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pwr_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rng.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_rtc_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_sd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_sdmmc.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_spi.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_tim_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_uart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_usart.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_irda.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_smartcard.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_wwdg.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_ll_usb.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_pcd_ex.h \
+ src/mbed/TARGET_NUCLEO_F401RE/stm32f4xx_hal_hcd.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis_nvic.h \
+ src/mbed/TARGET_NUCLEO_F401RE/cmsis.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/gpio_object.h \
+ src/mbed/mbed_assert.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PortNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PeripheralNames.h \
+ src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/PinNames.h \
+ src/mbed/mbed_error.h src/mbed/mbed_interface.h src/mbed/DigitalIn.h \
+ src/mbed/gpio_api.h src/mbed/DigitalOut.h src/mbed/DigitalInOut.h \
+ src/mbed/BusIn.h src/mbed/BusOut.h src/mbed/BusInOut.h src/mbed/PortIn.h \
+ src/mbed/port_api.h src/mbed/PortInOut.h src/mbed/PortOut.h \
+ src/mbed/AnalogIn.h src/mbed/analogin_api.h src/mbed/AnalogOut.h \
+ src/mbed/PwmOut.h src/mbed/pwmout_api.h src/mbed/Serial.h \
+ src/mbed/Stream.h src/mbed/FileLike.h src/mbed/FileBase.h \
+ src/mbed/FileHandle.h src/mbed/SerialBase.h src/mbed/FunctionPointer.h \
+ src/mbed/serial_api.h src/mbed/buffer.h src/mbed/dma_api.h \
+ src/mbed/SPI.h src/mbed/spi_api.h src/mbed/SPISlave.h src/mbed/I2C.h \
+ src/mbed/i2c_api.h src/mbed/I2CSlave.h src/mbed/Ethernet.h \
+ src/mbed/CAN.h src/mbed/RawSerial.h src/mbed/Timer.h \
+ src/mbed/ticker_api.h src/mbed/Ticker.h src/mbed/TimerEvent.h \
+ src/mbed/us_ticker_api.h src/mbed/Timeout.h src/mbed/LowPowerTimeout.h \
+ src/mbed/LowPowerTicker.h src/mbed/LowPowerTimer.h \
+ src/mbed/LocalFileSystem.h src/mbed/InterruptIn.h \
+ src/mbed/gpio_irq_api.h src/mbed/wait_api.h src/mbed/sleep_api.h \
+ src/mbed/rtc_time.h
