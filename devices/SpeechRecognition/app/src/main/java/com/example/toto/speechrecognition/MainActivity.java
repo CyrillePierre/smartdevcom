@@ -7,10 +7,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,8 @@ public class MainActivity extends Activity{
     private static final int DISTANCE_MIN = 5;
 
     private ArrayList<VoiceCommands> commands;
+
+    BluetoothStream bs;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends Activity{
 
                 if(getIntent().getData() != null)
                 {
+                    //Log.e("data : ", getIntent().getDataString());
                     //Toast.makeText(getApplicationContext(), getIntent().getDataString(), Toast.LENGTH_SHORT);
                     manageQuery(getIntent().getDataString());
                 }
@@ -51,9 +55,11 @@ public class MainActivity extends Activity{
         btnSpeak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manageQuery("jarvis,rien,à,la,télé");
+                manageQuery("jarvis,allume,le,sapin");
             }
         });
+
+        bs = new BluetoothStream();
 
         commands = Parser.parse(getApplicationContext().getResources().getXml(R.xml.voice_data));
 
@@ -67,6 +73,14 @@ public class MainActivity extends Activity{
      */
     private void manageQuery(String query)
     {
+        // Pour deverouiller le portable
+        if(query.equals("Wakeup"))
+        {
+            bs.sendBLE(this, (char) 0, "SDC_Lisa");
+
+            return;
+        }
+
         // On met en minuscule, on enlève le "jarvis" qui est déjà dans toutes les requetes, et on remplace les ',' par des ' '
         String newQuery = query.toLowerCase().replace("jarvis,", "").replaceAll(","," ");
         //String newQuery = ((EditText) findViewById(R.id.edit_text)).getText().toString();
@@ -100,6 +114,26 @@ public class MainActivity extends Activity{
         }*/
 
         tts.speak(goodRequest.voiceDiction, TextToSpeech.QUEUE_FLUSH, null, null);
+
+        bs.sendBLE(this, (char) goodRequest.bluetoothCode, goodRequest.bleName);
+    }
+
+
+    /**
+     * Permet de manager s'il faut lock ou unlock le portable au reveil
+     * @param unlocked : true s'il faut deverouiller
+     */
+    public void manageUnlocked(boolean unlocked)
+    {
+        TextView tv = (TextView) findViewById(R.id.distance);
+
+        // S'il faut deverouiller
+        if(unlocked)
+           tv.setText("Je laisse verouillé");
+
+        // S'il laisser verouiller
+        else
+            tv.setText("Je deverouille");
     }
 
     /**
