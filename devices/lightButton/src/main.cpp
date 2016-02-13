@@ -30,7 +30,7 @@ int main() {
     d += new LightAction(*lb);
 
     DeviceManager dm;
-    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
+//    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
 //    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
     dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
 

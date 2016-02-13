@@ -30,6 +30,7 @@ void DeviceManager::listenNetDevices() {
                 nde.nd->read(&b, 1);
 
                 if (b == sdc::net::NetInterpreter::START_DELIM) {
+                    dbg::ledSignal();
                     nde.queued = true;
                     _queue.push(&nde);
                 }

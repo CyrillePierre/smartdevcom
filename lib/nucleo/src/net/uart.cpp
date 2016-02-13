@@ -1,8 +1,11 @@
 #include "uart.hpp"
 #include "rtos/Thread.h"
+#include "mbed/Ticker.h"
 #include <iostream>
 
 using sdc::net::Uart;
+
+//static mbed::Ticker tk;
 
 Uart::Uart(type::Byte const * comAddr,
            type::Byte const * virtualAddr,
@@ -14,6 +17,7 @@ Uart::Uart(type::Byte const * comAddr,
       _bufSem(0)
 {
     _sr.attach(this, &Uart::readHandler);
+//    tk.attach_us(this, &Uart::bufferInfo, 1000000);
 }
 
 std::size_t Uart::read(sdc::type::Byte * buf, std::size_t size) {
@@ -46,10 +50,10 @@ void Uart::readHandler() {
 
 // TODO à enlever
 void Uart::bufferInfo() {
-    for (;;) {
+//    for (;;) {
         _sr.printf("buffer.size = %d\n", _buffer.size());
-        rtos::Thread::wait(1000);
-    }
+//        rtos::Thread::wait(1000);
+//    }
 }
 
 

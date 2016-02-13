@@ -11,3 +11,4 @@ src/
 .
 src/Servo
 src/util
+../../lib/nucleo/src
