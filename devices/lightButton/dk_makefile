@@ -18,8 +18,9 @@ INCLUDE_PATHS = $(addprefix -I, $(SUBDIRS) $(INCDIRS))
 
 SYS_OBJECTS   = $(wildcard lib/*.o)
 LIBRARY_PATHS = -Llib
-LIBRARIES     = -lmbed -lsdc_nucleo
+LIBRARIES     = -lsdc_nucleo -lmbed
 LINKER_SCRIPT = lib/STM32F401XE.ld
+LIB_FILES	  = $(wildcard lib/*)
 
 ############################################################################### 
 GCC_BIN =
@@ -86,7 +87,7 @@ $1/%.o : %.cpp
 	@echo "Compilation de $$@..."
 	@$(CPP) $(CC_FLAGS) $(CC_SYMBOLS) $(VERSION) -fno-rtti $(INCLUDE_PATHS) -o $$@ $$<
 
-$1/%.o : %.s
+$1/%.o : %.S
 	@echo "Compilation de $$@..."
 	@$(AS) $(CPU) -o $$@ $$<
 
@@ -98,9 +99,9 @@ endef
 
 all: check_dirs $(PROGRAM).bin $(PROGRAM).hex 
 
-$(PROGRAM).elf: $(OBJECTS) $(SYS_OBJECTS)
+$(PROGRAM).elf: $(OBJECTS) $(SYS_OBJECTS) $(LIB_FILES)
 	@echo Compilation de $@...
-	@$(LD) $(LD_FLAGS) -T$(LINKER_SCRIPT) $(LIBRARY_PATHS) -o $@ $^ $(LIBRARIES) $(LD_SYS_LIBS) $(LIBRARIES) $(LD_SYS_LIBS)
+	@$(LD) $(LD_FLAGS) $(LIBRARY_PATHS) -o $@ -T$(LINKER_SCRIPT) $(OBJECTS) $(SYS_OBJECTS) $(LIBRARIES) $(LD_SYS_LIBS)
 	@$(CHOWN) $@
 
 $(PROGRAM).bin: $(PROGRAM).elf size

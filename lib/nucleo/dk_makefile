@@ -14,7 +14,7 @@ SRC_CC	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.c))
 SRC_AS	= $(foreach sdir,$(SUBDIRS),$(wildcard $(sdir)/*.S))
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_PATH)/%.o,$(SRC_CPP)) \
 		  $(patsubst $(SRC_DIR)/%.c,$(OBJ_PATH)/%.o,$(SRC_CC)) \
-		  $(patsubst $(SRC_DIR)/%.s,$(OBJ_PATH)/%.o,$(SRC_AS))
+		  $(patsubst $(SRC_DIR)/%.S,$(OBJ_PATH)/%.o,$(SRC_AS))
 INCLUDE_PATHS = $(addprefix -I, $(SUBDIRS))
 
 SYS_OBJECTS   = $(wildcard lib/*.o)
@@ -84,15 +84,15 @@ vpath %.S   $(SUBDIRS)
 
 define make-goal
 $1/%.o : %.cpp
-	@echo "Compilation de $$@..."
+	@echo "Compilation de $$<..."
 	@$(CPP) $(CC_FLAGS) $(CC_SYMBOLS) $(VERSION) -fno-rtti $(INCLUDE_PATHS) -o $$@ $$<
 
-$1/%.o : %.s
-	@echo "Compilation de $$@..."
-	@$(AS) $(CPU) -o $$@ $$<
+$1/%.o : %.S
+	@echo "Compilation de $$<..."
+	@$(CC) $(CC_FLAGS) $(CPU) -o $$@ $$<
 
 $1/%.o : %.c
-	@echo "Compilation de $$@..."
+	@echo "Compilation de $$<..."
 	@$(CC)  $(CC_FLAGS) $(CC_SYMBOLS) $(INCLUDE_PATHS) -o $$@ $$<
 endef
 
