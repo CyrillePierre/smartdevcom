@@ -1,6 +1,7 @@
 # These variables are to be modified so it correspond to your system
 IMAGE       = nucleo            # The Docker image name (given at build time by -t)
 NUCLEO_DIR	= /media/nucleo
+LIBS_DIR    = libs
 
 # These variables are not intended to be modified
 PWD         = $(shell pwd)
@@ -11,8 +12,8 @@ MEDIA       = /$(shell lsblk|grep $(NUCLEO)|tr -d ' '|cut -d'/' -f2-)
 DOCKERMOUNT = \
 	-v $(PWD):$(MOUNTPOINT) \
 	-v $(PWD)/../../protocol/src:$(MOUNTPOINT)/inc/protocol \
-	-v $(PWD)/../../lib/nucleo/src:$(MOUNTPOINT)/inc/nucleo \
-	-v $(PWD)/../../lib/nucleo/lib:$(MOUNTPOINT)/lib
+	-v $(PWD)/../../$(LIBS_DIR)/nucleo/src:$(MOUNTPOINT)/inc/nucleo \
+	-v $(PWD)/../../$(LIBS_DIR)/nucleo/lib:$(MOUNTPOINT)/lib
 
 DK_MAKEFILE = dk_makefile
 MAKE        = make --no-print-directory

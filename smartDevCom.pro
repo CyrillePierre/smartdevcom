@@ -2,6 +2,19 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     protocol \
-    protocol/test \
+    test \
+    libs \
     devices \
-    tools
+    tools \
+
+# Path of sub-directories
+protocol.subdir = protocol
+test.subdir     = protocol/test
+tools.subdir    = tools
+libs.subdir     = libs
+devices.subdir  = devices
+
+# Dependencies between the projects
+libs.depends    = protocol
+test.depends    = protocol
+devices.depends = libs
