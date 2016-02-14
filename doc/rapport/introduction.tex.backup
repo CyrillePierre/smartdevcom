@@ -1,0 +1,8 @@
+\chapter*{Introduction}
+
+\section{Résumé}
+Le but de ce projet de dernière année est de réaliser une intelligence artificielle capable d'intergir de manière naturelle avec nous, cela dans le but de créer un réseau d'objets intelligents sans limite physique au niveau du support de communication, de la position des objets et enfin du type d'objet avec lequel on souhaite communiquer.
+
+Afin de réaliser ce projet, il faut en premier lieu savoir ce qui caractérise un \textbf{objet intelligent}. Après avoir listé la liste des fonctionnalités que peut avoir n'importe quel type d'objet, il faut mettre en place un \textbf{protocole} afin de pouvoir communiquer avec ces objets. La construction de ce protocole passe en premier lieu par la \textbf{classification} de l'ensemble des objets que l'on sera à même de pouvooir créer.
+
+\section{Abstract}
