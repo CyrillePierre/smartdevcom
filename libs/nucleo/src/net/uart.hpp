@@ -37,6 +37,9 @@ public:
     /** @see sdc::net::NetDevice::read */
     virtual std::size_t read(type::Byte *, std::size_t);
 
+    /** @brief Lecture d'un octet */
+    type::Byte read();
+
     /** @see sdc::net::NetDevice::write */
     virtual std::size_t write(type::Byte const *, std::size_t);
 
@@ -46,7 +49,7 @@ public:
     void bufferInfo();
 
 private:
-    /** @brief Intéruption gérant la lecture du port série */
+    /** @brief Interruption gérant la lecture du port série */
     void readHandler();
 
     void print();

@@ -5,8 +5,6 @@
 
 using sdc::net::Uart;
 
-//static mbed::Ticker tk;
-
 Uart::Uart(type::Byte const * comAddr,
            type::Byte const * virtualAddr,
            std::size_t        comAddrSize,
@@ -17,7 +15,6 @@ Uart::Uart(type::Byte const * comAddr,
       _bufSem(0)
 {
     _sr.attach(this, &Uart::readHandler);
-//    tk.attach_us(this, &Uart::bufferInfo, 1000000);
 }
 
 std::size_t Uart::read(sdc::type::Byte * buf, std::size_t size) {
@@ -29,6 +26,14 @@ std::size_t Uart::read(sdc::type::Byte * buf, std::size_t size) {
         _buffer.pop_front();
     }
     return i;
+}
+
+sdc::type::Byte Uart::read() {
+    sdc::type::Byte b;
+    _bufSem.wait();
+    b = _buffer.front();
+    _buffer.pop_front();
+    return b;
 }
 
 std::size_t Uart::write(sdc::type::Byte const * buf, std::size_t size) {
@@ -50,10 +55,10 @@ void Uart::readHandler() {
 
 // TODO à enlever
 void Uart::bufferInfo() {
-//    for (;;) {
-        _sr.printf("buffer.size = %d\n", _buffer.size());
-//        rtos::Thread::wait(1000);
-//    }
+    for (;;) {
+        std::cout << "buffer.size = " << _buffer.size() << std::endl;
+        rtos::Thread::wait(1000);
+    }
 }
 
 

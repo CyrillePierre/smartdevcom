@@ -3,9 +3,8 @@
 #include "devicemanager.hpp"
 #include "net/uart.hpp"
 #include "device.hpp"
-#include "lightbutton.hpp"
-#include "lightaction.hpp"
 #include "debug.hpp"
+#include "bolutekcc41.hpp"
 
 using namespace sdc;
 
@@ -24,21 +23,16 @@ int main() {
     for (int i = 0; i < 4; ++i) dbg::ledSignal(), rtos::Thread::wait(140);
     std::cout << "start" << std::endl;
 
-    LightButton * lb = new LightButton(D3);
+    net::Uart uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
+    BolutekCC41 bolu{uart, D4};
 
-    Device & d = Device::get();
-    d += lb;
-    d += new LightAction(*lb);
+    bolu.setMaster(1);
+    rtos::Thread::wait(1000);
+    std::cout << "isMaster ? : " << bolu.isMaster() << std::endl;
+    bolu.setMaster(0);
+    rtos::Thread::wait(1000);
+    std::cout << "isMaster ? : " << bolu.isMaster() << std::endl;
 
-    DeviceManager dm;
-    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
-//    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
-    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
-
-    using Dm = DeviceManager;
-    rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);
-
-    dm.parseData();
-
-    tListen.terminate();
+    std::cout << "end" << std::endl;
+    for (;;);
 }

@@ -14,7 +14,7 @@ tools.subdir    = tools
 libs.subdir     = libs
 devices.subdir  = devices
 
-# Dependencies between the projects
+# Dependencies between projects
 libs.depends    = protocol
 test.depends    = protocol
 devices.depends = libs
