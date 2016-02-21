@@ -8,7 +8,7 @@ class TestNetInterpreter : public QObject
     Q_OBJECT
 
 private slots:
-    void testVip();
+    void vipAddrRequests();
     void testVarp();
 };
 

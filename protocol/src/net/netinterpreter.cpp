@@ -18,9 +18,6 @@ void NetInterpreter::operator ()(NetStream &ns) {
     type::Byte protocol;
     ns.read(protocol, 5);
 
-//    std::cout << "NetInterpreter::operator()" << std::endl;
-//    std::cout << "protocol = " << std::dec << (int) protocol << std::endl;
-
     switch (protocol) {
         case Proto::VIP:  _vip(ns);       break;
         case Proto::VARP: manageVARP(ns); break;
@@ -42,6 +39,9 @@ void NetInterpreter::manageVARP(NetStream &ns) const {
     ns.read(byte, 3);
     readingVarp.version = byte;
 
+    ns.read(byte, 3);
+    readingVarp.op = byte;
+
     ns.read(byte, 5);
     readingVarp.scale = byte;
 
@@ -49,6 +49,15 @@ void NetInterpreter::manageVARP(NetStream &ns) const {
     ns.read(readingVarp.addrSrc,    vSize);
     ns.read(readingVarp.scAddrDest, cSize);
     ns.read(readingVarp.addrDest,   vSize);
+
+    {
+        int i;
+        std::cout << std::hex;
+        std::cout << "comAddrSrc = ";
+        for (i = 0; i < cSize - 1; ++i)
+            std::cout << (int) readingVarp.scAddrSrc[i] << ":";
+        std::cout << (int) readingVarp.scAddrSrc[i] << std::endl;
+    }
 
     /* Si l'adresse de destination dans le support ou dans le réseau virtuel,
      * c'est moi ou si c'est du broadcast, et que c'est une demande d'adresse */

@@ -6,4 +6,5 @@ SUBDIRS += \
 	testVipInterpreter \
 	testDynamicBitset \
 	testnetinterpreter \
-	testnetstream
+	testnetstream \
+    testAddr

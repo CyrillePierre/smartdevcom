@@ -5,7 +5,9 @@
 #include "netstream.hpp"
 #include <string.h>
 
+#ifndef DEBUG
 #define DBG if (0)
+#endif
 
 using namespace sdc;
 using sdc::vnet::VIPInterpreter;

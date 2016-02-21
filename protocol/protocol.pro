@@ -25,7 +25,8 @@ HEADERS += src/types.hpp \
     src/element.hpp \
     src/actuator.hpp \
     src/action.hpp \
-    src/net/netdevice.hpp
+    src/net/netdevice.hpp \
+    src/net/addr.hpp
 
 SOURCES +=  \
            src/net/netmanager.cpp \
@@ -35,7 +36,8 @@ SOURCES +=  \
 		   src/net/netdevice.cpp \
 		   src/vnet/vipinterpreter.cpp \
 		   src/vnet/sdcpinterpreter.cpp \
-    src/device.cpp
+    src/device.cpp \
+    src/net/addr.cpp
 
 SUBDIRS += \
     test/testSdcpInterpreter/testSdcpInterpreter.pro
