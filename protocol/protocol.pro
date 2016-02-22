@@ -32,7 +32,6 @@ SOURCES +=  \
            src/net/netmanager.cpp \
            src/net/netstream.cpp \
            src/net/netinterpreter.cpp \
-           src/net/varpheader.cpp \
 		   src/net/netdevice.cpp \
 		   src/vnet/vipinterpreter.cpp \
 		   src/vnet/sdcpinterpreter.cpp \

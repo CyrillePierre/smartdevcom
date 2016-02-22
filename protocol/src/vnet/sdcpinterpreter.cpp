@@ -38,7 +38,7 @@ void SDCPInterpreter::buildHeader(NetStream &       ns,
 {
     DynamicBitset & db = ns.writingBitset();
     net::NetDevice const & nd = ns.device();
-    VIPInterpreter::buildHeader(db, nd.getVirtualAddr(), vh.addrSrc, size + 1);
+    VIPInterpreter::buildHeader(db, nd.virtualAddr().vals, vh.addrSrc, size + 1);
     db.push(id,       6);
     db.push(reqType,  2);
 }

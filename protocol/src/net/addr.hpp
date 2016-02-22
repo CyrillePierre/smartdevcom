@@ -22,7 +22,7 @@ struct Addr {
         : size{size}, vals{vals} {}
 
     /** Pas de copie */
-    Addr(Addr const &) = delete;
+    Addr(Addr const & addr) : size{addr.size}, vals{addr.vals} {}
 
     constexpr Addr(Addr && addr)
         : size{std::move(addr.size)}, vals{std::move(addr.vals)} {}
@@ -35,23 +35,26 @@ struct Addr {
      */
     int broadcastLvl() const;
 
+    /**
+     * Cette méthode permet de comparer une adresse à celle-ci et de savoir
+     * si elle sont compatible. L'adresse à comparer est soit l'adresse elle
+     * même ou une adresse de broadcast incluant cette adresse.
+     * @return
+     */
+    bool accept(Addr const &) const;
+
     /** @return l'octets correspondant à l'indice dans vals */
     type::Byte operator[](std::size_t i) const { return vals[i]; }
 };
 
 namespace _addr {
-    template <std::size_t size>
-    struct AddrHelper {
-        type::Byte data[size];
-    };
-
     template <type::Byte... bytes>
-    struct AddrBuilder {
+    struct AddrHelper {
         static constexpr type::Byte const data[]{bytes...};
     };
 
     template <type::Byte... bytes>
-    constexpr type::Byte const AddrBuilder<bytes...>::data[];
+    constexpr type::Byte const AddrHelper<bytes...>::data[];
 }
 
 /**
@@ -61,8 +64,7 @@ namespace _addr {
  */
 template <type::Byte... bytes>
 constexpr Addr makeAddr() {
-//    return Addr{_addr::AddrHelper<sizeof...(bytes)>{bytes...}.data, sizeof...(bytes)};
-    return Addr{_addr::AddrBuilder<bytes...>::data, sizeof...(bytes)};
+    return Addr{_addr::AddrHelper<bytes...>::data, sizeof...(bytes)};
 }
 
 /**

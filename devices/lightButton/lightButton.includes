@@ -1,9 +1,3 @@
-src/mbed
-src/mbed/TARGET_NUCLEO_F401RE
-src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4
-src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE
-src/rtos
-src/rtx/TARGET_CORTEX_M
 src/
 ../../protocol/src/
 /usr/include/c++/5/
@@ -11,4 +5,6 @@ src/
 .
 src/Servo
 src/util
-../../lib/nucleo/src
+../../libs/nucleo/src
+../../libs/nucleo/src/rtos
+../../libs/nucleo/src/mbed

@@ -47,6 +47,9 @@ public:
               std::enable_if_t<std::is_integral<T>{}> * = nullptr>
     void read(T &, uint8_t = sizeof(T) << 3);
 
+    template <class T, class = std::enable_if_t<std::is_integral<T>{}>>
+    T read(uint8_t = sizeof(T) << 3);
+
     /**
      * @brief Vide le buffer de lecture
      * Actuellement, la méthode ne fait rien
@@ -69,7 +72,7 @@ private:
 
     // Le nombre à modifier doit être initialisé à 0
     template <typename T>
-    void set(T &, uint8_t, type::Bit = 1);
+              void set(T &, uint8_t, type::Bit = 1);
 };
 
 
@@ -90,6 +93,14 @@ void NetStream::read(T & data, uint8_t size) {
         size -= minNbBits;
     }
 }
+
+template <class T, class>
+T NetStream::read(uint8_t size) {
+    T t;
+    read(t, size);
+    return t;
+}
+
 
 } // net
 } // sdc

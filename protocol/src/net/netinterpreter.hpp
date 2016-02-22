@@ -14,6 +14,12 @@ enum Proto : type::Byte {
     VARP = 1	// virtual ARP
 };
 
+enum VarpOperation : type::Byte {
+    COM_ADDR_REQUEST = 0,
+    VIP_ADDR_REQUEST,
+    RESPONSE
+};
+
 /**
  * Cette classe s'occupe de l'interpretation des paquets reçues au niveau de la
  * couche réseau. Les protocoles qui peuvent être géré sont VIP et VARP.

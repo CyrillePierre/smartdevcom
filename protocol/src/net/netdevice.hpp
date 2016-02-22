@@ -2,6 +2,7 @@
 #define NETDEVICE_HPP
 
 #include "types.hpp"
+#include "addr.hpp"
 
 namespace sdc {
 namespace net {
@@ -17,9 +18,8 @@ struct NetDevice {
     static constexpr std::size_t virtualAddrSize = 3;
 
 private :
-    type::Byte const * const _comAddr;       // adresse dans le support de com
-    type::Byte const * const _virtualAddr;   // adresse dans le réseau virtuel
-    std::size_t const        _comAddrSize;
+    Addr const _cAddr;	// adresse dans le support de com
+    Addr const _vAddr;	// adresse dans le réseau virtuel
 
 public :
     /**
@@ -27,7 +27,8 @@ public :
      * @param virtualAddr l'adresse sur le réseau virtuelle
      * @param comAddrSize la taille de l'adresse du support de com en octets
      */
-    NetDevice(type::Byte const *, type::Byte const *, std::size_t);
+    NetDevice(Addr const & comAddr, Addr const & virtualAddr)
+        : _cAddr(comAddr), _vAddr(virtualAddr) {}
 
     virtual ~NetDevice() {}
 
@@ -51,19 +52,13 @@ public :
      */
     virtual std::size_t write(type::Byte const *, std::size_t) = 0;
 
-    const type::Byte* getComAddr()        const { return _comAddr; }
-    const type::Byte* getVirtualAddr()    const { return _virtualAddr; }
+    Addr const & comAddr()     const { return _cAddr; }
+    Addr const & virtualAddr() const { return _vAddr; }
 
     /** @return la taille de l'adresse du support de com en octets */
-    std::size_t comAddrSize() const { return _comAddrSize; }
+    std::size_t comAddrSize() const { return _cAddr.size; }
 
 };
-
-inline NetDevice::NetDevice(type::Byte const * comAddr,
-                            type::Byte const * virtualAddr,
-                            std::size_t        comAddrSize)
-    : _comAddr(comAddr), _virtualAddr(virtualAddr), _comAddrSize(comAddrSize)
-{}
 
 } // net
 } // sdc

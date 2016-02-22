@@ -9,6 +9,9 @@ class TestAddr : public QObject
 
 private slots:
     void constructors() const;
+    void compare() const;
+    void broadcast() const;
+    void accept() const;
 };
 
 #endif // TESTADDR_HPP

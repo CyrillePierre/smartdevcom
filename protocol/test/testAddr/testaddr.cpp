@@ -11,7 +11,7 @@ void TestAddr::constructors() const {
 
     Addr a1{b1, sizeof(b1)}, a2{b2, sizeof(b2)}, a3{b3, sizeof(b3)};
     Addr const a4 = makeAddr<0x23, 0x52, 0xf4, 0xbc, 0x45, 0x8a>();
-    Addr const a5 = makeAddr<0x1f, 0xec, 0xb3, 2>();
+    Addr a5 = makeAddr<0x1f, 0xec, 0xb3, 2>();
     char * hex;
 
     QCOMPARE(a1.size, sizeof(b1));
@@ -30,6 +30,53 @@ void TestAddr::constructors() const {
     QCOMPARE(hex, "23 52 F4 BC 45 8A");
     hex = QTest::toHexRepresentation((char const *) a5.vals, a5.size);
     QCOMPARE(hex, "1F EC B3 02");
+}
+
+void TestAddr::compare() const {
+    Addr a1 = makeAddr<0x41, 0x7a, 0xb3>(),
+         a2 = makeAddr<0x41, 0xfa, 0xd1>(),
+         a3 = makeAddr<0x41, 0x7a, 0x23>(),
+         a4 = makeAddr<0x41, 0x7a, 0xb3>(),
+         a5 = makeAddr<0x12, 0x01, 0x04>();
+
+    QCOMPARE(a1 == a2, false);
+    QCOMPARE(a1 == a3, false);
+    QCOMPARE(a1 == a4, true);
+    QCOMPARE(a1 == a5, false);
+    QCOMPARE(a2 != a3, true);
+    QCOMPARE(a4 != a3, true);
+    QCOMPARE(a4 != a1, false);
+}
+
+void TestAddr::broadcast() const {
+    Addr a1 = makeAddr<0x41, 0x7a, 0xb3>(),
+         a2 = makeAddr<0x41, 0x7a, 0xff>(),
+         a3 = makeAddr<0x41, 0xff, 0xff>(),
+         a4 = makeAddr<0xff, 0xff, 0xff>(),
+         a6 = makeAddr<0x41, 0xff, 0xb3>();
+
+    QCOMPARE(a1.broadcastLvl(), 0);
+    QCOMPARE(a2.broadcastLvl(), 1);
+    QCOMPARE(a3.broadcastLvl(), 2);
+    QCOMPARE(a4.broadcastLvl(), 3);
+    QCOMPARE(a6.broadcastLvl(), 0);
+}
+
+void TestAddr::accept() const {
+    Addr a1 = makeAddr<0x41, 0x7a, 0xb3>(),
+         a2 = makeAddr<0x41, 0x7a, 0xff>(),
+         a3 = makeAddr<0x41, 0xff, 0xff>(),
+         a4 = makeAddr<0xff, 0xff, 0xff>(),
+         a5 = makeAddr<0x41, 0x7b, 0xff>(),
+         a6 = makeAddr<0x41, 0xff, 0xb3>();
+
+    QCOMPARE(a1.accept(a1), true);
+    QCOMPARE(a1.accept(a2), true);
+    QCOMPARE(a1.accept(a3), true);
+    QCOMPARE(a1.accept(a4), true);
+    QCOMPARE(a1.accept(a5), false);
+    QCOMPARE(a6.accept(a1), false);
+    QCOMPARE(a1.accept(a6), false);
 }
 
 QTEST_MAIN(TestAddr);

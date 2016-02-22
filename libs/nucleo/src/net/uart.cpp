@@ -4,15 +4,15 @@
 #include <iostream>
 
 using sdc::net::Uart;
+using sdc::net::Addr;
 
 //static mbed::Ticker tk;
 
-Uart::Uart(type::Byte const * comAddr,
-           type::Byte const * virtualAddr,
-           std::size_t        comAddrSize,
-           PinName			 tx,
-           PinName   		 rx)
-    : ReadableNetDevice(comAddr, virtualAddr, comAddrSize),
+Uart::Uart(Addr const & comAddr,
+           Addr const & virtualAddr,
+           PinName	    tx,
+           PinName      rx)
+    : ReadableNetDevice(comAddr, virtualAddr),
       _sr(tx, rx),
       _bufSem(0)
 {

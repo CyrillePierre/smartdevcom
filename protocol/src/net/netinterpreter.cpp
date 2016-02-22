@@ -2,6 +2,7 @@
 #include "net/netinterpreter.hpp"
 #include "net/varpheader.hpp"
 #include "net/netdevice.hpp"
+#include "addr.hpp"
 
 #include <string.h>
 #include <iostream>
@@ -24,6 +25,37 @@ void NetInterpreter::operator ()(NetStream &ns) {
     }
 }
 
+void NetInterpreter::manageVARP(NetStream & ns) const {
+    NetDevice const & nd = ns.device();
+    std::size_t const cSize = nd.comAddrSize(),
+                      vSize = NetDevice::virtualAddrSize;
+    VARPHeader header{cSize};
+
+    header.version = ns.read<type::Byte>(3);
+    header.op      = ns.read<type::Byte>(3);
+    header.scale   = ns.read<type::Byte>(5);
+
+    ns.read(header.scAddrSrc,  cSize);
+    ns.read(header.addrSrc,    vSize);
+    ns.read(header.scAddrDest, cSize);
+    ns.read(header.addrDest,   vSize);
+
+    {
+        std::size_t i;
+        std::cout << std::hex;
+        std::cout << "comAddrSrc = ";
+        for (i = 0; i < cSize - 1; ++i)
+            std::cout << (int) header.scAddrSrc[i] << ":";
+        std::cout << (int) header.scAddrSrc[i] << std::endl;
+    }
+
+    Addr scAddrDest{header.scAddrDest, cSize},
+         addrDest{header.addrDest, vSize};
+//    if (header.op == COM_ADDR_REQUEST && )
+
+}
+
+#if 0
 /**
  * @brief Cette méthode permer de traiter les paquets de type VARP
  * @param ns : la trame reçue
@@ -79,6 +111,8 @@ void NetInterpreter::manageVARP(NetStream &ns) const {
         sendVARP(ns, writingVarp);
     }
 }
+
+#endif
 
 /**
  * @brief Cette méthode permet d'envoyer un header VARP

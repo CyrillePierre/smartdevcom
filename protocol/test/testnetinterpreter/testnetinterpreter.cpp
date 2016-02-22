@@ -8,14 +8,13 @@
 using namespace sdc;
 
 void TestNetInterpreter::vipAddrRequests() {
-    type::Byte const com[] = {0xc0, 0xa7, 0x1c, 0x04};
-    type::Byte const virt[] = {0x1b, 0xc7, 0x03};
     type::Byte deviceBuf[32] =
         {0x08, 0x04,
          0xc0, 0xa7, 0x1c, 0x04, 	0x1b, 0xc7, 0x03,
          0xff, 0xff, 0xff, 0xff,	0x1b, 0xc7, 0x05};
 
-    test::FakeDevice fd(com, virt, sizeof(com));
+    test::FakeDevice fd(net::makeAddr<0xc0, 0xa7, 0x1c, 0x04>(),
+                        net::makeAddr<0x1b, 0xc7, 0x03>());
     net::NetStream ns(fd);
     vnet::SDCPInterpreter sdcp;
     vnet::VIPInterpreter vip(sdcp);
