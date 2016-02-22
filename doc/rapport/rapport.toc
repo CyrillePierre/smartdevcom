@@ -1,5 +1,5 @@
 \select@language {french}
-\contentsline {paragraph}{Mots cl\IeC {\'e}s :}{v}{section*.2}
+\contentsline {paragraph}{Mots cl\IeC {\'e}s}{v}{section*.2}
 \contentsline {paragraph}{Keywords:}{vii}{section*.4}
 \contentsline {chapter}{\numberline {1}Automatisation de la maison}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}L\IeC {\textquoteright }intelligence des objets}{1}{section.1.1}
