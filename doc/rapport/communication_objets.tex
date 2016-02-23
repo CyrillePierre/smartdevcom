@@ -1,17 +1,24 @@
 \chapter{La création des objets}
 
 \section{Reconnaissance vocale : Application Android}
-	\subsection{Etat de l’art}
-	
-	Tout projet implique une phase de recherche, afin d'effectuer un état de l'art sur ce qu'il a déjà été fait auparavant dans ce domaine.
-Afin de rechercher ce qu'il fallait pour cet état de l'art, il a donc fallu décomposer en plusieurs parties ce que devait réellement réaliser cette reconnaissance. Ces parties étaient :
+	\subsection{Etat de l’art}	
+Tout projet implique une phase de recherche, afin d'effectuer un état de l'art sur ce qu'il a déjà été fait 
+auparavant dans ce domaine. Afin de rechercher ce qu'il fallait pour cet état de l'art, il a donc fallu 
+décomposer en plusieurs parties ce que devait réellement réaliser cette reconnaissance. Ces parties étaient :
+
 \begin{itemize}
 \item Activation de la reconnaissance vocale automatiquement
 \item Gestion de la chaine de caractères comprise par la reconnaissance
 \end{itemize}
 
-De base sur Android, il est possible d'activer la reconnaissance vocale automatiquement grâce aux mots clefs « OK Google ». Souhaitant appeler notre intelligence domotique Jarvis, il était peu souhaitable de dire ces mots afin d'activer la reconnaissance.
-Après recherches, il s'avère qu'il n'existe aucun moyen simple de changer ces mots clefs, puisque les seuls moyens sont soit d'avoir un téléphone rooté, autrement dit où l'on a tous les accès afin de changer le bon fichier de configuration. Soit d'avoir un téléphone de la marque Motorola, qui intègre le changement de ces mots directement dans son firmware. C'est pourquoi pour activer la reconnaissance vocale, nous sommes obligés de prononcer les mots « OK Google ».
+De base sur Android, il est possible d'activer la reconnaissance vocale  automatiquement grâce aux mots clefs 
+« OK Google ». Souhaitant appeler notre intelligence domotique Jarvis, il était peu souhaitable de dire ces 
+mots afin d'activer la reconnaissance.
+Après recherches, il s'avère qu'il n'existe aucun moyen simple de changer ces mots clefs, puisque les seuls 
+moyens sont soit d'avoir un téléphone rooté, autrement dit où l'on a tous les accès afin de changer le bon 
+fichier de configuration. Soit d'avoir un téléphone de la marque Motorola, qui intègre le changement de ces 
+mots directement dans son firmware. C'est pourquoi pour activer la reconnaissance vocale, nous sommes obligés 
+de prononcer les mots « OK Google ».
 	
 	\subsection{Activation de la reconnaissance vocale}
 	
@@ -21,19 +28,47 @@ Afin de pouvoir démarrer et utiliser la reconnaissance vocale, il faut un ensem
  \item Tasker
 \end{itemize}
 
-Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la paramétrer de telle sorte qu'elle réagise seulement si une suite de mots clefs est reconnue. Afin de pouvoir communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de traiter la chaîne de caractères : SpeechRecognition.
+Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se 
+servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la 
+paramétrer de telle sorte qu'elle réagise seulement si une suite de mots clefs est reconnue. Afin de pouvoir 
+communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application 
+d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. 
+Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de 
+traiter la chaîne de caractères : SpeechRecognition.
 
 	\subsection{SpeechRecognition}
 	
-SpeechRecognition (SP) est une application Android qui permet donc d'interpréter une chaîne de caractères, et d'envoyer une trame suivant le protocole SDCP au bon objet connecté. l'application possède une base de données comportant chaque requête que l'on peut réaliser :
+SpeechRecognition (SP) est une application Android qui permet donc d'interpréter une chaîne de caractères, et 
+d'envoyer une trame suivant le protocole SDCP au bon objet connecté. l'application possède deux bases de 
+données. La première possède l'ensemble des objets intelligents. Cette base de données est stockée dans un 
+fichier JSON.
 
-\begin{lstlisting}[frame=single]
-<data name="allumer_lumiere">
-    <voice_activation>allume la lumiere</voice_activation>
-    <voice_diction>j'allume la lumiere</voice_diction>
-    <code_bluetooth>2</code_bluetooth>
-    <ble_name>SDC_Homer</ble_name>
-</data>
+\begin{lstlisting}[caption=Base de données des objets intelligents][frame=single]
+{
+    "smartDevices" : [
+      {
+        "device": {
+          "idAction": "0x111",
+          "bleName": "sdc_Lisa"
+        }
+      }]
+}
+\end{lstlisting}
+
+Cette base de données comprend une liste des objets connectés proches de nous, ainsi que les actions qu'ils 
+peuvent réaliser. 
+
+\begin{lstlisting}[caption=Base de données des commandes vocales][frame=single]
+{
+    "voiceCommands" : [
+      {
+        "command" : {
+            "voiceActivation" : "Quelle est la température",
+            "voiceDiction" : "la température est",
+            "idAction" : "0x111"
+        }
+      }]
+}
 \end{lstlisting}
 
 Ainsi une requête est caractérisée par une chaîne de caractères à reconnaître, une chaîne de caractères à dire par synthèse vovale, afin de donner un feedback sur ce qu'il se passe à l'utilisateur. Un code bluetooth, caractéristique de la requête à effectuer, et pour finir le nom de l'objet bluetooth sur lequel il faut se connecter pour réaliser la requête.
