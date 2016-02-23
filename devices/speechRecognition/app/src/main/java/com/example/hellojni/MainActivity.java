@@ -2,6 +2,7 @@ package com.example.hellojni;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.Menu;
@@ -9,11 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.hellojni.json.Device;
-import com.example.hellojni.json.JsonData;
+import com.example.hellojni.json.commands.Command;
+import com.example.hellojni.json.commands.CommandsData;
+import com.example.hellojni.json.devices.Device;
+import com.example.hellojni.json.devices.DevicesData;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -33,17 +37,25 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        JsonData devices = new JsonData();
-        Device d = new Device("name", "activation", "totoBle", "diction", "0X04");
+        DevicesData devices = new DevicesData();
+        CommandsData voiceCommands = new CommandsData();
 
-        devices = JsonParser.parse(getApplicationContext());
-        //JsonParser.addObject2(d, getApplicationContext());
+        Device d = new Device("bleName", "0x111");
+        //Command c = new Command("voiceActivation2", "voiceDiction2", "0x33");
 
-        /*try {
-            JsonParser.assetToFile(getAssets().open("voiceData.json", AssetManager.ACCESS_BUFFER), getApplicationContext());
+        //devices = JsonParser.parse(getApplicationContext(), JsonParser.DEVICES_FILE, new DevicesData()); // Pour lire les données
+        //voiceCommands = JsonParser.parse(getApplicationContext(), JsonParser.COMMANDS_FILE, new CommandsData()); // Pour lire les données
+
+        //JsonParser.addElement(d, getApplicationContext(), JsonParser.DEVICES_FILE, new DevicesData()); // Pour rajouter un objet
+        //JsonParser.addElement(c, getApplicationContext(), JsonParser.COMMANDS_FILE, new CommandsData()); // Pour rajouter un objet
+
+        try {
+            // Pour envoyer le patron dans les données internes
+            JsonParser.assetToFile(getAssets().open("smartDevices.json", AssetManager.ACCESS_BUFFER), getApplicationContext(), JsonParser.DEVICES_FILE);
+            //JsonParser.assetToFile(getAssets().open("voiceCommands.json", AssetManager.ACCESS_BUFFER), getApplicationContext(), JsonParser.COMMANDS_FILE);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         InterfaceCpp inte = new InterfaceCpp();
         System.out.println(inte.stringFromCPP());
@@ -81,9 +93,6 @@ public class MainActivity extends Activity{
 
         TextView tv = (TextView) findViewById(R.id.distance);
         tv.setText(inte.stringFromCPP());
-
-        /*MyService service = new MyService();
-        startService(new Intent(this, MyService.class));*/
     }
 
     /**

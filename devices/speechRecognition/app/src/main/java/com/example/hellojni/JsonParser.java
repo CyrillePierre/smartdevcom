@@ -2,9 +2,12 @@ package com.example.hellojni;
 
 import android.content.Context;
 
-import com.example.hellojni.json.Device;
-import com.example.hellojni.json.JsonData;
-import com.example.hellojni.json.SmartDevice;
+import com.example.hellojni.json.commands.Command;
+import com.example.hellojni.json.commands.CommandsData;
+import com.example.hellojni.json.commands.VoiceCommand;
+import com.example.hellojni.json.devices.Device;
+import com.example.hellojni.json.devices.DevicesData;
+import com.example.hellojni.json.devices.SmartDevice;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,47 +23,51 @@ import java.io.InputStream;
  */
 public class JsonParser {
 
-    public static final String JSON_FILE = "voiceData.json";
+    public static final String DEVICES_FILE = "smartDevices.json";
+    public static final String COMMANDS_FILE = "voiceCommands.json";
 
-    public static JsonData parse(Context c)
+    public static <T> T parse(Context c, String filename, T type)
     {
         File path = c.getFilesDir();
-        File file = new File(path, JSON_FILE);
+        File file = new File(path, filename);
         String str = readFile(file);
 
         System.out.println(str.toString());
 
         Gson gson = new GsonBuilder().create();
 
-        JsonData devices = gson.fromJson(str, JsonData.class);
+        T devices = (T) gson.fromJson(str, type.getClass());
 
         return devices;
     }
 
-    public static void assetToFile(InputStream is, Context c)
+    public static void assetToFile(InputStream is, Context c, String fileName)
     {
         String str = StreamToString(is);
 
-        writeToFile(c, str);
+        writeToFile(c, str, fileName);
     }
 
-    public static void addObject2(Device device, Context c)
+    public static <Elem, T> void addElement(Elem element, Context c, String filename, T type)
     {
         Gson gson = new Gson();
 
-        JsonData data = parse(c);
-        data.getDevices().add(new SmartDevice(device));
+        T data = parse(c, filename, type);
 
-        String content = gson.toJson(data, JsonData.class);
+        if(data instanceof DevicesData)
+            ((DevicesData) data).getDevices().add(new SmartDevice((Device)element));
+        else if(data instanceof CommandsData)
+            ((CommandsData) data).getCommands().add(new VoiceCommand((Command) element));
 
-        writeToFile(c, content);
+        String content = gson.toJson(data, type.getClass());
+
+        writeToFile(c, content, filename);
     }
 
-    private static void writeToFile(Context c, String s)
+    private static void writeToFile(Context c, String content, String fileName)
     {
         File path = c.getFilesDir();
-
-        File file = new File(path, JSON_FILE);
+        File file = new File(path, fileName);
 
         FileOutputStream stream = null;
         try {
@@ -69,7 +76,7 @@ public class JsonParser {
             e.printStackTrace();
         }
         try {
-            stream.write(s.getBytes());
+            stream.write(content.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

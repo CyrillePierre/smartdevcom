@@ -1,0 +1,10 @@
+{
+    "voiceCommands" : [
+      {
+        "command" : {
+            "voiceActivation" : "Quelle est la température",
+            "voiceDiction" : "la température est",
+            "idAction" : "0x111"
+        }
+      }]
+}

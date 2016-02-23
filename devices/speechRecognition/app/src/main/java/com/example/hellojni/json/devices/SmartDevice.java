@@ -1,4 +1,4 @@
-package com.example.hellojni.json;
+package com.example.hellojni.json.devices;
 
 /**
  * Created by toto on 23/02/16.

@@ -6,7 +6,6 @@
 
 #include <string.h>
 #include <iostream>
->>>>>>> 7613bd5491bcf010b262caacc58b13d7d4a7bf68
 
 using namespace sdc::net;
 namespace type = sdc::type;
