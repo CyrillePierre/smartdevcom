@@ -1,10 +1,5 @@
 #include "types.hpp"
 #include "net/netinterpreter.hpp"
-#include "net/varpheader.hpp"
-#include "net/netdevice.hpp"
-
-#include <string.h>
-#include <iostream>
 
 using namespace sdc::net;
 namespace type = sdc::type;

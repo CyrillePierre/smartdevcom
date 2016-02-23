@@ -1,9 +1,6 @@
 #include "vipinterpreter.h"
 #include "netinterpreter.hpp"
 #include "sdcpinterpreter.hpp"
-#include "vipheader.h"
-#include "netstream.hpp"
-#include <string.h>
 
 #define DBG if (0)
 

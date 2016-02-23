@@ -1,0 +1,12 @@
+{
+    "smartDevices" : [
+      {
+        "device": {
+          "deviceName": "allumer_sapin",
+          "voiceActivation": "allume la télé",
+          "voiceDiction": "jallume la télé",
+          "codeBluetooth": "0x03",
+          "bleName": "sdC_LIsA"
+        }
+      }]
+}

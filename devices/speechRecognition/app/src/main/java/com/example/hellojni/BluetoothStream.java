@@ -1,6 +1,5 @@
 package com.example.hellojni;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -15,12 +14,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by toto on 18/01/16.

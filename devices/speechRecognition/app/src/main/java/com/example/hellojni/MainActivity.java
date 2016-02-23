@@ -1,20 +1,21 @@
 package com.example.hellojni;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.hellojni.json.Device;
+import com.example.hellojni.json.JsonData;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends Activity{
     private Button btnSpeak;
@@ -31,6 +32,18 @@ public class MainActivity extends Activity{
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        JsonData devices = new JsonData();
+        Device d = new Device("name", "activation", "totoBle", "diction", "0X04");
+
+        devices = JsonParser.parse(getApplicationContext());
+        //JsonParser.addObject2(d, getApplicationContext());
+
+        /*try {
+            JsonParser.assetToFile(getAssets().open("voiceData.json", AssetManager.ACCESS_BUFFER), getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
         InterfaceCpp inte = new InterfaceCpp();
         System.out.println(inte.stringFromCPP());

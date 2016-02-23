@@ -8,12 +8,6 @@
         <ble_name>toto</ble_name>
     </data>
 
-    <!--<data name="allumer_lumiere">
-        <voice_activation>allume la lumière</voice_activation>
-        <voice_diction>j'allume la lumière</voice_diction>
-        <code_bluetooth>0x0001</code_bluetooth>
-    </data>-->
-
     <data name="allumer_sapin">
         <voice_activation>allume le sapin</voice_activation>
         <voice_diction>j'allume le sapin</voice_diction>
@@ -41,7 +35,4 @@
         <code_bluetooth>3</code_bluetooth>
         <ble_name>SDC_Homer</ble_name>
     </data>
-
-
-
 </devices>

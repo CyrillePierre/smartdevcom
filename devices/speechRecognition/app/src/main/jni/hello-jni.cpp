@@ -1,5 +1,4 @@
 #include <jni.h>
-#include <iostream>
 
 extern "C" {
     JNIEXPORT jstring JNICALL
