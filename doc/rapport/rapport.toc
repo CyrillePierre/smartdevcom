@@ -5,32 +5,37 @@
 \contentsline {section}{\numberline {1.1}L\IeC {\textquoteright }intelligence des objets}{1}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}D\IeC {\'e}finition d\IeC {\textquoteright }un objet connect\IeC {\'e}}{1}{subsection.1.1.1}
 \contentsline {subsection}{\numberline {1.1.2}Les capteurs}{1}{subsection.1.1.2}
-\contentsline {subsection}{\numberline {1.1.3}Les actionneurs}{1}{subsection.1.1.3}
-\contentsline {section}{\numberline {1.2}La communication des objets}{1}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Pr\IeC {\'e}sentation des technologies de communication}{1}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Les diff\IeC {\'e}rentes topologies de r\IeC {\'e}seaux}{1}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}Application du r\IeC {\'e}seau \IeC {\`a} la domotique}{1}{subsection.1.2.3}
-\contentsline {section}{\numberline {1.3}La centralisation de l\IeC {\textquoteright }intelligence : Jarvis}{1}{section.1.3}
-\contentsline {subsection}{\numberline {1.3.1}Vision macroscopique d\IeC {\textquoteright }un syst\IeC {\`e}me domotique}{1}{subsection.1.3.1}
-\contentsline {subsection}{\numberline {1.3.2}Les sc\IeC {\'e}narios}{1}{subsection.1.3.2}
-\contentsline {subsection}{\numberline {1.3.3}Analyse et anticipation de requ\IeC {\^e}tes}{1}{subsection.1.3.3}
-\contentsline {chapter}{\numberline {2}Mise en place du protocole de communication}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Les protocoles existants}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Z-Wave}{3}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Alljoyn}{3}{subsection.2.1.2}
-\contentsline {section}{\numberline {2.2}Le r\IeC {\'e}seau virtuelle}{3}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Architecture du r\IeC {\'e}seau}{3}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Le routage}{3}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}Un r\IeC {\'e}seau dynamique}{3}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}La g\IeC {\'e}n\IeC {\'e}ricit\IeC {\'e} des objets connect\IeC {\'e}s}{3}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}M\IeC {\'e}thode de classification des actions sur les objets}{3}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}La structure actuelle}{3}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Gestion dynamique d\IeC {\textquoteright }objets inconnus}{3}{subsection.2.3.3}
-\contentsline {chapter}{\numberline {3}La cr\IeC {\'e}ation des objets}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}Reconnaissance vocale : Application Android}{5}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Etat de l\IeC {\textquoteright }art}{5}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Activation de la reconnaissance vocale}{5}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}SpeechRecognition}{6}{subsection.3.1.3}
-\contentsline {subsection}{\numberline {3.1.4}Communiquer avec les protocoles BLE et WiFi}{7}{subsection.3.1.4}
-\contentsline {section}{\numberline {3.2}Les actionneurs}{7}{section.3.2}
-\contentsline {section}{\numberline {3.3}Les capteurs}{7}{section.3.3}
+\contentsline {subsection}{\numberline {1.1.3}Les actionneurs}{2}{subsection.1.1.3}
+\contentsline {section}{\numberline {1.2}La communication des objets}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Pr\IeC {\'e}sentation des technologies de communication}{2}{subsection.1.2.1}
+\contentsline {paragraph}{Les protocoles tr\IeC {\`e}s \IeC {\'e}nergivores}{3}{section*.5}
+\contentsline {paragraph}{Les protocoles peu \IeC {\'e}nergivores}{3}{section*.6}
+\contentsline {subsection}{\numberline {1.2.2}Les diff\IeC {\'e}rentes topologies de r\IeC {\'e}seaux}{3}{subsection.1.2.2}
+\contentsline {subsubsection}{Etoile}{4}{section*.7}
+\contentsline {subsubsection}{P2P}{4}{section*.8}
+\contentsline {subsubsection}{Arbre}{4}{section*.9}
+\contentsline {subsection}{\numberline {1.2.3}Application du r\IeC {\'e}seau \IeC {\`a} la domotique}{5}{subsection.1.2.3}
+\contentsline {section}{\numberline {1.3}La centralisation de l\IeC {\textquoteright }intelligence : Jarvis}{5}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Vision macroscopique d\IeC {\textquoteright }un syst\IeC {\`e}me domotique}{5}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Les sc\IeC {\'e}narios}{5}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Analyse et anticipation de requ\IeC {\^e}tes}{5}{subsection.1.3.3}
+\contentsline {chapter}{\numberline {2}Mise en place du protocole de communication}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Les protocoles existants}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Z-Wave}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Alljoyn}{7}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}Le r\IeC {\'e}seau virtuelle}{7}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Architecture du r\IeC {\'e}seau}{7}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Le routage}{7}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Un r\IeC {\'e}seau dynamique}{7}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}La g\IeC {\'e}n\IeC {\'e}ricit\IeC {\'e} des objets connect\IeC {\'e}s}{7}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}M\IeC {\'e}thode de classification des actions sur les objets}{7}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}La structure actuelle}{7}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Gestion dynamique d\IeC {\textquoteright }objets inconnus}{7}{subsection.2.3.3}
+\contentsline {chapter}{\numberline {3}La cr\IeC {\'e}ation des objets}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Reconnaissance vocale : Application Android}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Etat de l\IeC {\textquoteright }art}{9}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Activation de la reconnaissance vocale}{9}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}SpeechRecognition}{10}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Communiquer avec les protocoles BLE et WiFi}{11}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}Les actionneurs}{11}{section.3.2}
+\contentsline {section}{\numberline {3.3}Les capteurs}{11}{section.3.3}
