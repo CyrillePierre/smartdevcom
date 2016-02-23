@@ -31,10 +31,10 @@ int main() {
 
     DeviceManager dm;
     dm += new net::Uart{net::makeAddr<0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6>(),
-                        net::makeAddr<0xaa, 0xbb, 0xcc>(), D8, D2};
+                        net::makeAddr<0x91, 0x92, 0x93>(), D8, D2};
 //    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
     dm += new net::Uart{net::makeAddr<0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6>(),
-                        net::makeAddr<0xaa, 0xbb, 0xcc>(),
+                        net::makeAddr<0xa1, 0xa2, 0xa3>(),
                         USBTX, USBRX};
 
     using Dm = DeviceManager;
