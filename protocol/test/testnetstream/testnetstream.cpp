@@ -5,11 +5,10 @@ namespace type = sdc::type;
 using sdc::net::NetStream;
 
 void TestNetStream::testRead() {
-    type::Byte com[] = {0xaa, 0xdd};
-    type::Byte virt[] = {0xB0, 0xB1, 0xB2};
     type::Byte deviceBuf[32] = {0xa2, 0xf3, 0xee, 0x28, 0x90, 0xf7, 0xa4};
     type::Byte buf[32];
-    sdc::test::FakeDevice fk{com, virt, 2};
+    sdc::test::FakeDevice fk{sdc::net::makeAddr<0xaa, 0xdd>(),
+                             sdc::net::makeAddr<0xb0, 0xb1, 0xb2>()};
     NetStream ns(fk);
     char *hex;
 

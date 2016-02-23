@@ -9,9 +9,9 @@
 
 using namespace sdc;
 
-type::Byte const comAddr[]  = {0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6};
-type::Byte const vAddrBLE[] = {0xaa, 0xbb, 0xcc};
-type::Byte const vAddrPC[]  = {0x1a, 0x2a, 0x3a};
+//type::Byte const comAddr[]  = {0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6};
+//type::Byte const vAddrBLE[] = {0xaa, 0xbb, 0xcc};
+//type::Byte const vAddrPC[]  = {0x1a, 0x2a, 0x3a};
 
 
 template <class C, void (C::*fn)()>
@@ -32,7 +32,9 @@ int main() {
     DeviceManager dm;
 //    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), D8, D2};
 //    dm += new net::Uart{comAddr, vAddrBLE, sizeof(comAddr), PA_11, PA_12};
-    dm += new net::Uart{comAddr, vAddrPC, sizeof(comAddr), USBTX, USBRX};
+    dm += new net::Uart{net::makeAddr<0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6>(),
+                        net::makeAddr<0xaa, 0xbb, 0xcc>(),
+                        USBTX, USBRX};
 
     using Dm = DeviceManager;
     rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);
