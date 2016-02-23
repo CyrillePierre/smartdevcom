@@ -17,7 +17,7 @@ void DeviceManager::parseData() {
         NetDeviceElem * nde = _queue.pop();	// Bloquant
         dbg::ledSignal();
         sdc::net::NetStream ns{*nde->nd};
-        _ni(ns);
+        net()(ns);
         nde->queued = false;
     }
 }

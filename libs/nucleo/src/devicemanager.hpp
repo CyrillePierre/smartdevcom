@@ -1,12 +1,10 @@
-#ifndef NETMANAGER_HPP
-#define NETMANAGER_HPP
+#ifndef DEVICEMANAGER_HPP
+#define DEVICEMANAGER_HPP
 
 #include <vector>
 #include <types.hpp>
 #include "rtos/Mutex.h"
-#include <net/netinterpreter.hpp>
-#include <vnet/vipinterpreter.h>
-#include <vnet/sdcpinterpreter.hpp>
+#include "net/netmanager.hpp"
 #include "net/readablenetdevice.hpp"
 #include "util/msgqueue.hpp"
 
@@ -19,7 +17,7 @@ namespace net { class NetDevice; }
  * chacun des interpréteurs et gère les périphériques réseaux. Une fois qu'elle
  * est démarrée, l'objet connecté est en fonctionnement.
  */
-class DeviceManager {
+class DeviceManager : public net::NetManager {
     struct NetDeviceElem {
         net::ReadableNetDevice * nd;
         bool			         queued;
@@ -36,14 +34,9 @@ private:
     util::MsgQueue<NetDeviceElem *, util::SingleWriter, util::SingleReader>
         _queue;
 
-    vnet::SDCPInterpreter _sdcp;
-    vnet::VIPInterpreter  _vip;
-    net::NetInterpreter   _ni;
-
     rtos::Mutex _mutex;
 
 public:
-    DeviceManager() : _vip{_sdcp}, _ni{_vip} {}
     ~DeviceManager();
 
     /**

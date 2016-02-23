@@ -1,8 +1,9 @@
 #include "types.hpp"
+#include "vnet/vipinterpreter.h"
 #include "net/netinterpreter.hpp"
+#include "net/netmanager.hpp"
 #include "net/varpheader.hpp"
 #include "net/netdevice.hpp"
-#include "addr.hpp"
 
 #include <string.h>
 #include <iostream>
@@ -46,6 +47,10 @@ void NetInterpreter::manageVARP(NetStream & ns) const {
     if ((header.op == COM_ADDR_REQUEST && nd.virtualAddr().accept(addrDest))
          || (header.op == VIP_ADDR_REQUEST && nd.comAddr().accept(scAddrDest)))
         sendVARP(ns, header);
+
+    // Appel de l'handler s'il y en a un
+    if (header.op == RESPONSE && _reqHandler)
+        _reqHandler(scAddrDest, addrDest);
 }
 
 /**
@@ -73,5 +78,34 @@ void NetInterpreter::sendVARP(NetStream &ns, const VARPHeader &header) const
 
     ns.flushOut();
 }
+
+void NetInterpreter::sendVARPRequest(const Addr & addr, bool isVIPReq) {
+    NetDevice & nd = _mgr[addr];
+    NetStream ns{nd};
+    DynamicBitset & db = ns.writingBitset();
+
+    db.push((type::Byte) Proto::VARP, 5);
+    db.push(NetInterpreter::VARP_VERSION, 3);
+    db.push((type::Byte)(isVIPReq ? VIP_ADDR_REQUEST : COM_ADDR_REQUEST), 3);
+    db.push(nd.comAddrSize(), 5);
+
+    Addr const & srcComAddr = nd.comAddr();
+    Addr const & srcAddr    = nd.virtualAddr();
+
+    db.push(srcComAddr.vals, srcComAddr.size);
+    db.push(srcAddr.vals, srcAddr.size);
+    if (isVIPReq) {
+        db.push(addr.vals, addr.size);
+        db.push(NetDevice::BROADCAST, NetDevice::virtualAddrSize);
+    }
+    else {
+        db.push(NetDevice::BROADCAST, addr.size);
+        db.push(addr.vals, addr.size);
+    }
+
+    ns.flushOut();
+}
+
+
 
 

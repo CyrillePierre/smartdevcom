@@ -21,7 +21,7 @@ CPP     = $(GCC_BIN)arm-none-eabi-g++
 AR      = $(GCC_BIN)arm-none-eabi-ar rs
 
 CPU = -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=$(FLOAT_ABI)
-CC_FLAGS = $(CPU) -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer
+CC_FLAGS = $(CPU) -c -g -fno-common -fmessage-length=0 -Wall -ffunction-sections -fdata-sections -fomit-frame-pointer
 #CC_FLAGS += -fPIC
 VERSION = -std=c++14
 
