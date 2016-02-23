@@ -1,0 +1,9 @@
+{
+    "smartDevices" : [
+      {
+        "device": {
+          "idAction": "0x111",
+          "bleName": "sdc_Lisa"
+        }
+      }]
+}

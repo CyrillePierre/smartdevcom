@@ -10,6 +10,7 @@ model {
             minSdkVersion.apiLevel = 21
             targetSdkVersion.apiLevel = 21
         }
+
     }
 
     android.productFlavors {
@@ -21,6 +22,10 @@ model {
     android.ndk {
         moduleName = "hello-jni"
         stl = "gnustl_static"
+        cppFlags.add("-std=c++1y")
+        cppFlags.add("-I${file("src/main/jni/protocol")}".toString())
+        cppFlags.add("-I${file("src/main/jni/protocol/net")}".toString())
+        cppFlags.add("-I${file("src/main/jni/protocol/vnet")}".toString())
     }
 
     android.buildTypes {
@@ -29,10 +34,17 @@ model {
             proguardFiles.add(file('proguard-rules.txt'))
         }
     }
+
+    android.packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'org.apache.commons:commons-lang3:3.4'
+    compile "commons-io:commons-io:+"
+    compile 'com.google.code.gson:gson:1.7.2'
 }
 
