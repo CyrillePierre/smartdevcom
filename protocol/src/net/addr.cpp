@@ -1,5 +1,7 @@
 #include "addr.hpp"
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 using sdc::net::Addr;
 namespace type = sdc::type;
@@ -22,6 +24,17 @@ bool Addr::accept(Addr const & a) const {
         result = ((*this)[i] | a[i]) == a[i];
 
     return result;
+}
+
+std::string Addr::str() const {
+    std::ostringstream oss;
+
+    oss << std::hex;
+    for (std::size_t i = 0; i < size; ++i)
+        oss << (i == 0 ? "" : ":") << std::setfill('0')
+            << std::setw(2) << (*this)[i];
+
+    return oss.str();
 }
 
 bool sdc::net::operator ==(Addr const & a, Addr const & b) {

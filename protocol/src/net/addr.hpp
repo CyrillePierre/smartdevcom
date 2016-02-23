@@ -2,6 +2,7 @@
 #define ADDR_HPP
 
 #include "types.hpp"
+#include <string>
 #include <initializer_list>
 #include <utility>
 
@@ -45,6 +46,9 @@ struct Addr {
 
     /** @return l'octets correspondant à l'indice dans vals */
     type::Byte operator[](std::size_t i) const { return vals[i]; }
+
+    /** Conversion en chaine de caractère */
+    std::string str() const;
 };
 
 namespace _addr {
