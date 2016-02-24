@@ -38,7 +38,7 @@ lumière intelligente, il faudra préciser l'intensité lumineuse, ainsi que la 
 \section{La communication des objets}
 	\subsection{Présentation des technologies de communication}
 Actuellement, il existe de nombreux protocoles réseaux qui permettent la communication entre les différents 
-objets.
+objets. Ces protocoles établissent des normes, afin de pouvoir dialoguer entre différents acteurs.
 
 \includegraphics{img/tableau-total.png} 
 
@@ -53,19 +53,64 @@ l'inconvénient de très peu passer les obstacles, et donc d'émettre sur une co
 permettent de faire transiter des données avec un faible débit, sur une grande distance grâce à une fréquence 
 bien moindre.
 
+C'est donc la deuxième famille qui est la plus utilisée pour l'internet des objets, puisqu'ils n'ont pas 
+besoin d'envoyer beaucoup de données, ont besoin d'envoyer le plus loin possible, et surtout d'avoir le plus 
+d'autonomie possible. Les protocoles les plus réprésentatifs de cette famille, sont le Bluetooth Low Energy 
+(ou BLE), le Zigbee, et Z-Wave. Ces deux derniers sont relativement onéreux et compliqués à mettre en place, 
+c'est pourquoi le BLE est le protocole le plus démocratisé de cette famille.
+
 % 		wifi, bluetooth, BLE, zig-bee, …
 % 		quelques caractéristiques (débit, portée, consommation)
 	\subsection{Les différentes topologies de réseaux}
+En plus des différents protocoles, il existe aussi des topologies différentes pour créer un réseau d'objets. 
+La topologie d'un système représente la manière dont celui-ci est organisé est agencé. Ainsi en fonction des 
+besoins, tout comme pour les protocoles, une topologie sera plus adéquat qu'une autre.
+
+	    \subsubsection{Etoile}
+\includegraphics{img/StarNetwork.svg.png}
+C'est la topologie la plus commune dans les communications. Elle est aussi appelée l'architecture 
+client/serveur dans le sens où il y une machine qui dirige tout le système, et par lequel toutes les données 
+passent. Il s'agit de l'architecture la plus simple, puisqu'avec cette topologie, il est facile de changer de 
+sortir du réseau local, et permet d'envoyer rapidement un paquet d'un noeud à un autre.
+
+	    \subsubsection{P2P}
+\includegraphics{img/NetworkTopology-Mesh.svg.png}
+Cette topologie, aussi appelé réseau meshé, permet d'avoir une architecture réseau plus robuste, puisqu'il 
+existe plusieurs chemins pour arriver à un noeud. Elle donne aussi une plus grande securité au niveau de 
+l'acheminement des paquets, puisque toutes les données ne passent pas au même endroit, il est donc plus 
+difficile de les sniffer. Pour finir cette architecture permet d'avoir un réseau beaucoup plus grand et 
+dynamique, puisqu'il n'existe pas de noeud central. L'inconvénient de cette architecture est qu'elle est plus 
+dure à mettre en place, du fait qu'il existe plusieurs routes pour acheminer les données. De ce fait, il faut 
+gérer la duplication possible des paquets, et le routage dynamique si un des noeud n'est plus fonctionnel.
+
+	    \subsubsection{Arbre}
+\includegraphics{img/TreeTopology.png}
+Cette architecture est simplement l'extension du réseau étoile, c'est l'architecture utilisée par Internet.
 % 		p2p, étoile, mesh, ...
 % 		lien avec les technos
 	\subsection{Application du réseau à la domotique}
+
+
 % 		les technologies les plus adaptées à la domotique
 % 		exemples d’architecture réseau dans une maison (avec ou sans mélange de technos)
 
 \section{La centralisation de l’intelligence : Jarvis}
 	\subsection{Vision macroscopique d’un système domotique}
+Actuellement, la croissance de l'intégration des objets connectés dans notre quotidien est réellement forte. 
+Dans un futur proche, nous seront entourés par un très grand nombre de ces objets. Mais il n'existe peu de 
+systèmes aujourd'hui qui permettent une interaction intelligente avec l'ensemble de ces objets. Il existe peu 
+de moyens simples et directs de réussir à communiquer avec l'ensemble de ces objets connectés sans devoir se 
+connecter manuellement à eux. De plus tous ces acteurs utilisent un langage différent pour communiquer, il 
+est donc difficile de réussir à centraliser un moyen de communication universel.
+
+SmartDevCom permet de réaliser une intelligence semblable à Jarvis, qui est une intelligence artificielle 
+forte, que l'on peut voir dans les films Iron Man. Cette intelligence peut communiquer avec tout, et peut 
+même deviner ce qu'elle doit faire à partir d'informations qu'elle aura apprise elle-même au cours du temps. 
+Cette intelligence sera même capable de réaliser une suite d'interactions : Les scenarios.
 % 		les conséquences de la connexion des objets
 	\subsection{Les scénarios}
+Les scénarios sont un ensemble de chose que l'on souhaite faire en simultannée et/ou de manière séquentielle. 
+Par exemple, lorsque l'on souhaite regarder un film, voici le scénario typique que l'on fait :
 % 		explication sur l’intérêt de la connexion des objets
 % 		exemples d’utilisations
 	\subsection{Analyse et anticipation de requêtes}
