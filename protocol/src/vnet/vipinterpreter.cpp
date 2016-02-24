@@ -58,11 +58,8 @@ void VIPInterpreter::operator()(net::NetStream &ns)
     ns.read(header.length, 16);
     DBG { std::cout << "vip.length  = " << (int) header.length << std::endl; }
 
-    if(memcmp(header.addrDest, device.virtualAddr().vals, VIRTUAL_SIZE)  ||
-       memcmp(header.addrDest, net::NetDevice::BROADCAST, VIRTUAL_SIZE))
-    {
+    if (device.virtualAddr().accept(net::Addr{header.addrDest, VIRTUAL_SIZE}))
         _sdcp(ns, header);
-    }
 }
 
 void VIPInterpreter::buildHeader(DynamicBitset &    bitset,

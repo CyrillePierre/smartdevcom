@@ -1,4 +1,4 @@
-
+#include "net/netmanager.hpp"
 
 using sdc::net::NetManager;
 using sdc::net::NetDevice;
