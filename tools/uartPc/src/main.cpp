@@ -22,7 +22,7 @@
 using Buf = std::uint8_t[];
 std::map<std::string, std::pair<int, std::uint8_t const *>> const bufs {
     {"sdcp.exec", 	 {16, Buf{0x36, 0xcc, 0x00, 0xff, MY_VIP_ADDR, VIP_ADDR,
-                        0x00, 0x04, 0x14, 0x00, 0x00, 0x01}}},
+                              0x00, 0x04, 0x14, 0x00, 0x00, 0x01}}},
     {"varp.com", 	 {21, Buf{0xcc, 0x08, 0x06,
                               MY_COM_ADDR, 	 MY_VIP_ADDR,
                               COM_BROADCAST, VIP_ADDR}}},
@@ -34,10 +34,18 @@ std::map<std::string, std::pair<int, std::uint8_t const *>> const bufs {
                               COM_BROADCAST, VIP_BROADCAST}}}
 };
 
+void showAvailableBuffers() {
+    std::cerr << "Buffers disponibles : ";
+    for (auto const & buf : bufs)
+        std::cerr << buf.first << ' ';
+    std::cerr << std::endl;
+}
+
 int main(int argc, char **argv) {
     if (argc != 3) {
         std::cerr << "Syntaxe : \n    " << argv[0]
                   << " <deviceFile> <buffer>" << std::endl;
+        showAvailableBuffers();
         return 1;
     }
 
@@ -62,7 +70,8 @@ int main(int argc, char **argv) {
         while ((nb = uart.read(bs, 32))) write(1, bs, nb);
     }
     catch (...) {
-        std::cerr << "Erreur : Buffer inconnu" << std::endl;
+        std::cerr << "Erreur : Buffer inconnu." << std::endl;
+        showAvailableBuffers();
         return 3;
     }
 

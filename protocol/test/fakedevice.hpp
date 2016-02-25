@@ -15,8 +15,9 @@ struct FakeDevice : public net::NetDevice {
     int pos;
 
     FakeDevice(net::Addr const & comAddr,
-               net::Addr const & virtualAddr)
-        : net::NetDevice(comAddr, virtualAddr), pos(0) {}
+               net::Addr const & virtualAddr,
+               net::Addr const & netAddr)
+        : net::NetDevice(comAddr, virtualAddr, netAddr), pos(0) {}
 
     virtual std::size_t read(type::Byte * b, std::size_t size)
     { while (size--) *b++ = buf[pos++]; return size; }

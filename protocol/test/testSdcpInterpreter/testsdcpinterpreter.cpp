@@ -12,7 +12,8 @@ void TestSDCPInterpreter::testTest() {
     type::Byte deviceBuf[32] = {0x00, 0xff, 0xa0, 0xa1, 0xa2, 0xb0, 0xb1, 0xb2,
                                 0x00, 0x00, 0x00};
     test::FakeDevice fd(net::makeAddr<0xaa, 0xdd>(),
-                        net::makeAddr<0xb0, 0xb1, 0xb2>());
+                        net::makeAddr<0xb0, 0xb1, 0xb2>(),
+                        net::makeAddr<0xb0, 0xb1, 0x00>());
     net::NetStream        ns(fd);
 
     net::NetManager mgr;

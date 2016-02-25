@@ -10,9 +10,10 @@ using sdc::net::Addr;
 
 Uart::Uart(Addr const & comAddr,
            Addr const & virtualAddr,
+           Addr const & netAddr,
            PinName	    tx,
            PinName      rx)
-    : ReadableNetDevice(comAddr, virtualAddr),
+    : ReadableNetDevice(comAddr, virtualAddr, netAddr),
       _sr(tx, rx),
       _bufSem(0)
 {

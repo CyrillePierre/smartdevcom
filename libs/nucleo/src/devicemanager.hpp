@@ -23,7 +23,7 @@ class DeviceManager : public net::NetManager {
         bool			         queued;
 
         NetDeviceElem(net::ReadableNetDevice * nd) : nd{nd}, queued{false} {}
-        NetDeviceElem(NetDeviceElem && nde) : nd{nde.nd}, queued{nde.queued} {}
+        NetDeviceElem(NetDeviceElem && nde) = default;
     };
 
 public:
@@ -40,14 +40,6 @@ public:
     ~DeviceManager();
 
     /**
-     * Les périphériques ajoutés doivent être alloué avec new. DeviceManager
-     * s'occupera de libérer la mémoire.
-     * @param nd le NetDevice à ajouter
-     */
-    DeviceManager & operator +=(net::ReadableNetDevice * nd)
-    { _nds.push_back(NetDeviceElem{nd}); return *this; }
-
-    /**
      * @brief Mise à jour de la file si un nouveau périphérique contient des
      * données à lire.
      */
@@ -55,6 +47,14 @@ public:
 
     /** Traite les messages reçus */
     void parseData();
+
+    /**
+     * Les périphériques ajoutés doivent être alloué avec new. DeviceManager
+     * s'occupera de libérer la mémoire.
+     * @param nd le NetDevice à ajouter
+     */
+    NetManager & operator +=(net::ReadableNetDevice * nd)
+    { _nds.push_back(NetDeviceElem{nd}); rtable() += nd; return *this; }
 };
 
 } // sdc

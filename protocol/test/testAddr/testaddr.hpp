@@ -12,6 +12,7 @@ private slots:
     void compare() const;
     void broadcast() const;
     void accept() const;
+    void net() const;
 };
 
 #endif // TESTADDR_HPP

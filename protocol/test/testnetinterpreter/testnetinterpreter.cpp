@@ -7,7 +7,8 @@ using namespace sdc;
 
 void TestNetInterpreter::vipAddrRequests() {
     test::FakeDevice fd(net::makeAddr<0xc0, 0xa7, 0xd9, 0x78>(),
-                        net::makeAddr<0x1b, 0xc7, 0x05>());
+                        net::makeAddr<0x1b, 0xc7, 0x05>(),
+                        net::makeAddr<0x1b, 0xc7, 0x00>());
 
     net::NetManager mgr;
 

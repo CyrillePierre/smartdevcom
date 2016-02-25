@@ -26,13 +26,20 @@ bool Addr::accept(Addr const & a) const {
     return result;
 }
 
+bool Addr::isInNet(const sdc::net::Addr & net) const {
+    bool result = size == net.size;
+    for (std::size_t i = 0; result && i < size; ++i)
+        if (net[i]) result = (*this)[i] == net[i];
+    return result;
+}
+
 std::string Addr::str() const {
     std::ostringstream oss;
 
     oss << std::hex;
     for (std::size_t i = 0; i < size; ++i)
         oss << (i == 0 ? "" : ":") << std::setfill('0')
-            << std::setw(2) << (*this)[i];
+            << std::setw(2) << (int) (*this)[i];
 
     return oss.str();
 }

@@ -2,7 +2,6 @@ src/
 ../../protocol/src/
 /usr/include/c++/5/
 /usr/include/
-.
 ../../libs/nucleo/src
 ../../libs/nucleo/src/rtos
 ../../libs/nucleo/src/mbed

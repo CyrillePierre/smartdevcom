@@ -40,9 +40,15 @@ struct Addr {
      * Cette méthode permet de comparer une adresse à celle-ci et de savoir
      * si elle sont compatible. L'adresse à comparer est soit l'adresse elle
      * même ou une adresse de broadcast incluant cette adresse.
-     * @return
+     * @return true si les adresses matchent
      */
     bool accept(Addr const &) const;
+
+    /**
+     * @return true si l'adresse appartient à l'adresse de résau passé en
+     * paramètre
+     */
+    bool isInNet(Addr const &) const;
 
     /** @return l'octets correspondant à l'indice dans vals */
     type::Byte operator[](std::size_t i) const { return vals[i]; }

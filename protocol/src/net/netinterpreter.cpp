@@ -1,7 +1,7 @@
 #include "types.hpp"
 #include "vnet/vipinterpreter.h"
 #include "net/netinterpreter.hpp"
-#include "net/netmanager.hpp"
+#include "net/routingtable.hpp"
 #include "net/varpheader.hpp"
 #include "net/netdevice.hpp"
 
@@ -28,29 +28,28 @@ void NetInterpreter::operator ()(NetStream &ns) {
 
 void NetInterpreter::manageVARP(NetStream & ns) const {
     NetDevice const & nd = ns.device();
-    std::size_t const cSize = nd.comAddrSize(),
-                      vSize = NetDevice::virtualAddrSize;
-    VARPHeader header{cSize};
+    VARPHeader header{nd.comAddrSize()};
 
     header.version = ns.read<type::Byte>(3);
     header.op      = ns.read<type::Byte>(3);
     header.scale   = ns.read<type::Byte>(5);
 
     ns.read(header.scAddrSrc,  header.scale);
-    ns.read(header.addrSrc,    vSize);
+    ns.read(header.addrSrc,    NetDevice::virtualAddrSize);
     ns.read(header.scAddrDest, header.scale);
-    ns.read(header.addrDest,   vSize);
+    ns.read(header.addrDest,   NetDevice::virtualAddrSize);
 
     Addr scAddrDest{header.scAddrDest, header.scale},
-         addrDest{header.addrDest, vSize};
+         addrDest  {header.addrDest, NetDevice::virtualAddrSize};
 
-    if ((header.op == COM_ADDR_REQUEST && nd.virtualAddr().accept(addrDest))
-         || (header.op == VIP_ADDR_REQUEST && nd.comAddr().accept(scAddrDest)))
-        sendVARP(ns, header);
+    if ((header.op == COM_ADDR_REQ && nd.virtualAddr().accept(addrDest))
+         || (header.op == VIP_ADDR_REQ && nd.comAddr().accept(scAddrDest)))
+        sendVARPResponse(ns, header);
 
     // Appel de l'handler s'il y en a un
     if (header.op == RESPONSE && _reqHandler)
-        _reqHandler(scAddrDest, addrDest);
+        _reqHandler(Addr{header.scAddrSrc, header.scale},
+                    Addr{header.addrSrc,   NetDevice::virtualAddrSize});
 }
 
 /**
@@ -58,7 +57,8 @@ void NetInterpreter::manageVARP(NetStream & ns) const {
  * @param ns : le stream sur lequel envoyer les données
  * @param header : la trame reçue à modifier pour l'envoi
  */
-void NetInterpreter::sendVARP(NetStream &ns, const VARPHeader &header) const
+void NetInterpreter::sendVARPResponse(NetStream &ns,
+                                      const VARPHeader &header) const
 {
     DynamicBitset & dbs = ns.writingBitset();
 
@@ -79,18 +79,40 @@ void NetInterpreter::sendVARP(NetStream &ns, const VARPHeader &header) const
     ns.flushOut();
 }
 
-void NetInterpreter::sendVARPRequest(const Addr & addr, bool isVIPReq) {
-    NetDevice & nd = _mgr[addr];
+void NetInterpreter::findTargets(const Addr & addr, bool isVIPReq) {
+    try {
+        if (!isVIPReq)
+            sendVARPRequest(_rtable[addr], addr, isVIPReq);
+        else
+            for (NetDevice * route : _rtable)
+                sendVARPRequest(*route, addr, isVIPReq);
+    }
+    catch (UnknownAddr & e) {
+        std::cout << "Exception : " << e.what() << std::endl;
+    }
+}
+
+void NetInterpreter::sendVARPRequest(NetDevice &  nd,
+                                     const Addr & addr,
+                                     bool         isVIPReq)
+{
     NetStream ns{nd};
     DynamicBitset & db = ns.writingBitset();
 
+    std::cout << "NetInterpreter::sendVARPRequest()" << std::endl;
+    std::cout << "isVIPReq ? : " << isVIPReq << std::endl;
+
     db.push((type::Byte) Proto::VARP, 5);
     db.push(NetInterpreter::VARP_VERSION, 3);
-    db.push((type::Byte)(isVIPReq ? VIP_ADDR_REQUEST : COM_ADDR_REQUEST), 3);
+    db.push((type::Byte)(isVIPReq ? VIP_ADDR_REQ : COM_ADDR_REQ), 3);
     db.push(nd.comAddrSize(), 5);
 
     Addr const & srcComAddr = nd.comAddr();
     Addr const & srcAddr    = nd.virtualAddr();
+
+    std::cout << "srcComAddr = " << srcComAddr.str() << std::endl;
+    std::cout << "srcAddr = " << srcAddr.str() << std::endl;
+    std::cout << "addr = " << addr.str() << std::endl;
 
     db.push(srcComAddr.vals, srcComAddr.size);
     db.push(srcAddr.vals, srcAddr.size);
@@ -99,9 +121,13 @@ void NetInterpreter::sendVARPRequest(const Addr & addr, bool isVIPReq) {
         db.push(NetDevice::BROADCAST, NetDevice::virtualAddrSize);
     }
     else {
-        db.push(NetDevice::BROADCAST, addr.size);
+        db.push(NetDevice::BROADCAST, nd.comAddrSize());
         db.push(addr.vals, addr.size);
     }
+
+    std::cout << std::hex;
+    for (auto const & byte : db) std::cout << (int) byte << ' ';
+    std::cout << std::dec << std::endl;
 
     ns.flushOut();
 }

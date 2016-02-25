@@ -28,7 +28,7 @@ public:
      * @param tx : pin d'émission
      * @param rx : pin de réception
      */
-    Uart(Addr const &, Addr const &, PinName, PinName);
+    Uart(Addr const &, Addr const &, Addr const &, PinName, PinName);
 
     /** @see sdc::net::NetDevice::read */
     virtual std::size_t read(type::Byte *, std::size_t);

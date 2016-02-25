@@ -18,17 +18,21 @@ struct NetDevice {
     static constexpr std::size_t virtualAddrSize = 3;
 
 private :
-    Addr const _cAddr;	// adresse dans le support de com
-    Addr const _vAddr;	// adresse dans le réseau virtuel
+    Addr const _cAddr;	 // adresse dans le support de com
+    Addr const _vAddr;	 // adresse dans le réseau virtuel
+    Addr const _netAddr; // adresse de réseau
 
 public :
     /**
      * @param comAddr l'adresse sur le support de communication
      * @param virtualAddr l'adresse sur le réseau virtuelle
      * @param comAddrSize la taille de l'adresse du support de com en octets
+     * @param netAddr l'adresse de réseau
      */
-    NetDevice(Addr const & comAddr, Addr const & virtualAddr)
-        : _cAddr(comAddr), _vAddr(virtualAddr) {}
+    NetDevice(Addr const & comAddr,
+              Addr const & virtualAddr,
+              Addr const & netAddr)
+        : _cAddr{comAddr}, _vAddr{virtualAddr}, _netAddr{netAddr} {}
 
     virtual ~NetDevice() {}
 
@@ -54,6 +58,7 @@ public :
 
     Addr const & comAddr()     const { return _cAddr; }
     Addr const & virtualAddr() const { return _vAddr; }
+    Addr const & netAddr()     const { return _netAddr; }
 
     /** @return la taille de l'adresse du support de com en octets */
     std::size_t comAddrSize() const { return _cAddr.size; }

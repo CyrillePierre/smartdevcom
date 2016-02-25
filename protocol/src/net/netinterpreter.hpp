@@ -6,12 +6,10 @@
 #include "net/addr.hpp"
 
 namespace sdc {
-
 namespace vnet { class VIPInterpreter; }
-
 namespace net {
+class RoutingTable;
 
-class NetManager;
 
 enum Proto : type::Byte {
     VIP  = 0,	// virtual IP
@@ -19,10 +17,11 @@ enum Proto : type::Byte {
 };
 
 enum VarpOperation : type::Byte {
-    COM_ADDR_REQUEST = 0,
-    VIP_ADDR_REQUEST,
+    COM_ADDR_REQ = 0,
+    VIP_ADDR_REQ,
     RESPONSE
 };
+
 
 /**
  * Cette classe s'occupe de l'interpretation des paquets reçues au niveau de la
@@ -35,17 +34,17 @@ struct NetInterpreter {
     static constexpr sdc::type::Byte VARP_VERSION = 0;
 
 private:
-    NetManager & _mgr;
+    RoutingTable         & _rtable;
     vnet::VIPInterpreter & _vip;
-    ReqHandler _reqHandler;
+    ReqHandler             _reqHandler;
 
 public:
     /**
      * @brief NetInterpreter
      * @param vip l'interpreteur de la couche VIP
      */
-    NetInterpreter(NetManager & mgr, vnet::VIPInterpreter & vip)
-        : _mgr{mgr}, _vip{vip}, _reqHandler{nullptr} {}
+    NetInterpreter(RoutingTable & rt, vnet::VIPInterpreter & vip)
+        : _rtable{rt}, _vip{vip}, _reqHandler{nullptr} {}
 
     /**
      * Cette méthode permet de parser la dernière requête reçue.
@@ -70,8 +69,10 @@ public:
 
 private :
     void manageVARP(NetStream &) const;
-    void sendVARP(NetStream &, const sdc::net::VARPHeader &) const;
-    void sendVARPRequest(Addr const &, bool);
+    void sendVARPResponse(NetStream &, const sdc::net::VARPHeader &) const;
+
+    void findTargets(Addr const &, bool);
+    void sendVARPRequest(NetDevice &, Addr const &, bool);
 };
 
 template <class Callable>
@@ -79,7 +80,7 @@ void NetInterpreter::asyncRequest(Addr const & addr,
                                   bool         isVIPReq,
                                   Callable &&  callable)
 {
-    sendVARPRequest(addr, isVIPReq);
+    findTargets(addr, isVIPReq);
     _reqHandler = std::forward<Callable>(callable);
 }
 

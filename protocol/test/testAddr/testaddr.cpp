@@ -79,5 +79,24 @@ void TestAddr::accept() const {
     QCOMPARE(a1.accept(a6), false);
 }
 
+void TestAddr::net() const {
+    Addr a1 = makeAddr<0x41, 0x7a, 0xb3>(),
+         a2 = makeAddr<0x41, 0x7a, 0x00>(),
+         a3 = makeAddr<0x41, 0x00, 0x00>(),
+         a4 = makeAddr<0x00, 0x00, 0x00>(),
+         a5 = makeAddr<0x41, 0x7b, 0x00>(),
+         a6 = makeAddr<0x41, 0x7b, 0xb3>(),
+         a7 = makeAddr<0x42, 0x00, 0x00>();
+
+    QCOMPARE(a1.isInNet(a1), true);
+    QCOMPARE(a1.isInNet(a2), true);
+    QCOMPARE(a1.isInNet(a3), true);
+    QCOMPARE(a1.isInNet(a4), true);
+    QCOMPARE(a1.isInNet(a5), false);
+    QCOMPARE(a6.isInNet(a5), true);
+    QCOMPARE(a1.isInNet(a7), false);
+    QCOMPARE(a6.isInNet(a7), false);
+}
+
 QTEST_MAIN(TestAddr);
 #include "moc_testaddr.cpp"
