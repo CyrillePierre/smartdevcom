@@ -31,6 +31,8 @@ private:
 public:
     RoutingTable() {}
     RoutingTable(std::initializer_list<NetDevice *> list) : _routes{list} {}
+    RoutingTable(RoutingTable const &) = delete;
+    RoutingTable(RoutingTable &&) = default;
 
     /** Ajout d'une nouvelle route */
     RoutingTable & operator +=(NetDevice * nd)

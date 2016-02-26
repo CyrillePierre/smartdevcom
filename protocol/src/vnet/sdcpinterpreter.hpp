@@ -78,7 +78,7 @@ public:
     /**
      * @param rtable la table de routage
      */
-    SDCPInterpreter(net::RoutingTable rtable) : _rtable{rtable} {}
+    SDCPInterpreter(net::RoutingTable & rtable) : _rtable{rtable} {}
 
     /**
      * Cette méthode permet d'interpreter une requête SDCP

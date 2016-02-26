@@ -18,8 +18,10 @@ class NetManager {
 public:
     NetManager() : _sdcp{_rtable}, _vip{_sdcp}, _net{_rtable, _vip} {}
 
-    NetInterpreter & net() { return _net; }
-    RoutingTable & rtable() { return _rtable; }
+    NetInterpreter        & net()          { return _net; }
+    vnet::SDCPInterpreter & sdcp()         { return _sdcp; }
+    RoutingTable          & rtable()       { return _rtable; }
+    RoutingTable const    & rtable() const { return _rtable; }
 };
 
 } // net

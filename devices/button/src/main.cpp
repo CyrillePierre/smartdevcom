@@ -4,6 +4,7 @@
 #include "device.hpp"
 #include "debug.hpp"
 #include "button.hpp"
+#include "sdcpbutton.hpp"
 
 using namespace sdc;
 
@@ -30,8 +31,9 @@ int main() {
     using Dm = DeviceManager;
     rtos::Thread tListen(&thread_cast<Dm, &Dm::listenNetDevices>, &dm);
 
-    Button btn{dm.net(), net::makeAddr<0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6>(),
-               USER_BUTTON};
+//    Button btn{dm.net(), net::makeAddr<0x00, 0x15, 0x83, 0x00, 0x6e, 0xd6>(),
+//               USER_BUTTON};
+    SDCPButton btn{dm.sdcp(), net::makeAddr<0x91, 0x92, 0x93>(), USER_BUTTON};
 
     dm.parseData();
 }

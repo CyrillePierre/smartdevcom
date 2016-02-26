@@ -17,7 +17,7 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
     ns.read(id, 6);
     ns.read(type, 2);
 
-    if (type == FrameType::response) {
+    if (type == FrameType::request) {
         switch (id) {
         case ReqID::test:         return rpTest(ns, vhead, id);
         case ReqID::getSensors:   return rpGetSensors(ns, vhead, id);
@@ -28,14 +28,16 @@ void SDCPInterpreter::operator ()(NetStream & ns, const VIPHeader & vhead) {
         }
     }
 
-    else if (type == FrameType::request) {
+    else if (type == FrameType::response) {
+        if (!_reqHandler) return;
+
         switch (id) {
         case ReqID::test:         return _reqHandler(view::View{});
         case ReqID::getSensors:
         case ReqID::getActuators:
         case ReqID::getActions:   return _reqHandler(view::List{ns});
-        case ReqID::getActionDef: return _reqHandler(view::View{});
-        case ReqID::execAction:   return _reqHandler(view::View{});
+        case ReqID::getActionDef: return _reqHandler(view::View{});	// non valide
+        case ReqID::execAction:   return _reqHandler(view::View{}); // non valide
         }
     }
 

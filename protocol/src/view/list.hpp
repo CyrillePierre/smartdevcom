@@ -17,11 +17,22 @@ struct List : public View {
         type::Word type;
     };
 
+    using Elems         = std::vector<Elem>;
+    using Iterator      = Elems::iterator;
+    using ConstIterator = Elems::const_iterator;
+    using SizeType      = Elems::size_type;
+
 private:
-    std::vector<Elem> _elems;
+    Elems _elems;
 
 public:
     List(net::NetStream &);
+
+    Iterator      begin()       noexcept { return _elems.begin(); }
+    ConstIterator begin() const noexcept { return _elems.begin(); }
+    Iterator      end()         noexcept { return _elems.end(); }
+    ConstIterator end()   const noexcept { return _elems.end(); }
+    SizeType      size()  const noexcept { return _elems.size(); }
 };
 
 } // view
