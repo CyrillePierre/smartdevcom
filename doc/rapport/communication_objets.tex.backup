@@ -100,7 +100,7 @@ où :
 Deux caractères de $s_1$ et $s_2$ sont dit \emph{correspondants} lorsque leur éloignement dans leur chaine 
 respective ne dépasse pas :
 \begin{equation}
- \lfloor{1}
+ \lfloor{\frac{max(|s_1|, |s_2|)}{2}}\rfloor - 1
 \end{equation}
 
 
@@ -111,9 +111,9 @@ puis on calcule la distance avec cette équation :
 
 avec :
 \begin{itemize}
- \item $d_j$ est la distance de Jaro entre $s_1$ et $s_2$
- \item $l$ est la longueur du préfixe commun (avec un maximum de 4 caractères)
- \item $p$ est un coefficient qui permet de favoriser les chaînes avec un préfixe commun. Winkler propose 
+ \item $d_j$, la distance de Jaro entre $s_1$ et $s_2$
+ \item $l$, la longueur du préfixe commun (avec un maximum de 4 caractères)
+ \item $p$, un coefficient qui permet de favoriser les chaînes avec un préfixe commun. Winkler propose 
 pour valeur $p=0.1$.
 
 \end{itemize}
@@ -124,6 +124,21 @@ Celle-ci permet d'évaluer le nombre de correspondance entre 2 chaînes, ainsi u
 caractère en commun dans les 2 chaines, et deux points s'il y a une séquence de caractères. La formule est : 
 
 	\subsection{Intégration du protocole}
+Le protocole a été fait pour être sur systèmes embarqués, avec le langage C++. Or l'objet reconnaissance 
+vocale doit lui aussi l'utiliser afin de pouvoir communiquer convenablement avec les autres objets. Ainsi deux 
+choix étaient possibles :
+\begin{itemize}
+ \item Réécrire le protocole sous Android
+ \item Intégrer le protocole en réalisant une interface pour Android
+\end{itemize}
+
+C'est la deuxième option qui a été choisie, car cela évitait de refaire une grosse partie du travail déjà 
+réalisée.
+
+Il faut savoir que le système Android fonctionne grâce à une machine virtuelle Java : \emph{Art}. Cette 
+machine n'éxécute de base à priori que du byte code Java, et pas de l'assembleur que l'on pourrait 
+obtenir en compilant un langage natif comme le C++. 
+
 
 	\subsection{Communiquer avec les protocoles BLE et WiFi}
 \section{Les actionneurs}

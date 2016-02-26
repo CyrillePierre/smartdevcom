@@ -111,9 +111,9 @@ puis on calcule la distance avec cette équation :
 
 avec :
 \begin{itemize}
- \item $d_j$ est la distance de Jaro entre $s_1$ et $s_2$
- \item $l$ est la longueur du préfixe commun (avec un maximum de 4 caractères)
- \item $p$ est un coefficient qui permet de favoriser les chaînes avec un préfixe commun. Winkler propose 
+ \item $d_j$, la distance de Jaro entre $s_1$ et $s_2$
+ \item $l$, la longueur du préfixe commun (avec un maximum de 4 caractères)
+ \item $p$, un coefficient qui permet de favoriser les chaînes avec un préfixe commun. Winkler propose 
 pour valeur $p=0.1$.
 
 \end{itemize}
@@ -121,9 +121,34 @@ pour valeur $p=0.1$.
 
 \paragraph{La distance de fuzzy}est une des autres manières de calculer la similarité entre deux phrases. 
 Celle-ci permet d'évaluer le nombre de correspondance entre 2 chaînes, ainsi un point est donné pour chaque 
-caractère en commun dans les 2 chaines, et deux points s'il y a une séquence de caractères. La formule est : 
+caractère en commun dans les 2 chaines, et deux points s'il y a une séquence de caractères. La formule est :
+
+
+Afin de savoir quelle distance est la plus appropriée, une série de tests a été réalisée, en utilisant à 
+chaque fois les 3 algorithmes. Le test consiste à prendre plusieurs phrases présentes dans le fichier des 
+commandes vocales, et à les dire un grand nombres de fois, avec différents tons de voix, différentes 
+articulations, et différents volumes. Ensuite, pour chaque requête, une liste des différentes phrases 
+comprises par la reconnaissance vocale est établie. Les trois algorithmes sont alors appliqués, pour voir 
+lequel est le plus robuste, et nous donne la correspondance la plus grande entre la requête souhaitée, et les 
+commandes comprises. Il s'avère que l'algorithme le plus simple  était le plus robuste pour notre étude, 
+c'est donc la la distance de Levenshtein qui a été gardée.
 
 	\subsection{Intégration du protocole}
+Le protocole a été construit pour être sur systèmes embarqués, avec le langage C++. Or l'objet reconnaissance 
+vocale doit lui aussi l'utiliser afin de pouvoir communiquer convenablement avec les autres objets. Ainsi deux 
+choix étaient possibles :
+\begin{itemize}
+ \item Réécrire le protocole sous Android
+ \item Intégrer le protocole en réalisant une interface pour Android
+\end{itemize}
+
+C'est la deuxième option qui a été choisie, celant évitant de refaire une grosse partie du travail déjà 
+réalisée.
+
+Il faut savoir que le système Android fonctionne grâce à une machine virtuelle Java : \emph{Art}. Cette 
+machine n'éxécute de base à priori que du byte code Java, et pas de l'assembleur que l'on pourrait 
+obtenir en compilant un langage natif comme le C++. 
+
 
 	\subsection{Communiquer avec les protocoles BLE et WiFi}
 \section{Les actionneurs}
