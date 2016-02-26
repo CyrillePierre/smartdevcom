@@ -16,7 +16,7 @@ class NetManager {
     RoutingTable		  _rtable;
 
 public:
-    NetManager() : _vip{_sdcp}, _net{_rtable, _vip} {}
+    NetManager() : _sdcp{_rtable}, _vip{_sdcp}, _net{_rtable, _vip} {}
 
     NetInterpreter & net() { return _net; }
     RoutingTable & rtable() { return _rtable; }
