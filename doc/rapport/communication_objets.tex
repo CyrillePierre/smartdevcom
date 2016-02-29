@@ -74,18 +74,19 @@ bluetooth auquel il faut se connecter pour réaliser l'action.
 
 Ainsi une commande vocale est caractérisée par une chaîne de caractères à reconnaître, une chaîne de 
 caractères à dire par synthèse vocale, afin de donner un feedback sur ce qu'il se passe à l'utilisateur. Elle 
-contient elle aussi l'id de l'action à réaliser, afin de faire le lien avec l'autre base de données.
+contient elle aussi l'identifiant de l'action à réaliser, afin de faire le lien avec l'autre base de données.
 
-La première chose a faire est de reconnaître quelle requête l'utilisateur souhaite réaliser. Pour ce faire, 
-l'application réalise un algorithme sur la chaîne reçue par reconnaissance vocale, dont le but est d'évaluer 
-la similarité avec l'ensemble des phrases possibles. La distance minimale caractérisera la requête faite par 
-l'utilisateur. Il existe différents algorithmes : Levenshtein, JaroWinkler, et Fuzzy. 
+La première chose à faire après avoir reçue la phrase reconnue par la reconnaissance vocale, est de 
+reconnaître quelle requête l'utilisateur souhaite réaliser. Pour ce faire, l'application réalise un algorithme 
+sur la chaîne reçue, dont le but est d'évaluer la similarité avec l'ensemble des 
+phrases possibles. La distance minimale caractérisera la requête faite par l'utilisateur. Il existe 
+différents algorithmes, tel que: Levenshtein, ou JaroWinkler.
 
-\paragraph{La distance de Levenshtein}est la plus simple des 3. Celle-ci calcule le nombre de différences 
+\paragraph{La distance de Levenshtein}est la plus simple. Celle-ci calcule le nombre de différences 
 qu'il y a entre deux chaînes de caractères. Ces différences peuvent être le remplacement, la suppression, ou 
 l'insertion d'un caractère.
 
-\paragraph{La distance de JaroWinkler} part de la distance de Jaro dont l'équation est:
+\paragraph{La distance de JaroWinkler}[1] part de la distance de Jaro dont l'équation est:
 \begin{equation}
  d = \frac{1}{3}(\frac{m}{|s1|}+\frac{m}{|s2|}+\frac{m-t}{m})
 \end{equation}
@@ -94,15 +95,18 @@ où :
 \begin{itemize}
  \item $|s_i|$ est la longueur de la chaîne de caractères de la chaîne 'i'
  \item $m$ est le nombre de caractères \emph{correspondants} dans les 2 chaînes
- \item $t$ est le nombre de transpositions nécessaires de ces caractères partagés
+ \item $t$ est le nombre de \emph{transpositions} nécessaires de ces caractères partagés
 \end{itemize}
 
-Deux caractères de $s_1$ et $s_2$ sont dit \emph{correspondants} lorsque leur éloignement dans leur chaine 
-respective ne dépasse pas :
+Deux caractères identiques de $s_1$ et $s_2$ sont dit \emph{correspondants} lorsque leur éloignement dans 
+leur chaine respective ne dépasse pas :
 \begin{equation}
  \lfloor{\frac{max(|s_1|, |s_2|)}{2}}\rfloor - 1
 \end{equation}
 
+Le nombre de \emph{transpositions} est obtenu en comparant le i-ème caractère \emph{correspondant} de $s_1$ 
+avec le i-ème caractère \emph{correspondant} de $s_2$. Le nombre de fois où ces caractères sont différents, 
+divisé par deux, donne le nombre de transpositions.
 
 puis on calcule la distance avec cette équation :
 \begin{equation}
@@ -118,22 +122,63 @@ pour valeur $p=0.1$.
 
 \end{itemize}
 
+Wikipédia donne un très bon exemple pour comprendre cette distance. Ils appliquent cette algorithme pour 
+calculer la distance entre MARTHA et MARHTA. Pour cela ils dressent un tableau :
 
-\paragraph{La distance de fuzzy}est une des autres manières de calculer la similarité entre deux phrases. 
-Celle-ci permet d'évaluer le nombre de correspondance entre 2 chaînes, ainsi un point est donné pour chaque 
-caractère en commun dans les 2 chaines, et deux points s'il y a une séquence de caractères. La formule est :
+\begin{tabular}{|0|1|2|3|4|5|6|}
+  \hline
+   & M & A & R & T & H & A \\
+  \hline
+  M & 1 & 0 & 0 & 0 & 0 & 0 \\
+  \hline
+  A & 0 & 1 & 0 & 0 & 0 & 0 \\
+  \hline
+  R & 0 & 0 & 1 & 0 & 0 & 0 \\
+  \hline
+  H & 0 & 0 & 0 & 0 & \textbf{1} & 0 \\
+  \hline
+  T & 0 & 0 & 0 & \textbf{1} & 0 & 0 \\
+  \hline
+  A & 0 & 0 & 0 & 0 & 0 & 1 \\
+  \hline
+\end{tabular}
+
+On a 
+\begin{itemize}
+  \item $m = 6$ (Nombre de 1 dans la matrice)
+  \item $|s_1| = 6$ 
+  \item $|s_2| = 6$
+  \item Les caractères correspondants sont \{{M,A,R,T,H,A\} pour $s_{1}$ et \{{M,A,R,H,T,A\} pour $s_{2}$. On 
+a donc 2 couples (T/H et H/T) de caractères \emph{correspondants} différents, soit deux demi-transpositions. 
+D'où $t=\frac {2}{2}=1$.
+\end{itemize}
+
+La distance de Jaro est :
+
+\begin{equation}
+ d_j = \frac {1}{3}\left(\frac {6}{6}+ \frac {6}{6}+\frac {6-1}{6}\right)=0.944
+\end{equation}
+
+La distance de Jaro-Winkler avec $p=0.1$ avec un préfixe de longueur $\ell =3$ devient
+
+\begin{equation}
+  d_w=0.944+(3*0.1(1-0.944))=0.961
+\end{equation}
 
 
-Afin de savoir quelle distance est la plus appropriée, une série de tests a été réalisée, en utilisant à 
-chaque fois les 3 algorithmes. Le test consiste à prendre plusieurs phrases présentes dans le fichier des 
+\paragraph{La distance la plus appropriée} a été trouvée en faisant une série de tests, en utilisant à chaque 
+fois les deux algorithmes. Le test consiste à prendre plusieurs phrases présentes dans le fichier des 
 commandes vocales, et à les dire un grand nombres de fois, avec différents tons de voix, différentes 
 articulations, et différents volumes. Ensuite, pour chaque requête, une liste des différentes phrases 
-comprises par la reconnaissance vocale est établie. Les trois algorithmes sont alors appliqués, pour voir 
+comprises par la reconnaissance vocale est établie. Les deux algorithmes sont alors appliqués, pour voir 
 lequel est le plus robuste, et nous donne la correspondance la plus grande entre la requête souhaitée, et les 
 commandes comprises. Il s'avère que l'algorithme le plus simple  était le plus robuste pour notre étude, 
-c'est donc la la distance de Levenshtein qui a été gardée.
+c'est donc la la distance de Levenshtein qui a été gardée. 
 
-	\subsection{Intégration du protocole}
+Maintenant que nous sommes capables de savoir quelle requête l'utilisateur souhaite envoyer, et à quel objet, 
+il faut savoir comment l'envoyer.
+
+	\subsection{Intégration du protocole avec JNI}
 Le protocole a été construit pour être sur systèmes embarqués, avec le langage C++. Or l'objet reconnaissance 
 vocale doit lui aussi l'utiliser afin de pouvoir communiquer convenablement avec les autres objets. Ainsi deux 
 choix étaient possibles :
@@ -145,12 +190,27 @@ choix étaient possibles :
 C'est la deuxième option qui a été choisie, celant évitant de refaire une grosse partie du travail déjà 
 réalisée.
 
-Il faut savoir que le système Android fonctionne grâce à une machine virtuelle Java : \emph{Art}. Cette 
-machine n'éxécute de base à priori que du byte code Java, et pas de l'assembleur que l'on pourrait 
-obtenir en compilant un langage natif comme le C++. 
+Il faut savoir que le système Android fonctionne grâce à une machine virtuelle Java : \emph{Art} (Pour 
+Android Run Time). Cette machine n'éxécute de base à priori que du byte code Java, et non de l'assembleur que 
+l'on pourrait obtenir en compilant un langage natif comme le C++. Grâce à \emph{JNI}, pour Java Native 
+Interface, il est possible d'interfacer du code java, avec du code natif. Pour cela il suffit de compiler le 
+code natif pour en faire une librairie, qu'il suffira se charger dans le programme. Dès lors il sera possible 
+d'utiliser du code natif.
 
 
-	\subsection{Communiquer avec les protocoles BLE et WiFi}
+	\subsection{Communiquer avec le protocoles BLE}
+	  \subsubsection{Fonctionnement du BLE}
+L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, afin de transmettre les 
+paquets aux différents objets connectés. Afin de pouvoir se servir de ce bluetooth, il faut commencer par 
+effectuer un scan, afin de voir tous les objets supportants ce protocole aux alentours. Une fonction de 
+callback est appelée pour chaque appareil détectée. On peut ensuite se connecter à cet appareil, afin d'être 
+apparairé avec celui-ci.
+
+Une fois appairée, on peut demander à l'appareil qu'il nous envoie son GATT (Generic Attribute Profile)
+
+
+
+
 \section{Les actionneurs}
 \section{Les capteurs}
 
