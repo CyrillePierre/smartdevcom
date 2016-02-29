@@ -10,4 +10,4 @@ $(PDF) : $(SRC)
 	$(COMPILER) $(LATEX_FLAGS) $(MAIN)
 
 clean :
-	rm *.aux *.pdf
+	rm *.aux *.toc *.lof *.dvi *.out rapport.pdf
