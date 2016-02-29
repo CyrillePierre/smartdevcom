@@ -82,8 +82,9 @@ bin/devicemanager.o: src/devicemanager.cpp src/rtos/Thread.h \
  src/inc/net/varpheader.hpp src/inc/net/netstream.hpp \
  src/inc/dynamicbitset.hpp src/inc/types.hpp src/inc/net/netdevice.hpp \
  src/inc/net/addr.hpp src/inc/net/addr.hpp \
- src/inc/vnet/sdcpinterpreter.hpp src/inc/vnet/vipinterpreter.h \
- src/inc/vnet/vipheader.h src/inc/net/routingtable.hpp \
+ src/inc/vnet/sdcpinterpreter.hpp src/inc/net/routingtable.hpp \
+ src/inc/net/netstream.hpp src/inc/typetraits.hpp \
+ src/inc/vnet/vipinterpreter.h src/inc/vnet/vipheader.h \
  src/net/readablenetdevice.hpp src/util/msgqueue.hpp src/rtos/Semaphore.h \
  src/rtos/Mutex.h src/debug.hpp src/mbed/DigitalOut.h src/mbed/platform.h \
  src/mbed/TARGET_NUCLEO_F401RE/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/device.h \
@@ -164,6 +165,10 @@ bin/devicemanager.o: src/devicemanager.cpp src/rtos/Thread.h \
 bin/inc/device.o: src/inc/device.cpp src/inc/device.hpp src/inc/types.hpp \
  src/inc/actuator.hpp src/inc/element.hpp src/inc/sensor.hpp \
  src/inc/action.hpp
+bin/inc/view/list.o: src/inc/view/list.cpp src/inc/view/list.hpp src/inc/view/view.hpp \
+ src/inc/net/netstream.hpp src/inc/types.hpp src/inc/dynamicbitset.hpp \
+ src/inc/types.hpp src/inc/net/netdevice.hpp src/inc/net/addr.hpp
+bin/inc/view/view.o: src/inc/view/view.cpp src/inc/view/view.hpp
 bin/inc/net/addr.o: src/inc/net/addr.cpp src/inc/net/addr.hpp src/inc/types.hpp
 bin/inc/net/netdevice.o: src/inc/net/netdevice.cpp src/inc/net/netdevice.hpp \
  src/inc/types.hpp src/inc/net/addr.hpp
@@ -178,8 +183,9 @@ bin/inc/net/netmanager.o: src/inc/net/netmanager.cpp src/inc/net/netmanager.hpp 
  src/inc/net/netstream.hpp src/inc/types.hpp src/inc/dynamicbitset.hpp \
  src/inc/types.hpp src/inc/net/netdevice.hpp src/inc/net/addr.hpp \
  src/inc/net/addr.hpp src/inc/vnet/sdcpinterpreter.hpp \
- src/inc/vnet/vipinterpreter.h src/inc/vnet/vipheader.h \
- src/inc/net/routingtable.hpp
+ src/inc/net/routingtable.hpp src/inc/net/netstream.hpp \
+ src/inc/typetraits.hpp src/inc/vnet/vipinterpreter.h \
+ src/inc/vnet/vipheader.h
 bin/inc/net/netstream.o: src/inc/net/netstream.cpp src/inc/net/netstream.hpp \
  src/inc/types.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
  src/inc/net/netdevice.hpp src/inc/net/addr.hpp \
@@ -189,17 +195,19 @@ bin/inc/net/routingtable.o: src/inc/net/routingtable.cpp src/inc/net/routingtabl
  src/inc/net/netdevice.hpp src/inc/types.hpp src/inc/net/addr.hpp
 bin/inc/vnet/sdcpinterpreter.o: src/inc/vnet/sdcpinterpreter.cpp \
  src/inc/vnet/sdcpinterpreter.hpp src/inc/types.hpp \
- src/inc/net/netstream.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
- src/inc/net/netdevice.hpp src/inc/net/addr.hpp \
- src/inc/vnet/vipinterpreter.h src/inc/vnet/vipheader.h \
- src/inc/device.hpp src/inc/sensor.hpp src/inc/element.hpp \
- src/inc/actuator.hpp src/inc/action.hpp
+ src/inc/net/routingtable.hpp src/inc/net/netdevice.hpp \
+ src/inc/net/addr.hpp src/inc/net/netstream.hpp src/inc/dynamicbitset.hpp \
+ src/inc/types.hpp src/inc/typetraits.hpp src/inc/vnet/vipinterpreter.h \
+ src/inc/vnet/vipheader.h src/inc/device.hpp src/inc/sensor.hpp \
+ src/inc/element.hpp src/inc/actuator.hpp src/inc/action.hpp \
+ src/inc/view/view.hpp src/inc/view/list.hpp
 bin/inc/vnet/vipinterpreter.o: src/inc/vnet/vipinterpreter.cpp \
  src/inc/vnet/vipinterpreter.h src/inc/types.hpp src/inc/vnet/vipheader.h \
  src/inc/net/netinterpreter.hpp src/inc/net/varpheader.hpp \
  src/inc/net/netstream.hpp src/inc/dynamicbitset.hpp src/inc/types.hpp \
  src/inc/net/netdevice.hpp src/inc/net/addr.hpp src/inc/net/addr.hpp \
- src/inc/vnet/sdcpinterpreter.hpp
+ src/inc/vnet/sdcpinterpreter.hpp src/inc/net/routingtable.hpp \
+ src/inc/net/netstream.hpp src/inc/typetraits.hpp
 bin/rtos/Mutex.o: src/rtos/Mutex.cpp src/rtos/Mutex.h \
  src/rtx/TARGET_CORTEX_M/cmsis_os.h src/rtx/TARGET_CORTEX_M/os_tcb.h \
  src/mbed/mbed_error.h

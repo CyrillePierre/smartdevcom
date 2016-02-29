@@ -28,6 +28,7 @@ all:
 upload :
 	mount $(DEVICE) $(NUCLEO_DIR)
 	cp bin/nucleo.bin $(NUCLEO_DIR)
+	sleep .3
 	umount $(NUCLEO_DIR)
 
 %:

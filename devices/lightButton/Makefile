@@ -25,8 +25,7 @@ all:
 	@$(DOCKER) $@
 
 upload :
-	mountpoint -q $(NUCLEO_DIR) && umount $(NUCLEO_DIR) || :
-	mount $(NUCLEO_DIR)
+	mount $(DEVICE) $(NUCLEO_DIR)
 	cp bin/nucleo.bin $(NUCLEO_DIR)
 	umount $(NUCLEO_DIR)
 
