@@ -8,7 +8,7 @@ décomposer en plusieurs parties ce que devait réellement réaliser cette recon
 
 \begin{itemize}
 \item Activation de la reconnaissance vocale automatiquement
-\item Gestion de la chaine de caractères comprise par la reconnaissance
+\item Gestion de la chaîne de caractères comprise par la reconnaissance
 \end{itemize}
 
 De base sur Android, il est possible d'activer la reconnaissance vocale  automatiquement grâce aux mots clefs 
@@ -30,7 +30,7 @@ Afin de pouvoir démarrer et utiliser la reconnaissance vocale, il faut un ensem
 
 Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se 
 servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la 
-paramétrer de telle sorte qu'elle réagise seulement si une suite de mots clefs est reconnue. Afin de pouvoir 
+paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue. Afin de pouvoir 
 communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application 
 d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. 
 Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de 
@@ -99,7 +99,7 @@ où :
 \end{itemize}
 
 Deux caractères identiques de $s_1$ et $s_2$ sont dit \emph{correspondants} lorsque leur éloignement dans 
-leur chaine respective ne dépasse pas :
+leur chaîne respective ne dépasse pas :
 \begin{equation}
  \lfloor{\frac{max(|s_1|, |s_2|)}{2}}\rfloor - 1
 \end{equation}
@@ -200,13 +200,20 @@ d'utiliser du code natif.
 
 	\subsection{Communiquer avec le protocoles BLE}
 	  \subsubsection{Fonctionnement du BLE}
-L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, afin de transmettre les 
+L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, pour transmettre les 
 paquets aux différents objets connectés. Afin de pouvoir se servir de ce bluetooth, il faut commencer par 
-effectuer un scan, afin de voir tous les objets supportants ce protocole aux alentours. Une fonction de 
+effectuer un scan, afin de voir tous les objets supportant ce protocole aux alentours. Une fonction de 
 callback est appelée pour chaque appareil détectée. On peut ensuite se connecter à cet appareil, afin d'être 
-apparairé avec celui-ci.
+appairé avec celui-ci.
 
-Une fois appairée, on peut demander à l'appareil qu'il nous envoie son GATT (Generic Attribute Profile)
+Tous les appareils utilisant le protocole BLE utilise le GATT (Generic Attribute Profile), afin d'envoyer et 
+de recevoir des données sur le réseau. Il faut donc obtenir cette interface pour pouvoir communiquer en BLE. 
+Une fois l'interface GATT obtenue, il est possible de récupérer l'ensemble des caractéristiques. Les 
+caractéristiques sont l'ensemble des valeurs que l'appareil possède que l'on peut lire ou écrire. Elles sont 
+composées d'un UUID (\emph{Universally Unique Identifier}), d'une propriété qui permet d'avoir une 
+description lisible de la caractéristique, et enfin d'une valeur. Par conséquent, si l'on souhaite obtenir la 
+valeur de température d'un objet, il faut récupérer la caractéristique dont la propriété est "température", 
+et pour finir de récupérer sa valeur.
 
 
 
