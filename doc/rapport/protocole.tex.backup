@@ -84,14 +84,6 @@
 		onéreuses. Une façon de résoudre ce problème est de ne pas limiter le réseau à un unique
 		support de communication mais à mettre en place des outils permettant de connecter entre eux
 		différents supports.
-		
-      \begin{figure}[!ht]
-         \centering
-         \includegraphics[width=.8\textwidth]{img/multinet.png}
-         \caption{Exemple d'architecture réseau mélangeant plusieurs supports de communication.}
-         \label{multinet}
-      \end{figure}
-		
       
 	\subsection{Le routage}
 % 		présentation du protocole VIP

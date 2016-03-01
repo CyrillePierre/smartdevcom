@@ -14,6 +14,8 @@ private slots:
     void testActions();
     void testActionDef();
     void testExec();
+
+    void request();
 };
 
 #endif // TESTSDCPINTERPRETER_HPP

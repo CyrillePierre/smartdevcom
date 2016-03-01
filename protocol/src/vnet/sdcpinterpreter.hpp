@@ -114,7 +114,7 @@ private:
      * @param ns le netstream lié à l'émetteur
      * @param addr l'adresse de l'émetteur
      * @param id l'identifiant de la requête
-     * @param size la taille de la couche SDCP
+     * @param size la taille des données de la couche SDCP (sans l'en-tête)
      * @param reqType le type de requête
      */
     void buildHeader(net::NetStream &,
@@ -135,11 +135,15 @@ void SDCPInterpreter::request(net::Addr const &  addr,
     net::NetDevice & nd = _rtable[addr];
     net::NetStream ns{nd};
 
-    buildHeader(ns, addr.vals, req, Sizeof<Args...>{} + 1, FrameType::request);
+    buildHeader(ns, addr.vals, req, Sizeof<Args...>{}, FrameType::request);
 
     DynamicBitset & db = ns.writingBitset();
     using Expander = int[];
     Expander{0, (db.push(args), 0)...};
+
+    std::cout << std::hex;
+    for (auto byte : db) std::cout << (int) byte << ' ';
+    std::cout << std::dec << std::endl;
 
     _reqHandler = handler;
     ns.flushOut();
