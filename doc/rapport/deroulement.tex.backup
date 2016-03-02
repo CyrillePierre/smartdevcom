@@ -1,0 +1,53 @@
+\chapter{Déroulement du projet}
+
+\section{Diagramme de Gantt prévisionnel}
+
+\section{Diagramme de Gantt réel}
+	
+
+
+\begin{figure}[!ht]
+         \centering
+         	\begin{lstlisting}
+{
+    "smartDevices" : [
+      {
+	"device": {
+	  "idAction": "0x111",
+	  "bleName": "sdc_Lisa"
+	}
+      }]
+}
+		\end{lstlisting}
+         \caption{Base de données des objets intelligents}
+         \label{BDD_smart}
+\end{figure}
+
+
+Cette base de données comprend une liste des objets connectés proches de nous. Comme on peut le voir un objet 
+est caractérisé par deux choses : l'identifiant de l'action qu'il peut réaliser, ainsi que le nom de l'objet 
+bluetooth auquel il faut se connecter pour réaliser l'action.
+
+\begin{figure}[!ht]
+         \centering
+	 \begin{lstlisting}[caption=][frame=single]
+{
+    "voiceCommands" : [
+      {
+        "command" : {
+            "voiceActivation" : "Quelle est la température",
+            "voiceDiction" : "la température est",
+            "idAction" : "0x111"
+        }
+      }]
+}
+	 \end{lstlisting}
+         \caption{Base de données des commandes vocales}
+         \label{BDD_objects}
+\end{figure}
+
+
+
+
+
+

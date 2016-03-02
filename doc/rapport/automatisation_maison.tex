@@ -52,7 +52,12 @@ Actuellement, il existe de nombreux protocoles réseaux qui permettent la commun
 objets. Ces protocoles établissent des normes, afin de pouvoir dialoguer et se comprendre entre différents 
 acteurs.
 
-\includegraphics{img/tableau-total.png} 
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=1.05\textwidth]{img/tableau-total.png}
+         \caption{Les supports de communications les plus connus}
+         \label{supports}
+\end{figure}
 
 Tous ces protocoles ont leur avantages et leur inconvénients. Malgré tous ces protocoles, on peut voir qu'il 
 existe principalement deux familles :
@@ -82,27 +87,42 @@ parlera de noeud pour parler des différentes machines présentes dans le résea
 relier les noeuds entre eux.
 
 	    \subsubsection{Etoile}
-\includegraphics{img/StarNetwork.svg.png}
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.4\textwidth]{img/StarNetwork.png}
+         \caption{Réseau étoile}
+         \label{StarNetwork}
+\end{figure}
 C'est la topologie la plus commune dans les communications. Elle est aussi appelée l'architecture 
 client/serveur dans le sens où il y une machine qui dirige tout le système, et par lequel toutes les données 
 passent. Il s'agit de l'architecture la plus simple, puisqu'avec cette topologie,  ... Son inconvénient 
 majeur est que si jamais le noeud principal ne fonctionne plus, le réseau entier tombe.
 
 	    \subsubsection{P2P}
-\includegraphics{img/NetworkTopology-Mesh.svg.png}
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.4\textwidth]{img/NetworkTopology-Mesh.png}
+         \caption{Réseau P2P}
+         \label{MeshNetwork}
+\end{figure}
 Cette topologie, aussi appelé réseau meshé, permet d'avoir une architecture réseau plus robuste, qu'une 
 topologie étoile, puisqu'il existe plusieurs chemins pour arriver à un noeud. Ainsi, si un des noeuds ne 
 fonctionnent plus, il ne pertube que très peu la communication des autres. Elle donne aussi une plus grande 
 securité au niveau de l'acheminement des paquets, puisque toutes les données ne passent pas au même endroit, 
 il est donc plus difficile de les sniffer. Pour finir cette architecture permet d'avoir un réseau beaucoup 
 plus grand et dynamique, puisqu'il n'existe pas de noeud central. L'inconvénient de cette architecture est 
-qu'elle est plus dure à mettre en place, du fait qu'il existe plusieurs routes pour acheminer les données. De 
-ce fait, il faut gérer la duplication possible des paquets, et le routage dynamique si un des noeud n'est plus 
+qu'elle est plus dure à mettre en place, du fait qu'il existe plusieurs routes pour acheminer les données. 
+De ce fait, il faut gérer la duplication possible des paquets, et le routage dynamique si un des noeud n'est 
+plus 
 fonctionnel.
 
-\subsubsection{Arbre}
-
-\includegraphics{img/TreeTopology.png}
+	    \subsubsection{Arbre}
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.6\textwidth]{img/TreeTopology.png}
+         \caption{Réseau en arbre}
+         \label{TreeNetwork}
+\end{figure}
 Cette architecture est simplement l'extension du réseau étoile, c'est l'architecture utilisée par Internet. 
 Il s'agit simplement de la connexion de plusieurs réseau étoile entre eux.
 % 		p2p, étoile, mesh, ...
