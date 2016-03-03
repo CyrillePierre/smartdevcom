@@ -250,12 +250,11 @@ compiler ce code en précisant que nous souhaitons obtenir une librairie et pas 
 nous donnera un fichier \emph{.so} sous Linux, ou un fichier \emph{.dll} sous Windows. Ce fichier devra 
 être placé à la racine du projet, afin que la machine virtuelle java puisse le trouver pendant l'exécution.
 
-La procédure étant relativement fastidieuse, Google a intégré des outils dans son IDE afin de faciliter la 
-démarche. Dès lors il sera possible d'utiliser du code natif, et donc de pouvoir se servir du protocole afin 
+Dès lors il sera possible d'utiliser du code natif, et donc de pouvoir se servir du protocole afin 
 de pouvoir communiquer avec les différents objets, et cela grâce au bluetooth d'Android.
 
 
-	\subsection{Communiquer avec le protocoles BLE}
+	\subsection{Communiquer avec le protocole BLE}
 	  \subsubsection{Fonctionnement du BLE}
 L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, pour transmettre les 
 paquets aux différents objets connectés. Afin de pouvoir se servir de ce bluetooth, il faut commencer par 
@@ -273,15 +272,40 @@ obtenir la valeur de température d'un objet, il faut récupérer la caractéris
 "température", puis simplement récupérer sa valeur.
 
 Cette procédure ne peut être simplifiée, il est donc obligatoire d'effectuer un scan pour voir l'ensemble des 
-objets bluetooth dans les environs, même si nous les connaissaons déjà. Il est donc impossible via le BLE 
+objets bluetooth dans les environs, même si nous les connaissons déjà. Il est donc impossible via le BLE 
 d'android de se connecter directement à un appareil à partir de son adresse MAC bluetooth, ce qui est 
 dommage, car nous devons donc passer par un scan pas forcément nécessaire, afin de communiquer avec un objet 
 proche de nous.
 
 
+\section{Les objets intelligents}
 
+Maintenant que les différentes briques ont été posées, il est possible de créer les différents objets
+intelligents.
 
-\section{Les actionneurs}
-\section{Les capteurs}
+\begin{figure}[!tbp]
+  \centering
+  \begin{minipage}[b]{0.49\textwidth}
+    \includegraphics[width=0.95\textwidth]{img/actuator2.jpg}
+    \caption{Actionneur intelligent}
+    \label{actuator}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.49\textwidth}
+    \includegraphics[width=0.95\textwidth]{img/sensor2.jpg}
+    \caption{Capteur intelligent}
+    \label{sensor}
+  \end{minipage}
+\end{figure}
+
+Il est possible de voir sur les figures \ref{actuator} et \ref{sensor} que les deux objets ne possèdent pas la 
+même carte de développement Nucleo. La carte présente pour l'actionneur est une F303K8, tandis que celle du 
+capteur est une F401RE. De manière générale, la première possède moins de composants, mais est plus petite, 
+qui est largement suffisant pour la création de nos objets connectés.
+
+L'actionneur présent sur la figure \ref{actuator} est composé d'un servomoteur. Cet objet a été utilisé en 
+tant qu'interrupteur intelligent. Le capteur présent sur la figure \ref{sensor} est quant à lui composé d'une 
+thermistance, afin de pouvoir récupérer la température de la pièce.
+
 
 

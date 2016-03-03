@@ -5,21 +5,37 @@
 
 
 \section{Les protocoles existants}
-	Il existe une multitude
-	% A ECRIRE, A ECRIRE	, A ECRIRE, A ECRIRE, A ECRIRE, A ECRIRE
+	Il existe une multitude de supports de communication déjà existants, dont les plus connus sont 
+zigbee, et zwave dans le milieu de la domotique. Il existe une autre alternative qui commence à arriver qui 
+s'appelle AllJoyn qui seront expliqués après.
 
 	\subsection{Zigbee}
-	% A ECRIRE, A ECRIRE	, A ECRIRE, A ECRIRE, A ECRIRE, A ECRIRE
+	ZigBee est un protocole de haut niveau permettant la communication, à basse consommation. Ce 
+protocole est basé sur la norme IEEE 802.15.4 et est utilisée pour les réseaux WPAN (\emph{Wireless Personal 
+Area Networks}). Le principal avantage de ce support est sa capacité à créer réseau maillé dynamique et 
+autonome, ce qui est très pratique pour créer un réseau d'objet dynamique.
+
 	\subsection{Z-Wave}
-	% A ECRIRE, A ECRIRE	, A ECRIRE, A ECRIRE, A ECRIRE, A ECRIRE
+	Z-wave est un protocole qui ressemble beaucoup au zigbee. En effet lui aussi permet de créer un 
+réseau maillé dynamique. Les quelques différences avec le z-wave sont principalement :
+
+\begin{itemize}
+ \item Les bandes de fréquences : 868 MHz, 915 MHz et 2.4 GHz pour le ZigBee; 868 MHz et 908 MHz pour le 
+Z-Wave
+\item Le nombre de noeuds dans le réseau : 232 pour Z-Wave et 64000 pour ZigBee.
+\end{itemize}
+
 	\subsection{Alljoyn}
+	Alljoyn est un projet open source international, porté par Qualcomm et présenté pour la première fois 
+en 2011. Ce protocole a pour but de communiquer avec tous les objets autour en s'abstrayant du support de 
+communication, et en étant compatible avec tous les systèmes du marchés
 	% A ECRIRE, A ECRIRE	, A ECRIRE, A ECRIRE, A ECRIRE, A ECRIRE
 	
 	% IMPORTANT : explication de pourquoi on a pas pris un protocole existant :
 	%  - ne correspond pas forcément à toute les fonctionnalités que l'on souhaite mettre en place
 	%  - est difficilement adaptable avec les outils que l'on a (mbed, attiny, bluetooth Bolutek)
 
-\section{Le réseau virtuelle}
+\section{Le réseau virtuel}
 	Nous allons maintenant nous intéresser aux caractéristiques du protocole qui a été
 	développé dans ce projet. L'un des points clés de la mise en place d'objets pour la domotique 
 	est la communication avec ceux-ci. Ces objets doivent en effet être "connectés" pour que l'on

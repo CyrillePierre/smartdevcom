@@ -28,19 +28,34 @@ Afin de pouvoir démarrer et utiliser la reconnaissance vocale, il faut un ensem
  \item Tasker
 \end{itemize}
 
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.5\textwidth]{img/tasker.png}
+         \caption{Autovoice + Tasker}
+         \label{Tasker}
+\end{figure}
+
 Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se 
 servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la 
-paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue. Afin de pouvoir 
-communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application 
-d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. 
-Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de 
-traiter la chaîne de caractères : SpeechRecognition.
+paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue, comme sur la 
+figure \ref{Tasker}. Afin de pouvoir communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du 
+côté de Tasker, c'est une application d'automatisation très connue sur Android. Elle permet de réaliser des 
+tâches en réponse à un événement donné. Ainsi il est possible d'utiliser comme événement Autovoice, et comme 
+tâche, une application qui permet de traiter la chaîne de caractères : SpeechToText, comme on peut le voir 
+sur la figure \ref{jarvis}.
 
-	\subsection{SpeechRecognition}
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.5\textwidth]{img/jarvis.png}
+         \caption{Tâche jarvis}
+         \label{jarvis}
+\end{figure}
+
+	\subsection{SpeechToText}
 	
 	  \subsubsection{La base de données}
 	
-SpeechRecognition (SP) est une application Android qui permet donc d'interpréter une chaîne de caractères, et 
+SpeechToText est une application Android qui permet donc d'interpréter une chaîne de caractères, et 
 d'envoyer une trame suivant le protocole SDCP au bon objet connecté. l'application possède deux bases de 
 données dynamiques. La première possède l'ensemble des objets intelligents. Cette base de données est stockée 
 dans un 
@@ -229,19 +244,15 @@ sera défini dans le code natif, cela permettra de créer le lien entre les deux
 demander au compilateur java de créer un fichier d'en-tête à partir de cette classe, qui sera utilisée dans 
 notre librairie plus tard.
 
-Il faut ensuite écrire le corps de la fonction \emph{fromCpp}. Afin de faire le lien avec le code java, il 
-faut inclure le fichier d'en-tête tout juste créer. Par la suite, nous devons compiler ce code 
-en précisant que nous souhaitons obtenir une librairie et pas un fichier exécutable. Cela nous donnerons un 
-fichier \emph{.so} sous Linux, ou un fichier \emph{.dll} sous Windows. Ce fichier devra 
+Il faut ensuite écrire le corps de la fonction \emph{fromCpp}, dans un autre fichier C++. Afin de faire le 
+lien avec le code java, il faut inclure le fichier d'en-tête tout juste créer. Par la suite, nous devons 
+compiler ce code en précisant que nous souhaitons obtenir une librairie et pas un fichier exécutable. Cela 
+nous donnera un fichier \emph{.so} sous Linux, ou un fichier \emph{.dll} sous Windows. Ce fichier devra 
 être placé à la racine du projet, afin que la machine virtuelle java puisse le trouver pendant l'exécution.
 
-. , puis l'inclure 
-
-La procédure étant relativement fastidieuse
-
-Dès lors il sera possible 
-d'utiliser du code natif, et donc de pouvoir se servir du protocole afin de pouvoir communiquer avec les 
-différents objets, et cela grâce au bluetooth d'Android.
+La procédure étant relativement fastidieuse, Google a intégré des outils dans son IDE afin de faciliter la 
+démarche. Dès lors il sera possible d'utiliser du code natif, et donc de pouvoir se servir du protocole afin 
+de pouvoir communiquer avec les différents objets, et cela grâce au bluetooth d'Android.
 
 
 	\subsection{Communiquer avec le protocoles BLE}
@@ -261,10 +272,38 @@ d'avoir une description lisible de la caractéristique, et enfin d'une valeur. P
 obtenir la valeur de température d'un objet, il faut récupérer la caractéristique dont la propriété est 
 "température", puis simplement récupérer sa valeur.
 
+Cette procédure ne peut être simplifiée, il est donc obligatoire d'effectuer un scan pour voir l'ensemble des 
+objets bluetooth dans les environs, même si nous les connaissons déjà. Il est donc impossible via le BLE 
+d'android de se connecter directement à un appareil à partir de son adresse MAC bluetooth, ce qui est 
+dommage, car nous devons donc passer par un scan pas forcément nécessaire, afin de communiquer avec un objet 
+proche de nous.
 
 
+\section{Les objets intelligents}
 
-\section{Les actionneurs}
-\section{Les capteurs}
+Maintenant que les différentes briques ont été posées, il est possible de créer les différents objets
+intelligents.
+
+\begin{figure}[!tbp]
+  \centering
+  \begin{minipage}[b]{0.49\textwidth}
+    \includegraphics[width=0.95\textwidth]{img/actuator2.jpg}
+    \caption{Actionneur intelligent}
+    \label{actuator}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.49\textwidth}
+    \includegraphics[width=0.95\textwidth]{img/sensor2.jpg}
+    \caption{Capteur intelligent}
+    \label{sensor}
+  \end{minipage}
+\end{figure}
+
+L'actionneur présent sur la figure \ref{actuator} est composé d'un servomoteur. Cet objet a été utilisé en 
+tant qu'interrupteur intelligent.
+
+Le capteur présent sur la figure \ref{sensor} est quant à lui composé d'une thermistance, afin de pouvoir 
+récupérer la température de la pièce.
+
 
 
