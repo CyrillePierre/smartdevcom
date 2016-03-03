@@ -30,3 +30,4 @@ doc/rapport/rapport.*
 \!doc/rapport/rapport.tex
 .hg/
 .*#
+*.backup
