@@ -1,10 +1,8 @@
-\chapter{La création des objets}
+﻿\chapter{La création des objets}
 
 \section{Reconnaissance vocale : Application Android}
 	\subsection{Etat de l’art}	
-Tout projet implique une phase de recherche, afin d'effectuer un état de l'art sur ce qu'il a déjà été fait 
-auparavant dans ce domaine. Afin de rechercher ce qu'il fallait pour cet état de l'art, il a donc fallu 
-décomposer en plusieurs parties ce que devait réellement réaliser cette reconnaissance. Ces parties étaient :
+Tout projet implique une phase de recherche, afin d'effectuer un état de l'art sur ce qu'il a déjà été fait auparavant dans ce domaine. Afin de rechercher ce qu'il fallait pour cet état de l'art, il a donc fallu décomposer en plusieurs parties ce que devait réellement réaliser cette reconnaissance. Ces parties étaient :
 
 \begin{itemize}
 \item Activation de la reconnaissance vocale automatiquement
@@ -12,13 +10,8 @@ décomposer en plusieurs parties ce que devait réellement réaliser cette recon
 \end{itemize}
 
 De base sur Android, il est possible d'activer la reconnaissance vocale  automatiquement grâce aux mots clefs 
-« OK Google ». Souhaitant appeler notre intelligence domotique Jarvis, il était peu souhaitable de dire ces 
-mots afin d'activer la reconnaissance.
-Après recherches, il s'avère qu'il n'existe aucun moyen simple de changer ces mots clefs, puisque les seuls 
-moyens sont soit d'avoir un téléphone rooté, autrement dit où l'on a tous les accès afin de changer le bon 
-fichier de configuration. Soit d'avoir un téléphone de la marque Motorola, qui intègre le changement de ces 
-mots directement dans son firmware. C'est pourquoi pour activer la reconnaissance vocale, nous sommes obligés 
-de prononcer les mots « OK Google ».
+« OK Google ». Souhaitant appeler notre intelligence domotique Jarvis, il était peu souhaitable de dire ces mots afin d'activer la reconnaissance.
+Après recherches, il s'avère qu'il n'existe aucun moyen simple de changer ces mots clefs, puisque les seuls moyens sont soit d'avoir un téléphone rooté, autrement dit où l'on a tous les accès afin de changer le bon fichier de configuration. Soit d'avoir un téléphone de la marque Motorola, qui intègre le changement de ces mots directement dans son firmware. C'est pourquoi pour activer la reconnaissance vocale, nous sommes obligés de prononcer les mots « OK Google ».
 	
 	\subsection{Activation de la reconnaissance vocale}
 	
@@ -35,13 +28,7 @@ Afin de pouvoir démarrer et utiliser la reconnaissance vocale, il faut un ensem
          \label{Tasker}
 \end{figure}
 
-Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se 
-servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la 
-paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue, comme sur la 
-figure \ref{Tasker}. Afin de pouvoir communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du 
-côté de Tasker, c'est une application d'automatisation très connue sur Android. Elle permet de réaliser des 
-tâches en réponse à un événement donné. Ainsi il est possible d'utiliser comme événement Autovoice, et comme 
-tâche, une application qui permet de traiter la chaîne de caractères : SpeechToText, comme on peut le voir 
+Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue, comme sur la figure \ref{Tasker}. Afin de pouvoir communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de traiter la chaîne de caractères : SpeechToText, comme on peut le voir 
 sur la figure \ref{jarvis}.
 
 \begin{figure}[!ht]
@@ -55,11 +42,7 @@ sur la figure \ref{jarvis}.
 	
 	  \subsubsection{La base de données}
 	
-SpeechToText est une application Android qui permet donc d'interpréter une chaîne de caractères, et 
-d'envoyer une trame suivant le protocole SDCP au bon objet connecté. l'application possède deux bases de 
-données dynamiques. La première possède l'ensemble des objets intelligents. Cette base de données est stockée 
-dans un 
-fichier JSON.
+SpeechToText est une application Android qui permet donc d'interpréter une chaîne de caractères, et d'envoyer une trame suivant le protocole SDCP au bon objet connecté. L'application possède deux bases de données dynamiques. La première possède l'ensemble des objets intelligents. Cette base de données est stockée dans un fichier JSON.
 
 \begin{figure}[!ht]
          \centering
@@ -79,9 +62,7 @@ fichier JSON.
 \end{figure}
 
 
-Cette base de données comprend une liste des objets connectés proches de nous. Comme on peut le voir un objet 
-est caractérisé par deux choses : l'identifiant de l'action qu'il peut réaliser, ainsi que le nom de l'objet 
-bluetooth auquel il faut se connecter pour réaliser l'action.
+Cette base de données comprend une liste des objets connectés proches de nous. Comme on peut le voir un objet est caractérisé par deux choses : l'identifiant de l'action qu'il peut réaliser, ainsi que le nom de l'objet bluetooth auquel il faut se connecter pour réaliser l'action.
 
 \begin{figure}[!ht]
          \centering
@@ -103,20 +84,12 @@ bluetooth auquel il faut se connecter pour réaliser l'action.
 
 
 
-Ainsi une commande vocale est caractérisée par une chaîne de caractères à reconnaître, une chaîne de 
-caractères à dire par synthèse vocale, afin de donner un feedback sur ce qu'il se passe à l'utilisateur. Elle 
-contient elle aussi l'identifiant de l'action à réaliser, afin de faire le lien avec l'autre base de données.
+Ainsi une commande vocale est caractérisée par une chaîne de caractères à reconnaître, une chaîne de caractères à dire par synthèse vocale, afin de donner un feedback sur ce qu'il se passe à l'utilisateur. Elle contient elle aussi l'identifiant de l'action à réaliser, afin de faire le lien avec l'autre base de données.
 
-La première chose à faire après avoir reçue la phrase reconnue par la reconnaissance vocale, est de 
-reconnaître quelle requête l'utilisateur souhaite réaliser. Pour ce faire, l'application réalise un algorithme 
-sur la chaîne reçue, dont le but est d'évaluer la similarité avec l'ensemble des 
-phrases possibles. La distance minimale caractérisera la requête faite par l'utilisateur. Il existe 
-différents algorithmes, tel que: Levenshtein, ou JaroWinkler.
+Dès que la phrase est analysée par la reconnaissance vocale, il est nécessaire de reconnaître la requête que l'utilisateur souhaite réaliser. Pour ce faire, l'application réalise un algorithme sur la chaîne reçue, dont le but est d'évaluer la similarité avec l'ensemble des phrases possibles. La distance minimale caractérisera la requête faite par l'utilisateur. Il existe différents algorithmes, tel que: Levenshtein, ou JaroWinkler.
 
     \subsubsection{La distance de Levenshtein}
-C'est le plus simple des deux algorithmes. Cette distance calcule le nombre de différences 
-qu'il y a entre deux chaînes de caractères. Ces différences peuvent être le remplacement, la suppression, 
-ou l'insertion d'un caractère.
+C'est le plus simple des deux algorithmes. Cette distance calcule le nombre de différences qu'il y a entre deux chaînes de caractères. Ces différences peuvent être le remplacement, la suppression, ou l'insertion d'un caractère.
 
     \subsubsection{La distance de JaroWinkler} 
 Celle-ci part de la distance de Jaro dont l'équation est [1]: 
@@ -137,11 +110,9 @@ leur chaîne respective ne dépasse pas :
  \lfloor{\frac{max(|s_1|, |s_2|)}{2}}\rfloor - 1
 \end{equation}
 
-Le nombre de \emph{transpositions} est obtenu en comparant le i-ème caractère \emph{correspondant} de $s_1$ 
-avec le i-ème caractère \emph{correspondant} de $s_2$. Le nombre de fois où ces caractères sont différents, 
-divisé par deux, donne le nombre de transpositions.
+Le nombre de \emph{transpositions} est obtenu en comparant le i-ème caractère \emph{correspondant} de $s_1$ avec le i-ème caractère \emph{correspondant} de $s_2$. Le nombre de fois où ces caractères sont différents, divisé par deux, donne le nombre de transpositions.
 
-puis on calcule la distance avec cette équation :
+On calcule ensuite la distance avec cette équation :
 \begin{equation}
  d_w = d_j + (l_p(1-d_j))
 \end{equation}
@@ -259,8 +230,7 @@ de pouvoir communiquer avec les différents objets, et cela grâce au bluetooth 
 L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, pour transmettre les 
 paquets aux différents objets connectés. Afin de pouvoir se servir de ce bluetooth, il faut commencer par 
 effectuer un scan, afin de voir tous les objets supportant ce protocole aux alentours. Une fonction de 
-callback est appelée pour chaque appareil détectée. On peut ensuite se connecter à cet appareil, afin d'être 
-appairé avec celui-ci.
+callback est appelée pour chaque appareil détectée. On peut ensuite se connecter à cet appareil, afin d'être appairé avec celui-ci.
 
 Tous les appareils utilisant le protocole BLE utilisent le GATT (\emph{Generic Attribute Profile}), afin 
 d'envoyer et de recevoir des données sur le réseau. Il faut donc obtenir cette interface pour pouvoir 
