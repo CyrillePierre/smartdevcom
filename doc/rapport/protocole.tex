@@ -6,14 +6,20 @@
 
 \section{Les protocoles existants}
 	Il existe une multitude de supports de communication déjà existants, dont les plus connus sont 
-zigbee, et zwave dans le milieu de la domotique. Il existe une autre alternative qui commence à arriver qui s'appelle AllJoyn qui sera expliqués après. Ces protocoles n'ont pas été utilisés, car ils ne possédaient pas l'ensemble des caractéristiques qui seront décrites plus tard. 
+	zigbee, et zwave dans le milieu de la domotique. Il existe une autre alternative qui commence à 
+	arriver qui s'appelle AllJoyn qui sera expliqués après. Ces protocoles n'ont pas été utilisés, 
+	car ils ne possédaient pas l'ensemble des caractéristiques qui seront décrites plus tard. 
 
 	\subsection{Zigbee}
-	ZigBee est un protocole de haut niveau permettant la communication, à basse consommation. Ce protocole est basé sur la norme IEEE 802.15.4 et est utilisée pour les réseaux WPAN (\emph{Wireless Personal 
-Area Networks}). Le principal avantage de ce support est sa capacité à créer réseau maillé dynamique et autonome, ce qui est très pratique pour créer un réseau d'objet dynamique.
-
+		ZigBee est un protocole de haut niveau permettant la communication, à basse consommation. Ce 
+		protocole est basé sur la norme IEEE 802.15.4 et est utilisée pour les réseaux WPAN 
+		(\emph{Wireless Personal 
+		Area Networks}). Le principal avantage de ce support est sa capacité à créer un réseau 
+		maillé dynamique et autonome, ce qui est très pratique pour créer un réseau d'objet dynamique.
+		
 	\subsection{Z-Wave}
-	Z-wave est un protocole qui ressemble beaucoup au zigbee. En effet lui aussi permet de créer un réseau maillé dynamique. Les quelques différences avec le z-wave sont principalement :
+	Z-wave est un protocole qui ressemble beaucoup au zigbee. En effet lui aussi permet de créer un 
+	réseau maillé dynamique. Les quelques différences avec le z-wave sont principalement :
 
 \begin{itemize}
  \item Les bandes de fréquences : 868 MHz, 915 MHz et 2.4 GHz pour le ZigBee; 868 MHz et 908 MHz pour le 
@@ -45,7 +51,7 @@ Z-Wave
 		\ref{netStar} représente un réseau créé par des objets connectés possédant une interface Wifi.
 		En utilisant du Wifi \emph{Point d'Accès}, un des objets fait office de serveur (\emph{C}) 
 		sur lequel les autres objets clients viendront se connecter. Avec cette architecture de 
-		réseau, l'ensemble des objets peuvent parler entre eux mais tous les messages passent par 
+		réseau, l'ensemble des objets peuvent parler entre eux mais leurs messages passera par 
 		\emph{C}. Cette connexion est complètement transparente à l'utilisation puisqu'elle 
 		directement gérée par le protocole IP. La communication consistera simplement à créer une
 		\emph{socket} TCP ou UDP entre deux objets. Ils pourront alors parler sans avoir à s'occuper
