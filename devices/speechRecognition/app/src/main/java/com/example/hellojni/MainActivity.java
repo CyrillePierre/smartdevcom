@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hellojni.json.commands.Command;
 import com.example.hellojni.json.commands.CommandsData;
@@ -74,7 +75,8 @@ public class MainActivity extends Activity{
                 if(getIntent().getData() != null)
                 {
                     //Log.e("data : ", getIntent().getDataString());
-                    //Toast.makeText(getApplicationContext(), getIntent().getDataString(), Toast.LENGTH_SHORT);
+
+                    Toast.makeText(getApplicationContext(), getIntent().getDataString(), Toast.LENGTH_SHORT);
                     manageQuery(getIntent().getDataString());
                 }
             }

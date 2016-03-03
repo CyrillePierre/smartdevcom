@@ -8,5 +8,5 @@ NetDevice & RoutingTable::operator [](const Addr & addr) {
     for (NetDevice * nd : _routes)
         if (addr.isInNet(nd->netAddr()))
             return *nd;
-    throw sdc::net::UnknownAddr{addr};
+    //throw sdc::net::UnknownAddr{addr};
 }

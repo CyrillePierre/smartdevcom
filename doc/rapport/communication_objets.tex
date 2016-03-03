@@ -8,7 +8,7 @@ décomposer en plusieurs parties ce que devait réellement réaliser cette recon
 
 \begin{itemize}
 \item Activation de la reconnaissance vocale automatiquement
-\item Gestion de la chaine de caractères comprise par la reconnaissance
+\item Gestion de la chaîne de caractères comprise par la reconnaissance
 \end{itemize}
 
 De base sur Android, il est possible d'activer la reconnaissance vocale  automatiquement grâce aux mots clefs 
@@ -28,38 +28,64 @@ Afin de pouvoir démarrer et utiliser la reconnaissance vocale, il faut un ensem
  \item Tasker
 \end{itemize}
 
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.5\textwidth]{img/tasker.png}
+         \caption{Autovoice + Tasker}
+         \label{Tasker}
+\end{figure}
+
 Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se 
 servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la 
-paramétrer de telle sorte qu'elle réagise seulement si une suite de mots clefs est reconnue. Afin de pouvoir 
-communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application 
-d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. 
-Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de 
-traiter la chaîne de caractères : SpeechRecognition.
+paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue, comme sur la 
+figure \ref{Tasker}. Afin de pouvoir communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du 
+côté de Tasker, c'est une application d'automatisation très connue sur Android. Elle permet de réaliser des 
+tâches en réponse à un événement donné. Ainsi il est possible d'utiliser comme événement Autovoice, et comme 
+tâche, une application qui permet de traiter la chaîne de caractères : SpeechToText, comme on peut le voir 
+sur la figure \ref{jarvis}.
 
-	\subsection{SpeechRecognition}
+\begin{figure}[!ht]
+         \centering
+         \includegraphics[width=0.5\textwidth]{img/jarvis.png}
+         \caption{Tâche jarvis}
+         \label{jarvis}
+\end{figure}
+
+	\subsection{SpeechToText}
 	
-SpeechRecognition (SP) est une application Android qui permet donc d'interpréter une chaîne de caractères, et 
+	  \subsubsection{La base de données}
+	
+SpeechToText est une application Android qui permet donc d'interpréter une chaîne de caractères, et 
 d'envoyer une trame suivant le protocole SDCP au bon objet connecté. l'application possède deux bases de 
-données. La première possède l'ensemble des objets intelligents. Cette base de données est stockée dans un 
+données dynamiques. La première possède l'ensemble des objets intelligents. Cette base de données est stockée 
+dans un 
 fichier JSON.
 
-\begin{lstlisting}[caption=Base de données des objets intelligents][frame=single]
+\begin{figure}[!ht]
+         \centering
+         	\begin{lstlisting}
 {
     "smartDevices" : [
       {
-        "device": {
-          "idAction": "0x111",
-          "bleName": "sdc_Lisa"
-        }
+	"device": {
+	  "idAction": "0x111",
+	  "bleName": "sdc_Lisa"
+	}
       }]
 }
-\end{lstlisting}
+		\end{lstlisting}
+         \caption{Base de données des objets intelligents}
+         \label{BDD_smart}
+\end{figure}
+
 
 Cette base de données comprend une liste des objets connectés proches de nous. Comme on peut le voir un objet 
 est caractérisé par deux choses : l'identifiant de l'action qu'il peut réaliser, ainsi que le nom de l'objet 
 bluetooth auquel il faut se connecter pour réaliser l'action.
 
-\begin{lstlisting}[caption=Base de données des commandes vocales][frame=single]
+\begin{figure}[!ht]
+         \centering
+	 \begin{lstlisting}[caption=][frame=single]
 {
     "voiceCommands" : [
       {
@@ -70,7 +96,12 @@ bluetooth auquel il faut se connecter pour réaliser l'action.
         }
       }]
 }
-\end{lstlisting}
+	 \end{lstlisting}
+         \caption{Base de données des commandes vocales}
+         \label{BDD_objects}
+\end{figure}
+
+
 
 Ainsi une commande vocale est caractérisée par une chaîne de caractères à reconnaître, une chaîne de 
 caractères à dire par synthèse vocale, afin de donner un feedback sur ce qu'il se passe à l'utilisateur. Elle 
@@ -82,11 +113,13 @@ sur la chaîne reçue, dont le but est d'évaluer la similarité avec l'ensemble
 phrases possibles. La distance minimale caractérisera la requête faite par l'utilisateur. Il existe 
 différents algorithmes, tel que: Levenshtein, ou JaroWinkler.
 
-\paragraph{La distance de Levenshtein}est la plus simple. Celle-ci calcule le nombre de différences 
-qu'il y a entre deux chaînes de caractères. Ces différences peuvent être le remplacement, la suppression, ou 
-l'insertion d'un caractère.
+    \subsubsection{La distance de Levenshtein}
+C'est le plus simple des deux algorithmes. Cette distance calcule le nombre de différences 
+qu'il y a entre deux chaînes de caractères. Ces différences peuvent être le remplacement, la suppression, 
+ou l'insertion d'un caractère.
 
-\paragraph{La distance de JaroWinkler}[1] part de la distance de Jaro dont l'équation est:
+    \subsubsection{La distance de JaroWinkler} 
+Celle-ci part de la distance de Jaro dont l'équation est [1]: 
 \begin{equation}
  d = \frac{1}{3}(\frac{m}{|s1|}+\frac{m}{|s2|}+\frac{m-t}{m})
 \end{equation}
@@ -99,7 +132,7 @@ où :
 \end{itemize}
 
 Deux caractères identiques de $s_1$ et $s_2$ sont dit \emph{correspondants} lorsque leur éloignement dans 
-leur chaine respective ne dépasse pas :
+leur chaîne respective ne dépasse pas :
 \begin{equation}
  \lfloor{\frac{max(|s_1|, |s_2|)}{2}}\rfloor - 1
 \end{equation}
@@ -125,33 +158,39 @@ pour valeur $p=0.1$.
 Wikipédia donne un très bon exemple pour comprendre cette distance. Ils appliquent cette algorithme pour 
 calculer la distance entre MARTHA et MARHTA. Pour cela ils dressent un tableau :
 
-\begin{tabular}{|0|1|2|3|4|5|6|}
-  \hline
-   & M & A & R & T & H & A \\
-  \hline
-  M & 1 & 0 & 0 & 0 & 0 & 0 \\
-  \hline
-  A & 0 & 1 & 0 & 0 & 0 & 0 \\
-  \hline
-  R & 0 & 0 & 1 & 0 & 0 & 0 \\
-  \hline
-  H & 0 & 0 & 0 & 0 & \textbf{1} & 0 \\
-  \hline
-  T & 0 & 0 & 0 & \textbf{1} & 0 & 0 \\
-  \hline
-  A & 0 & 0 & 0 & 0 & 0 & 1 \\
-  \hline
-\end{tabular}
+\begin{figure}[!ht]
+         \centering
+	    \begin{tabular}{|0|1|2|3|4|5|6|}
+		\hline
+		& M & A & R & T & H & A \\
+		\hline
+		M & 1 & 0 & 0 & 0 & 0 & 0 \\
+		\hline
+		A & 0 & 1 & 0 & 0 & 0 & 0 \\
+		\hline
+		R & 0 & 0 & 1 & 0 & 0 & 0 \\
+		\hline
+		H & 0 & 0 & 0 & 0 & \textbf{1} & 0 \\
+		\hline
+		T & 0 & 0 & 0 & \textbf{1} & 0 & 0 \\
+		\hline
+		A & 0 & 0 & 0 & 0 & 0 & 1 \\
+		\hline
+	      \end{tabular}
+         \caption{Exemple pour la distance de JaroWinkler}
+         \label{JaroWinkler}
+\end{figure}
 
-On a 
+On a :
 \begin{itemize}
   \item $m = 6$ (Nombre de 1 dans la matrice)
   \item $|s_1| = 6$ 
   \item $|s_2| = 6$
-  \item Les caractères correspondants sont \{{M,A,R,T,H,A\} pour $s_{1}$ et \{{M,A,R,H,T,A\} pour $s_{2}$. On 
-a donc 2 couples (T/H et H/T) de caractères \emph{correspondants} différents, soit deux demi-transpositions. 
-D'où $t=\frac {2}{2}=1$.
+  \item Les caractères correspondants sont \{{M,A,R,T,H,A\} pour $s_{1}$ et \{{M,A,R,H,T,A\} pour $s_{2}$. 
 \end{itemize}
+
+On a donc 2 couples (T/H et H/T) de caractères \emph{correspondants} différents, soit deux 
+demi-transpositions. D'où $t=\frac {2}{2}=1$.
 
 La distance de Jaro est :
 
@@ -165,8 +204,8 @@ La distance de Jaro-Winkler avec $p=0.1$ avec un préfixe de longueur $\ell =3$ 
   d_w=0.944+(3*0.1(1-0.944))=0.961
 \end{equation}
 
-
-\paragraph{La distance la plus appropriée} a été trouvée en faisant une série de tests, en utilisant à chaque 
+\subsubsection{Etude de l'algorithme le plus approprié}
+La meilleure distance pour notre projet a été trouvée en faisant une série de tests, en utilisant à chaque 
 fois les deux algorithmes. Le test consiste à prendre plusieurs phrases présentes dans le fichier des 
 commandes vocales, et à les dire un grand nombres de fois, avec différents tons de voix, différentes 
 articulations, et différents volumes. Ensuite, pour chaque requête, une liste des différentes phrases 
@@ -191,22 +230,53 @@ C'est la deuxième option qui a été choisie, celant évitant de refaire une gr
 réalisée.
 
 Il faut savoir que le système Android fonctionne grâce à une machine virtuelle Java : \emph{Art} (Pour 
-Android Run Time). Cette machine n'éxécute de base à priori que du byte code Java, et non de l'assembleur que 
+Android Run Time). Cette machine n'exécute de base à priori que du byte code Java, et non de l'assembleur que 
 l'on pourrait obtenir en compilant un langage natif comme le C++. Grâce à \emph{JNI}, pour Java Native 
 Interface, il est possible d'interfacer du code java, avec du code natif. Pour cela il suffit de compiler le 
-code natif pour en faire une librairie, qu'il suffira se charger dans le programme. Dès lors il sera possible 
-d'utiliser du code natif.
+code natif pour en faire une librairie, qu'il suffira se charger dans le programme. Cette librairie 
+contient un ensemble de fonctionnalités déjà compilé, et qui peut donc être utilisé directement dans le 
+programme.
+
+\subsubsection{Intégration de la librairie [2]}
+La première chose à faire est de créer une classe dans le code Java, elle contiendra plusieurs directives 
+importantes, comme le chargement de la librairie, mais aussi le prototype de la fonction \emph{fromCpp} qui 
+sera défini dans le code natif, cela permettra de créer le lien entre les deux langages. Il faut ensuite 
+demander au compilateur java de créer un fichier d'en-tête à partir de cette classe, qui sera utilisée dans 
+notre librairie plus tard.
+
+Il faut ensuite écrire le corps de la fonction \emph{fromCpp}, dans un autre fichier C++. Afin de faire le 
+lien avec le code java, il faut inclure le fichier d'en-tête tout juste créer. Par la suite, nous devons 
+compiler ce code en précisant que nous souhaitons obtenir une librairie et pas un fichier exécutable. Cela 
+nous donnera un fichier \emph{.so} sous Linux, ou un fichier \emph{.dll} sous Windows. Ce fichier devra 
+être placé à la racine du projet, afin que la machine virtuelle java puisse le trouver pendant l'exécution.
+
+La procédure étant relativement fastidieuse, Google a intégré des outils dans son IDE afin de faciliter la 
+démarche. Dès lors il sera possible d'utiliser du code natif, et donc de pouvoir se servir du protocole afin 
+de pouvoir communiquer avec les différents objets, et cela grâce au bluetooth d'Android.
 
 
 	\subsection{Communiquer avec le protocoles BLE}
 	  \subsubsection{Fonctionnement du BLE}
-L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, afin de transmettre les 
+L'application Android a donc pour but d'utiliser le protocole Bluetooth Low Energy, pour transmettre les 
 paquets aux différents objets connectés. Afin de pouvoir se servir de ce bluetooth, il faut commencer par 
-effectuer un scan, afin de voir tous les objets supportants ce protocole aux alentours. Une fonction de 
+effectuer un scan, afin de voir tous les objets supportant ce protocole aux alentours. Une fonction de 
 callback est appelée pour chaque appareil détectée. On peut ensuite se connecter à cet appareil, afin d'être 
-apparairé avec celui-ci.
+appairé avec celui-ci.
 
-Une fois appairée, on peut demander à l'appareil qu'il nous envoie son GATT (Generic Attribute Profile)
+Tous les appareils utilisant le protocole BLE utilisent le GATT (\emph{Generic Attribute Profile}), afin 
+d'envoyer et de recevoir des données sur le réseau. Il faut donc obtenir cette interface pour pouvoir 
+communiquer en BLE. Une fois l'interface GATT obtenue, il est possible de récupérer l'ensemble des 
+caractéristiques. Les caractéristiques sont l'ensemble des valeurs que l'appareil possède que l'on peut lire 
+ou écrire. Elles sont composées d'un UUID (\emph{Universally Unique Identifier}), d'une propriété qui permet 
+d'avoir une description lisible de la caractéristique, et enfin d'une valeur. Par conséquent, si l'on souhaite 
+obtenir la valeur de température d'un objet, il faut récupérer la caractéristique dont la propriété est 
+"température", puis simplement récupérer sa valeur.
+
+Cette procédure ne peut être simplifiée, il est donc obligatoire d'effectuer un scan pour voir l'ensemble des 
+objets bluetooth dans les environs, même si nous les connaissaons déjà. Il est donc impossible via le BLE 
+d'android de se connecter directement à un appareil à partir de son adresse MAC bluetooth, ce qui est 
+dommage, car nous devons donc passer par un scan pas forcément nécessaire, afin de communiquer avec un objet 
+proche de nous.
 
 
 
