@@ -1,1 +1,74 @@
+% Commande pour écrire un mot dans le lexique
+% @param 1 : le mot à définir
+% @param 2 : sa définition
+\newcommand{\lexEntry}[2] {
+	\noindent
+	\parbox[t]{.3\textwidth}{\textbf{#1}}
+	\hspace*{.03\textwidth}
+	\parbox[t]{.65\textwidth}{#2}
+	\hspace*{7pt}
+}
+
 \chapter*{Lexique}
+	\lexEntry{Actionneur} {
+		Dans le cadre de ce rapport, un actionneur désigne un module d'un objet connecté capable
+		d'agir sur son environnement.
+	}
+	
+	\lexEntry{Address Resolution Protocol (ARP)} {
+		Le protocole ARP est un des protocoles de la famille IP. Il permet de faire le lien entre une
+		adresse IP et une adresse MAC.
+	}
+
+	\lexEntry{Bluetooth} {
+		Bluetooth est un standard de communication permettant l'échange de données sur une très
+		courte distance (de l'ordre de 10 mètres).
+	}
+	
+	\lexEntry{Bluetooth Low Energy (BLE)} {
+		Le BLE est une amélioration du Bluetooth visant à réduire considérablement la consomation
+		tout en conservant les mêmes caractéristiques que le bluetooth classique.
+	}
+	
+	\lexEntry{Capteur} {
+		Dans le cadre de ce rapport, un capteur désigne un module d'un objet connecté capable de
+		mesure une grandeur physique de son environnement.
+	}
+
+	\lexEntry{Ethernet} {
+		Ethernet est un protocole de communication qui permet de mettre en place
+		des réseaux locaux. Le transfert de donnée se fait alors par l'envoi de
+		paquets}
+		
+	\lexEntry{Internet Protocol (IP)} {
+		IP est une famille de protocole dédié à la création d'un système d'adressage unique pour
+		la mise en place de réseau d'ordinateurs.
+	}
+		
+	\lexEntry{Support de communication} {
+		Dans le cadre de ce rapport, un support de communication désigne une des technologies de
+		communication existante (ex : Wifi, Bluetooth, ZigBee, Ethernet, \dots).
+	}
+	
+	\lexEntry{UDP} {
+		UDP (user datagram protocol) est un protocole réseau utilisé pour
+		transférer des informations d'une application à une autre. Les données
+		transférées ne sont cependant pas contrôlées.
+	}
+	
+	\lexEntry{Voisin} {
+		Un objet voisin est un objet connecté appartenant au même support de communication que
+		l'objet comparé.
+	}
+		
+	\lexEntry{Wifi} {
+		Le Wifi est un ensemble de protocole de communication sans fil permettant la communication
+		entre périphériques à distance moyenne (de l'ordre d'une centaine de mètres). En fonction
+		du protocole, le débit de la communication peut être relativement importante.
+	}
+		
+	\lexEntry{ZigBee} {
+		ZigBee est un protocole de haut niveau permettant la communication avec de petite radios. 
+		Sa consomation est faible, sa portée est d'environ 10 mètres. Il est principalement utilisé
+		dans la domotique.
+	}
