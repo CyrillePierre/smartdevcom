@@ -1,15 +1,33 @@
-\chapter*{Perspective}
+\chapter*{Perspectives}
 
 Beaucoup de choses ont étaient faites dans ce projet, mais il reste encore beaucoup de choses qui sont prévus 
 afin de l'améliorer.
 
 \section*{Dynamicité du protocole}
+	Avec l'ensemble des outils qui ont été définit par les protocoles VIP, VARP, VDHCP et SDCP. Il 
+	est théoriquement possible de créer tous les objets que l'on peut imaginer. Mais le protocole
+	n'est pas encore complètement implémenté. Il manque encore la gestion dynamique des tables de
+	routage, la création du protocole VDHCP (pour l'affectation automatique d'adresse VIP) et la 
+	gestion des interfaces Wifi. Si l'on souhaite pouvoir profiter pleinement des fonctionnalités
+	du protocole, il est donc indispensable de l'implémenter complètement pour bénéficier d'un
+	réseau virtuel dynamique.
 
 \section*{Création d'un réseau virtuel}
+	La plus grande partie du projet a été consacrée à la réalisation du protocole. Mais la partie
+	la plus intéressante est cependant lorsque l'on commence à créer un ensemble d'objets et de les
+	mettre en réseau. On atteint alors une étape beaucoup plus visuelle et donc beaucoup agréable 
+	pour travailler. Malheureusement il était indispensable de mettre d'abord en place les briques
+	de base du protocole avant de pouvoir commencer un objet. Mais une fois que ces problèmes sont
+	réglés, il alors possible d'équiper entièrement une maison en domotique.
 
 \section*{Ajout d'une intelligence}
+	Une fois qu'a été mis en place un réseau virtuel contenant un ensemble suffisant d'objets 
+	connectés, on a alors la possiblité d'obtenir des informations sur la maison ou de cont
 
 \section*{Création d'un logiciel intégré}
-
-
+	Ce logiciel permettra d'automatiser la création de tous les objets connectés possibles. Il 
+	contiendra une base de données de tous les objets que l'on peut créer, avec la liste de leurs 
+	différents 	capteurs et actionneurs. Cette base de données contiendra la références de ces 
+	modules afin de pouvoir les 	commander sur Internet sur des sites de références. Enfin, il 
+	permettra d'envoyer le bon programme sur l'objet automatiquement.
 
