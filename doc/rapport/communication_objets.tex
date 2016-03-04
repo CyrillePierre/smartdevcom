@@ -71,8 +71,8 @@ Cette base de données comprend une liste des objets connectés proches de nous.
     "voiceCommands" : [
       {
         "command" : {
-            "voiceActivation" : "Quelle est la température",
-            "voiceDiction" : "la température est",
+            "voiceActivation" : "Quelle est la temperature",
+            "voiceDiction" : "la temperature est",
             "idAction" : "0x111"
         }
       }]
@@ -179,11 +179,11 @@ La distance de Jaro-Winkler avec $p=0.1$ avec un préfixe de longueur $\ell =3$ 
 La meilleure distance pour notre projet a été trouvée en faisant une série de tests, en utilisant à chaque 
 fois les deux algorithmes. Le test consiste à prendre plusieurs phrases présentes dans le fichier des 
 commandes vocales, et à les dire un grand nombres de fois, avec différents tons de voix, différentes 
-articulations, et différents volumes. Ensuite, pour chaque requête, une liste des différentes phrases 
-comprises par la reconnaissance vocale est établie. Les deux algorithmes sont alors appliqués, pour voir 
-lequel est le plus robuste, et nous donne la correspondance la plus grande entre la requête souhaitée, et les 
-commandes comprises. Il s'avère que l'algorithme le plus simple  était le plus robuste pour notre étude, 
-c'est donc la la distance de Levenshtein qui a été gardée. 
+articulations, et différents volumes. Ensuite, pour chacune de ces requêtes, une liste des différentes 
+phrases comprises par la reconnaissance vocale est établie. Les deux algorithmes sont alors appliqués, pour 
+voir lequel est le plus robuste, et nous donne la correspondance la plus grande entre la requête souhaitée, et 
+les commandes comprises. Il s'avère que l'algorithme le plus simple  était le plus robuste pour notre étude, 
+c'est donc la distance de Levenshtein qui a été gardée. 
 
 Maintenant que nous sommes capables de savoir quelle requête l'utilisateur souhaite envoyer, et à quel objet, 
 il faut savoir comment l'envoyer.
@@ -216,7 +216,7 @@ demander au compilateur java de créer un fichier d'en-tête à partir de cette 
 notre librairie plus tard.
 
 Il faut ensuite écrire le corps de la fonction \emph{fromCpp}, dans un autre fichier C++. Afin de faire le 
-lien avec le code java, il faut inclure le fichier d'en-tête tout juste créer. Par la suite, nous devons 
+lien avec le code java, il faut inclure le fichier d'en-tête tout juste créé. Par la suite, nous devons 
 compiler ce code en précisant que nous souhaitons obtenir une librairie et pas un fichier exécutable. Cela 
 nous donnera un fichier \emph{.so} sous Linux, ou un fichier \emph{.dll} sous Windows. Ce fichier devra 
 être placé à la racine du projet, afin que la machine virtuelle java puisse le trouver pendant l'exécution.
@@ -233,7 +233,7 @@ effectuer un scan, afin de voir tous les objets supportant ce protocole aux alen
 callback est appelée pour chaque appareil détectée. On peut ensuite se connecter à cet appareil, afin d'être appairé avec celui-ci.
 
 Tous les appareils utilisant le protocole BLE utilisent le GATT (\emph{Generic Attribute Profile}), afin 
-d'envoyer et de recevoir des données sur le réseau. Il faut donc obtenir cette interface pour pouvoir 
+d'envoyer et recevoir des données sur le réseau. Il faut donc obtenir cette interface pour pouvoir 
 communiquer en BLE. Une fois l'interface GATT obtenue, il est possible de récupérer l'ensemble des 
 caractéristiques. Les caractéristiques sont l'ensemble des valeurs que l'appareil possède que l'on peut lire 
 ou écrire. Elles sont composées d'un UUID (\emph{Universally Unique Identifier}), d'une propriété qui permet 
@@ -244,8 +244,8 @@ obtenir la valeur de température d'un objet, il faut récupérer la caractéris
 Cette procédure ne peut être simplifiée, il est donc obligatoire d'effectuer un scan pour voir l'ensemble des 
 objets bluetooth dans les environs, même si nous les connaissons déjà. Il est donc impossible via le BLE 
 d'android de se connecter directement à un appareil à partir de son adresse MAC bluetooth, ce qui est 
-dommage, car nous devons donc passer par un scan pas forcément nécessaire, afin de communiquer avec un objet 
-proche de nous.
+dommage, car nous devons obligatoirement réaliser un scan, afin de communiquer avec un objet 
+proche de nous, même si nous le connaissons.
 
 
 \section{Les objets intelligents}
@@ -271,7 +271,7 @@ intelligents.
 Il est possible de voir sur les figures \ref{actuator} et \ref{sensor} que les deux objets ne possèdent pas la 
 même carte de développement Nucleo. La carte présente pour l'actionneur est une F303K8, tandis que celle du 
 capteur est une F401RE. De manière générale, la première possède moins de composants, mais est plus petite, 
-qui est largement suffisant pour la création de nos objets connectés.
+ce qui est largement suffisant pour la création de nos objets connectés.
 
 L'actionneur présent sur la figure \ref{actuator} est composé d'un servomoteur. Cet objet a été utilisé en 
 tant qu'interrupteur intelligent. Le capteur présent sur la figure \ref{sensor} est quant à lui composé d'une 

@@ -16,7 +16,7 @@ Cet objet connecté est constitué de peu d'éléments :
  \item Un ou plusieurs capteur(s)
  \item Un ou plusieurs actionneur(s)
  \item Une source d'énergie
- \item Un microcontrôleur (Mbed)
+ \item Un microcontrôleur
  \item D'une ou plusieurs interface(s) réseau(x)
 \end{itemize}
 
@@ -66,7 +66,11 @@ C'est donc la deuxième famille qui est la plus utilisée pour l'internet des ob
 % 		wifi, bluetooth, BLE, zig-bee, …
 % 		quelques caractéristiques (débit, portée, consommation)
 	\subsection{Les différentes topologies de réseaux}
-En plus des différents supports de communication, il existe aussi des topologies différentes pour créer un réseau d'objets. La topologie d'un système représente la manière dont celui-ci est organisé est agencé. Ainsi en fonction des besoins, tout comme pour les protocoles, une topologie sera plus adéquate qu'une autre. On parlera de nœud pour parler des différentes machines présentes dans le réseau, et de chemin ou route pour relier les nœuds entre eux.
+En plus des différents supports de communication, il existe aussi des topologies différentes pour créer un 
+réseau d'objets. La topologie d'un système représente la manière dont celui-ci est organisé et agencé. Ainsi 
+en fonction des besoins, tout comme pour les protocoles, une topologie sera plus adéquate qu'une autre. On 
+parlera de nœud pour parler des différentes machines présentes dans le réseau, et de chemin ou route pour 
+relier les nœuds entre eux.
 
 	    \subsubsection{Etoile}
 \begin{figure}[!ht]
@@ -101,7 +105,8 @@ duplication possible des paquets, et le routage dynamique si un des nœuds n'est
          \caption{Réseau en arbre}
          \label{TreeNetwork}
 \end{figure}
-Cette architecture est simplement l'extension du réseau étoile, c'est l'architecture utilisée par Internet. Il s'agit simplement de la connexion de plusieurs réseau étoile entre eux.
+Cette architecture est simplement l'extension du réseau étoile, c'est l'architecture utilisée par Internet. Il 
+s'agit simplement de la connexion de plusieurs réseaux étoiles entre eux.
 % 		p2p, étoile, mesh, ...
 % 		lien avec les technos
 	\subsection{Application du réseau à la domotique}
@@ -114,7 +119,11 @@ L'ensemble de ces objets doit suivre une topologie, afin de pouvoir acheminer le
 \section{La centralisation de l’intelligence : Jarvis}
 	\subsection{Vision macroscopique d’un système domotique}
 Actuellement, la croissance de l'intégration des objets connectés dans notre quotidien est réellement forte. 
-Dans un futur proche, nous serons entourés par un très grand nombre de ces objets. Mais il n'existe peu de systèmes aujourd'hui qui permettent une interaction intelligente avec l'ensemble de ces objets. Il existe peu de moyens simples et directs de réussir à communiquer avec l'ensemble de ces objets connectés sans devoir se connecter manuellement à eux. De plus tous ces acteurs utilisent un langage différent pour communiquer, il est donc difficile de réussir à centraliser un moyen de communication universel.
+Dans un futur proche, nous serons entourés par un très grand nombre de ces objets. parallèlement il existe 
+peu de systèmes aujourd'hui qui permettent une interaction intelligente avec l'ensemble de ces objets. Il 
+existe peu de moyens simples et directs pour réussir à communiquer avec l'ensemble de ces objets connectés 
+sans devoir se connecter manuellement à eux. De plus tous ces acteurs utilisent un langage différent pour 
+communiquer, il est donc difficile de réussir à centraliser un moyen de communication universel.
 
 SmartDevCom permet de réaliser une intelligence semblable à Jarvis, qui est une intelligence 
 artificielle forte, que l'on peut voir dans les films Iron Man. Cette intelligence peut communiquer 
@@ -131,7 +140,7 @@ Par exemple, lorsque l'on souhaite regarder un film, voici un scénario avancé 
  \item Choix du volume
  \item Fermeture des stores
  \item Extinction de la lumière principale
- \item Allumage petite lumière tamisée, accordée au thème du film
+ \item Allumage d'une petite lumière tamisée, accordée au thème du film
  \item Passage du téléphone en mode silencieux 
 \end{itemize}
 
