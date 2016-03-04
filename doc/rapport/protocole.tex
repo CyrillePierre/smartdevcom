@@ -82,7 +82,17 @@ Z-Wave
          \label{netGraph}
       \end{figure}
       
-      Ces deux architectures sont les plus courantes dans les technologies de communication sans fils. Certaines de ces technologies offrent même la possibilité de choisir quelle architecture on souhaite utiliser. En domotique, la plupart des produits proposés dans le		marché utilise une architecture maillée car elle est la plus adaptée aux tailles des maisons. Mais souvent, ces produits nous limitent à l'utilisation d'une même technologie de communication pour tous les objets de la maison (et également de la même marque). Ceci peut être problématique lorsque l'on souhaite ajouter dans le réseau un objet connecté que l'on aurait fabriqué nous-même. En effet, certains de ces produits utilisent des technologies assez onéreuses. Une façon de résoudre ce problème est de ne pas limiter le réseau à un unique support de communication mais à mettre en place des outils permettant de connecter entre eux différents supports.
+      Ces deux architectures sont les plus courantes dans les technologies de communication sans 
+      fils. Certaines de ces technologies offrent même la possibilité de choisir quelle architecture 
+		on souhaite utiliser. En domotique, la plupart des produits proposés dans le		marché 
+		utilise une 		architecture maillée car elle est la plus adaptée aux tailles des maisons. 
+		Mais 	souvent, ces 		produits nous limitent à l'utilisation d'une même technologie de 
+		communication 	pour tous les objets 		de la maison (et également de la même marque). Ceci 
+		peut être 	problématique lorsque l'on souhaite 		ajouter dans le réseau un objet 
+		connecté que l'on aurait 	fabriqué nous-même. En effet, certains de 		ces produits 
+		utilisent des technologies assez 	onéreuses. Une façon de résoudre ce problème est de ne 	
+		pas limiter le réseau à un unique 	support de communication mais à mettre en place des 
+		outils permettant de connecter entre eux 	différents supports.
 		
       \begin{figure}[!ht]
          \centering
@@ -91,7 +101,10 @@ Z-Wave
          \label{multinet}
       \end{figure}
       
-      La figure \ref{multinet} est un exemple de réseau que notre protocole est capable de gérer. On peut voir qu'il permet de lier entre eux 3 supports de communication différents ayant également des architectures de réseau différente. Le lien entre chacun de ces supports est réalisé par des objets connectés un peu particulier que l'on appelle des \emph{passerelles} 
+      La figure \ref{multinet} est un exemple de réseau que notre protocole est capable de gérer. 
+      On peut voir qu'il permet de lier entre eux 3 supports de communication différents ayant 
+		également des architectures de réseau différentes. Le lien entre chacun de ces supports est 
+		réalisé par des objets connectés un peu particulier que l'on appelle des \emph{passerelles} 
 		(\emph{A} et \emph{B} sur le schéma).
 		Ces objets peuvent fonctionner de la même façon que n'importe quel autre objet. Ils ont cependant la possibilité de communiquer sur différents supports. Cela signifie que ces objets sont équipés au minimum de 2 technologies de communications. Par exemple, Wifi + Bluetooth,
 		ZigBee + Ethernet ou même Wifi + Wifi (dans 2 réseaux différents).
@@ -151,7 +164,7 @@ Z-Wave
 			Il existe cependant des valeurs particulières d'adresse VIP : 
 			\paragraph{Les adresses de réseaux}
 				Toutes les addresses VIP dont l'adresse d'objet est 0 représente l'adresse du 
-				sous-réseau. Cela signifie que l'adresse de décrit pas un objet mais le sous-réseau 
+				sous-réseau. Cela signifie que l'adresse ne décrit pas un objet mais le sous-réseau 
 				lui-même. De la même façon, toutes les adresses VIP dont l'adresse de sous-réseau est 0 
 				représente 	l'adresse de réseau (l'adresse doit valoir également 0).
 				
@@ -265,15 +278,16 @@ Z-Wave
 
 			Comme l'on montré ces exemples, l'utilisation des tables de routage est un bon moyen pour
 			transporter un message dans la totalité du réseau virtuel. Mais actuellement, elle possède
-			un petit inconvénient. Il est nécessaire d'écrire les tables de routage de chacun des
-			objets faisant passerelle. Il existe cependant des algorithmes de mise à jour dynamique
-			des tables de routage mais ils n'ont pas encore été étudiés dans ce projet.
+			un petit inconvénient. Il est nécessaire d'écrire à la main les tables de routage de 
+			chacun des objets faisant passerelle. Il existe cependant des algorithmes de mise à jour 
+			dynamique des tables de routage pour automatiser leur création mais ils n'ont pas encore 
+			été étudiés dans ce projet.
 
 	\subsection{Un réseau dynamique}
 		Le protocole VIP est suffisant pour mettre en place une architecture d'objets connectés dans
 		une maison mais il manque cependant une étape pour que les messages puissent utiliser
 		correctement les supports de communication. Imaginons que l'on souhaite envoyer un message 
-		à un objet appartenant au même support. On connait on connait son adresse VIP. Mais comment 
+		à un objet appartenant au même support. On connait son adresse VIP. Mais comment 
 		fait on pour déterminer à qui appartient l'adresse ? Il est en effet nécessaire de pouvoir 
 		faire le lien entre l'adresse de support d'un objet et son adresse VIP. Pour cela, il a été
 		mis en place un protocole nommé VARP (Virtual Address Resolution Protocol) inspiré du
@@ -284,7 +298,8 @@ Z-Wave
 		faire une requête multiple en utilisant une adresse de broadcast. Cela signifie que tous les
 		objets acceptant cette adresse répondront à la requête. Cela peut par exemple être utilisé
 		pour mettre à jour une table contenant la liste des couples d'adresses support/VIP des objets
-		voisins. Le tableau \ref{varpEx} présente quelques exemples d'utilisation du protocole VARP.
+		voisins. La figure \ref{varpNet} et le tableau \ref{varpEx} présente quelques exemples 
+		d'utilisation du protocole VARP.
 		
 		\begin{figure}[!ht]
 			\centering
@@ -385,7 +400,7 @@ Z-Wave
 			\item il possède zéro, un ou plusieurs capteurs
 			\item il possède zéro, un ou plusieurs actionneurs
 			\item il possède zéro, une ou plusieurs actions
-			\item il définit la façon dont doivent être utilisé chacune des actions
+			\item il définit la façon dont doivent être utilisé chacune de ses actions
 			\item il permet l'exécution de chacune de ses actions
 		\end{itemize}
 		
@@ -428,7 +443,8 @@ Z-Wave
 		l'arbre). Mais la construction de cet arbre de type n'est, encore une fois, pas évidente.
 		Pour cette construction, une première approche a été faite en utilisant des outils de
 		statistique. Il existe en effet beaucoup d'algorithmes de clusterisation qui crée des
-		structures sous forme d'arbre. Le problème de ces algorithmes est qu'ils utilisent des données
+		structures sous forme d'arbres. Le problème de ces algorithmes est qu'ils utilisent des 
+		données
 		quantitatives. Dans notre cas, les données sont purement qualitatives. Pour ce genre de
 		données, une des méthodes consiste à lister un ensemble d'actions le plus varié possible et
 		de rechercher des critères pouvant discriminer ces actions. Cette méthode est intéressant mais
@@ -474,8 +490,8 @@ Z-Wave
 		en créant des objets spéciaux agissant comme des bases de données. Ces objets auront pour
 		tâche de mettre à jour un arbre de type regroupant tous les types que l'on peut rencontrer
 		dans le réseau virtuel. Cette base sera bien évidemment dynamique pour que des nouveaux objets
-		puissent ajouter de nouveau type. Ces objets peuvent également rassembler d'autres types de
-		données comme par exemple la liste des actions de tous les objets. Ce regroupement
+		puissent ajouter de nouveau type. Ces objets peuvent également rassembler d'autres
+		informations comme par exemple la liste des actions de tous les objets. Ce regroupement
 		d'informations peut être très utile pour d'autres objets dont l'unique but est de contrôler
 		des objets existants.
 		

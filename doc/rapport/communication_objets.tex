@@ -28,7 +28,14 @@ Afin de pouvoir démarrer et utiliser la reconnaissance vocale, il faut un ensem
          \label{Tasker}
 \end{figure}
 
-Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et de se servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, on peut la paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est reconnue, comme sur la figure \ref{Tasker}. Afin de pouvoir communiquer avec Jarvis, le seul mot clef choisi a donc été son nom. Du côté de Tasker, c'est une application d'automatisation très connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. Ainsi il est possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de traiter la chaîne de caractères : SpeechToText, comme on peut le voir 
+Autovoice est une application Android qui permet d'utiliser la reconnaissance vocale de Google, et 
+de se servir de la chaîne de caractères reconnues pour en faire ce que l'on souhaite. Par ailleurs, 
+on peut la paramétrer de telle sorte qu'elle réagisse seulement si une suite de mots clefs est 
+reconnue, comme sur la figure \ref{Tasker}. Afin de pouvoir communiquer avec Jarvis, le seul mot 
+clef choisi a donc été son nom. Du côté de Tasker, c'est une application d'automatisation très 
+connue sur Android. Elle permet de réaliser des tâches en réponse à un événement donné. Ainsi il est 
+possible d'utiliser comme événement Autovoice, et comme tâche, une application qui permet de traiter 
+la chaîne de caractères : SpeechToText, comme on peut le voir 
 sur la figure \ref{jarvis}.
 
 \begin{figure}[!ht]
@@ -127,7 +134,7 @@ pour valeur $p=0.1$.
 \end{itemize}
 
 Wikipédia donne un très bon exemple pour comprendre cette distance. Ils appliquent cette algorithme pour 
-calculer la distance entre MARTHA et MARHTA. Pour cela ils dressent un tableau :
+calculer la distance entre MARTHA et MAR\underline{HT}A. Pour cela ils dressent un tableau :
 
 \begin{figure}[!ht]
          \centering
@@ -178,12 +185,12 @@ La distance de Jaro-Winkler avec $p=0.1$ avec un préfixe de longueur $\ell =3$ 
 \subsubsection{Etude de l'algorithme le plus approprié}
 La meilleure distance pour notre projet a été trouvée en faisant une série de tests, en utilisant à chaque 
 fois les deux algorithmes. Le test consiste à prendre plusieurs phrases présentes dans le fichier des 
-commandes vocales, et à les dire un grand nombres de fois, avec différents tons de voix, différentes 
+commandes vocales, et à les dire un grand nombre de fois, avec différents tons de voix, différentes 
 articulations, et différents volumes. Ensuite, pour chaque requête, une liste des différentes phrases 
 comprises par la reconnaissance vocale est établie. Les deux algorithmes sont alors appliqués, pour voir 
 lequel est le plus robuste, et nous donne la correspondance la plus grande entre la requête souhaitée, et les 
 commandes comprises. Il s'avère que l'algorithme le plus simple  était le plus robuste pour notre étude, 
-c'est donc la la distance de Levenshtein qui a été gardée. 
+c'est donc la distance de Levenshtein qui a été gardée. 
 
 Maintenant que nous sommes capables de savoir quelle requête l'utilisateur souhaite envoyer, et à quel objet, 
 il faut savoir comment l'envoyer.
