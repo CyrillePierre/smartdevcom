@@ -10,14 +10,14 @@
 	arriver qui s'appelle AllJoyn qui sera expliqués après. Ces protocoles n'ont pas été utilisés, 
 	car ils ne possédaient pas l'ensemble des caractéristiques qui seront décrites plus tard. 
 
-	\subsection{Zigbee}
+	\subsection{Zigbee [9]}
 		ZigBee est un protocole de haut niveau permettant la communication, à basse consommation. Ce 
 		protocole est basé sur la norme IEEE 802.15.4 et est utilisée pour les réseaux WPAN 
 		(\emph{Wireless Personal 
 		Area Networks}). Le principal avantage de ce support est sa capacité à créer un réseau 
 		maillé dynamique et autonome, ce qui est très pratique pour créer un réseau d'objet dynamique.
 		
-	\subsection{Z-Wave}
+	\subsection{Z-Wave [10]}
 	Z-wave est un protocole qui ressemble beaucoup au zigbee. En effet lui aussi permet de créer un 
 	réseau maillé dynamique. Les quelques différences avec le z-wave sont principalement :
 
@@ -276,7 +276,7 @@ Z-Wave
 				\label{routingTable}
 			\end{table}
 
-			Comme l'on montré ces exemples, l'utilisation des tables de routage est un bon moyen pour
+			Comme l'ont montré ces exemples, l'utilisation des tables de routage est un bon moyen pour
 			transporter un message dans la totalité du réseau virtuel. Mais actuellement, elle possède
 			un petit inconvénient. Il est nécessaire d'écrire à la main les tables de routage de 
 			chacun des objets faisant passerelle. Il existe cependant des algorithmes de mise à jour 
@@ -370,7 +370,7 @@ Z-Wave
 		ainsi. Quels sont leurs caractéristiques ? La définition d'un objet connecté a déjà été 
 		abordé brièvement dans la première partie de ce rapport. Maintenant nous allons voir un peu
 		plus en détails les fonctionnalités de ceux-ci. Tous ces éléments sont définis dans 
-		un protocole encapsulé dans le protocole VIP : le protocole SDCP (Smarts Devices 
+		un protocole encapsulé dans le protocole VIP : le protocole SDCP (Smarts Device
 		Communication Protocol). Le tableau \ref{modeleCouche} illustre l'organisation des différentes
 		couches du protocole de SmartDevCom.
 		
@@ -447,8 +447,10 @@ Z-Wave
 		données
 		quantitatives. Dans notre cas, les données sont purement qualitatives. Pour ce genre de
 		données, une des méthodes consiste à lister un ensemble d'actions le plus varié possible et
-		de rechercher des critères pouvant discriminer ces actions. Cette méthode est intéressant mais
-		la recherche des critères discriminant est presque aussi compliqué que d'essayer de construire
+		de rechercher des critères pouvant discriminer ces actions. Cette méthode est intéressante 
+mais
+ 		la recherche des critères discriminants est presque aussi compliqué que d'essayer de 
+construire
 		l'arbre des types à la main.
 		
 		Finalement, l'arbre des types d'actions a été écrit manuellement en essayant de faire le tour

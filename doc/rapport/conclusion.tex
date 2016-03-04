@@ -1,11 +1,22 @@
 \chapter*{Conclusion}
 
-Le but de ce projet était de réaliser un réseau d'objets intelligents et dynamiques.
+Le but de ce projet était de mettre en place un réseau d'objets connectés équipés de capteurs et
+d'actionneurs dédiés à la domotique. Mais pour pouvoir réaliser ce genre de réseau, il est 
+indispensable de mettre en place un protocole de communication pour que tous les objets se
+comprennent. Étant donné que souhaitions avoir aucune contrainte lors de la création des objets
+connectés, il a fallu écrire un protocole qui soit le plus générique et dynamique possible. C'est
+pourquoi la tâche la plus importante du projet a été la mise en place du protocole.
+Actuellement, celui-ci est opérationnel bien qu'il n'intègre pas encore toute la dynamique que
+nous souhaitions.
 
-Cet objectif a été en parti atteint, puisque les bases du protocoles ont été écrites, permettant la 
-commnunication avec ces objets. Une application Android a aussi été réalisée, afin de pouvoir communiquer 
-avec ces différents objets
-
-Ce projet nous a apporté beaucoup de choses, puisque nous avons pu travailler avec plusieurs cartes 
-électroniques Mbed. Nous avons pu mettre faire un état de l'art sur les différents protocoles existant, et 
-des différents supports de communication.
+Ce projet a donc nécessité une grande partie de réflexion et d'analyse pour concevoir un protocole 
+générique. Il a requis beaucoup de connaissances dans le domaine du réseau mais également un peu
+dans le domaine des statistiques pour l'organisation des types d'actions. Mais le projet n'a pas été
+uniquement théorique. L'implémentation du protocole et la création d'objets ont fait intervenir des
+technologies assez récente comme la norme C++14 pour le protocole, la cross-compilation avec Docker 
+pour programmer sur ARM, JNI pour intégrer du code natif sous Android, des outils de programmation
+temps réel ainsi que des bibliothèques d'Android et d'Mbed. Ce projet a donc été très enrichissant 
+d'une part, pour les nombreux domaines de l'informatique embarqué qu'il a fait intervenir et d'autre
+part, pour la fusion et la concrétisation de beaucoup de connaissances que l'on a acquise à l'ISIMA.
+Cet enrichissement ne va cependant pas s'arrêter là puisque l'étape suivante est maintenant la 
+création de vrais objets qui utiliseront le travail qui a été réalisé dans ce projet.
