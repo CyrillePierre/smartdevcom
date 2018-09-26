@@ -4,7 +4,7 @@ Version : 0.2
 
 1 - Presentation
 	Ce document décrit le fonctionnement du protocole mis en place pour
-	la communication entre des objets connectés dans un réseau virtuelle.
+	la communication entre des objets connectés dans un réseau virtuel.
 	Ce réseau a la particularité d'être indépendant de la technologie de
 	communication des objets. Cela signifie qu'il doit être implémenté
 	comme une surcouche au protocole spécifique à la technologie de
